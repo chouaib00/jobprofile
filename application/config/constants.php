@@ -85,7 +85,7 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 
-defined('DOMAIN') OR define('DOMAIN', '/jobprofiling/');
+defined('DOMAIN') OR define('DOMAIN', '/');
 defined('SITE_NAME') OR define('SITE_NAME', 'Job Profiling');
 //loaded by server
 

@@ -76,8 +76,8 @@ $query_builder = FALSE;
 $db['default'] = array(
 	'dsn'	=> 'mysql:host=localhost; dbname=job-profiling; charset=utf8;',
 	'hostname' => 'localhost',
-	'username' => 'brent',
-	'password' => '12345678',
+	'username' => 'admin_jobprofile',
+	'password' => 'MXhzv8WMisZO',
 	'database' => '',
 	//'dbdriver' => 'mysqli',
 	'dbdriver' => 'pdo',
