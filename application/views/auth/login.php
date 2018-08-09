@@ -7,12 +7,12 @@
         </div>
         <h3>Looking for a job?<br>Looking for workers?</h3>
 
-        <form class="m-t" role="form">
+        <form class="m-t" role="form" method="POST" action="?">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Email / Username" required="">
+                <input type="text" name="user_email" class="form-control" placeholder="Email / Username" required="">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="Password" required="">
+                <input type="password" name="user_password" class="form-control" placeholder="Password" required="">
             </div>
             <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 

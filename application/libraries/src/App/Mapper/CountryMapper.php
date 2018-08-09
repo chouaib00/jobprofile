@@ -2,12 +2,12 @@
 namespace App\Mapper;
 use Sys\Mapper\Mapper;
 
-class UserMapper extends Mapper{
+class CountryMapper extends Mapper{
 
   protected $_table = 'tbl_user';
 
-  public function selectByLoginPassword($username_email, $password){
-    $sql_statement = "SELECT * FROM tbl_user";
+  public function selectDataTable(){
+    $sql_statement = "SELECT * FROM tbl_country";
 		$stmt = $this->prepare($sql_statement);
 		$stmt->execute();
 		$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);

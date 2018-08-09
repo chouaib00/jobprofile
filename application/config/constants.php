@@ -92,5 +92,6 @@ defined('SITE_NAME') OR define('SITE_NAME', 'Job Profiling');
 defined('ASSETS')      OR define('ASSETS', DOMAIN.'assets/');
 defined('JS_DIR')      OR define('JS_DIR', DOMAIN.'assets/js/');
 defined('CSS_DIR')      OR define('CSS_DIR', DOMAIN.'assets/css/');
+defined('REF_DIR')      OR define('REF_DIR', DOMAIN.'assets/ref/');
 defined('IMG_DIR')      OR define('IMG_DIR', DOMAIN.'assets/img/');
 defined('THEME')      OR define('THEME', DOMAIN.'assets/theme/');

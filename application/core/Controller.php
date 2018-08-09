@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Controller extends CI_Controller {
 
 	protected $_data = array();
+	protected $sess = null;
 	protected $_header = array(
 		'title' => SITE_NAME
 	);

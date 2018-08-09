@@ -1,3 +1,7 @@
+<link href="<?php echo THEME; ?>css/plugins/select2/select2.min.css" rel="stylesheet">
+<link href="<?php echo THEME; ?>css/plugins/iCheck/custom.css" rel="stylesheet">
+
+
 <div class="wrapper wrapper-content animated fadeInLeft">
   <div class="row">
     <div class="col-lg-12">
@@ -20,20 +24,101 @@
               <form method="get" class="form-horizontal">
                   <h5>First Name, Middle Name, Last Name, Name Extension</h5>
                   <div class="form-group">
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter First Name"></div>
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter Middle Name"></div>
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter Last Name"></div>
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter Name Extension"></div>
+                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="First Name"></div>
+                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Middle Name"></div>
+                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Last Name"></div>
+                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Name Extension"></div>
                   </div>
                   <div class="hr-line-dashed"></div>
-                  <p><h5>First Name, Middle Name, Last Name, Name Extension</h5></p>
+
+                  <h5>Present Address</h5>
                   <div class="form-group">
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter First Name"></div>
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter Middle Name"></div>
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter Last Name"></div>
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter Name Extension"></div>
+                      <div class="col-sm-12"><input type="text" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)"></div>
+                      <div class="col-sm-4 m-t-sm">
+                        <select class="select2-basic form-control" data-placeholder="Select Country">
+                            <option></option>
+                            <option value="Bahamas">Bahamas</option>
+                            <option value="Bahrain">Bahrain</option>
+                            <option value="Bangladesh">Bangladesh</option>
+                            <option value="Barbados">Barbados</option>
+                            <option value="Belarus">Belarus</option>
+                            <option value="Belgium">Belgium</option>
+                            <option value="Belize">Belize</option>
+                            <option value="Benin">Benin</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4 m-t-sm">
+                        <select class="select2-basic form-control" data-placeholder="Select Province">
+                            <option></option>
+                            <option value="Bahamas">Bahamas</option>
+                            <option value="Bahrain">Bahrain</option>
+                            <option value="Bangladesh">Bangladesh</option>
+                            <option value="Barbados">Barbados</option>
+                            <option value="Belarus">Belarus</option>
+                            <option value="Belgium">Belgium</option>
+                            <option value="Belize">Belize</option>
+                            <option value="Benin">Benin</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4 m-t-sm">
+                        <select class="select2-basic form-control" data-placeholder="Select City">
+                            <option></option>
+                            <option value="Bahamas">Bahamas</option>
+                            <option value="Bahrain">Bahrain</option>
+                            <option value="Bangladesh">Bangladesh</option>
+                            <option value="Barbados">Barbados</option>
+                            <option value="Belarus">Belarus</option>
+                            <option value="Belgium">Belgium</option>
+                            <option value="Belize">Belize</option>
+                            <option value="Benin">Benin</option>
+                        </select>
+                      </div>
                   </div>
                   <div class="hr-line-dashed"></div>
+                  <h5>Permanent Address</h5>
+
+                  <div class="form-group">
+                    <div class="col-sm-12"><input type="text" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)"></div>
+                    <div class="col-sm-4 m-t-sm">
+                        <select class="select2-basic form-control" data-placeholder="Select Country">
+                            <option></option>
+                            <option value="Bahamas">Bahamas</option>
+                            <option value="Bahrain">Bahrain</option>
+                            <option value="Bangladesh">Bangladesh</option>
+                            <option value="Barbados">Barbados</option>
+                            <option value="Belarus">Belarus</option>
+                            <option value="Belgium">Belgium</option>
+                            <option value="Belize">Belize</option>
+                            <option value="Benin">Benin</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4 m-t-sm">
+                        <select class="select2-basic form-control" data-placeholder="Select Province">
+                            <option></option>
+                            <option value="Bahamas">Bahamas</option>
+                            <option value="Bahrain">Bahrain</option>
+                            <option value="Bangladesh">Bangladesh</option>
+                            <option value="Barbados">Barbados</option>
+                            <option value="Belarus">Belarus</option>
+                            <option value="Belgium">Belgium</option>
+                            <option value="Belize">Belize</option>
+                            <option value="Benin">Benin</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4 m-t-sm">
+                        <select class="select2-basic form-control" data-placeholder="Select City">
+                            <option></option>
+                            <option value="Bahamas">Bahamas</option>
+                            <option value="Bahrain">Bahrain</option>
+                            <option value="Bangladesh">Bangladesh</option>
+                            <option value="Barbados">Barbados</option>
+                            <option value="Belarus">Belarus</option>
+                            <option value="Belgium">Belgium</option>
+                            <option value="Belize">Belize</option>
+                            <option value="Benin">Benin</option>
+                        </select>
+                      </div>
+                  </div>
                     <div class="form-group"><label class="col-sm-2 control-label">Help text</label>
                         <div class="col-sm-10"><input type="text" class="form-control"> <span class="help-block m-b-none">A block of help text that breaks onto a new line and may extend beyond one line.</span>
                         </div>
@@ -256,3 +341,9 @@
 
 </div>
 <script src="<?php echo THEME ?>js/plugins/pace/pace.min.js"></script>
+<!-- Select2 -->
+<script src="<?php echo THEME ?>js/plugins/select2/select2.full.min.js"></script>
+<!-- iCheck -->
+<script src="<?php echo THEME ?>js/plugins/iCheck/icheck.min.js"></script>
+
+<script src="<?php echo JS_DIR ?>components/applicant/update_profile.js"></script>
