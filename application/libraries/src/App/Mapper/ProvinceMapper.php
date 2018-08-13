@@ -2,9 +2,9 @@
 namespace App\Mapper;
 use Sys\Mapper\Mapper;
 
-class CountryMapper extends Mapper{
+class ProvinceMapper extends Mapper{
 
-  protected $_table = 'tbl_country';
+  protected $_table = 'tbl_province';
 
   public function selectDataTable($filter, $columns, $limit, $offset, $order){
     $result = array(
@@ -41,15 +41,22 @@ class CountryMapper extends Mapper{
       }
     }
 
-    $sql_statement = "SELECT COUNT(1) as 'num' FROM tbl_country " . $where_str_query;
+    $sql_statement = "SELECT COUNT(1) as 'num'
+                      FROM `tbl_province`
+                      INNER JOIN `tbl_region`
+                      ON `province_region_id` = `region_id`
+                      INNER JOIN `tbl_country`
+                      ON region_country_id = country_id " . $where_str_query;
 		$stmt = $this->prepare($sql_statement);
-
 		$stmt->execute($params);
 		$result['count'] = $stmt->fetch(\PDO::FETCH_ASSOC)['num'];
 
-
-
-    $sql_statement = "SELECT ".$column_str_query." FROM tbl_country " . $where_str_query . " " . $order_str_query. " ".$limit_str_query;
+    $sql_statement = "SELECT ".$column_str_query."
+                      FROM `tbl_province`
+                      INNER JOIN `tbl_region`
+                      ON `province_region_id` = `region_id`
+                      INNER JOIN `tbl_country`
+                      ON region_country_id = country_id " . $where_str_query . " " . $order_str_query. " ".$limit_str_query;
 
 		$stmt = $this->prepare($sql_statement);
     $params[':limit'] = $limit;

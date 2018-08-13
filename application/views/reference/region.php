@@ -4,7 +4,7 @@
         <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Country List</h5>
+                        <h5>Region List</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -29,8 +29,9 @@
                         <table class="table table-striped table-bordered table-hover datatable-basic" data-config="{}">
                           <thead>
                             <tr>
+                                <th class="col-md-4 text-center">Country</th>
                                 <th class="col-md-3 text-center">Code</th>
-                                <th class="col-md-8 text-center">Name</th>
+                                <th class="col-md-4 text-center">Region</th>
                                 <th class="col-md-1 text-center no-sort">Action</th>
                             </tr>
                           </thead>
@@ -48,4 +49,4 @@
 
 </div>
 
-<script src="<?php echo JS_DIR ?>components/reference/country_list.js"></script>
+<script src="<?php echo JS_DIR ?>components/reference/region_list.js"></script>

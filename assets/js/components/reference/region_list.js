@@ -3,12 +3,13 @@ $(document).ready(function(){
 
     let config = {
       url : global.site_name + 'reference/ref',
-      order_col : 1,
-      req_data : {type : 'country'},
+      order_col : 3,
+      req_data : {type : 'region'},
       column :[
-        { "data": "country_code"},
         { "data": "country_name" },
-        { "data": "country_id"
+        { "data": "region_code" },
+        { "data": "region_desc" },
+        { "data": "region_id"
         , "searchable": false}
       ],
       add_url : global.site_name + 'reference/ref'

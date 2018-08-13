@@ -1,7 +1,3 @@
-<link href="<?php echo THEME; ?>css/plugins/select2/select2.min.css" rel="stylesheet">
-<link href="<?php echo THEME; ?>css/plugins/iCheck/custom.css" rel="stylesheet">
-
-
 <div class="wrapper wrapper-content animated fadeInLeft">
   <div class="row">
     <div class="col-lg-12">
@@ -340,10 +336,4 @@
 
 
 </div>
-<script src="<?php echo THEME ?>js/plugins/pace/pace.min.js"></script>
-<!-- Select2 -->
-<script src="<?php echo THEME ?>js/plugins/select2/select2.full.min.js"></script>
-<!-- iCheck -->
-<script src="<?php echo THEME ?>js/plugins/iCheck/icheck.min.js"></script>
-
 <script src="<?php echo JS_DIR ?>components/applicant/update_profile.js"></script>

@@ -18,6 +18,15 @@ class Mapper extends PdoAdapter{
 		//$this->db = $ci->db;
 	}
 
+	public function getAllCount(){
+		$sql_statement = "SELECT COUNT(1) as 'num'
+									FROM ".$this->_table."";
+		$stmt = $this->prepare($sql_statement);
+		$stmt->execute();
+		$result = $stmt->fetch(\PDO::FETCH_ASSOC);
+		return $result['num'];
+	}
+
 	public function getAll(){
 		$sql_statement = "SELECT * FROM ".$this->_table."";
 		$stmt = $this->prepare($sql_statement);
