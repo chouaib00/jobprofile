@@ -26,6 +26,7 @@
                     <li><a href="<?php echo DOMAIN; ?>reference/country">Country</a></li>
                     <li><a href="<?php echo DOMAIN; ?>reference/region">Region</a></li>
                     <li><a href="<?php echo DOMAIN; ?>reference/province">Province</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>reference/city">City</a></li>
                     <li><a href="dashboard_2.html">Dashboard v.2</a></li>
                     <li><a href="dashboard_3.html">Dashboard v.3</a></li>
                     <li><a href="dashboard_4_1.html">Dashboard v.4</a></li>

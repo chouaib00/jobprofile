@@ -30,6 +30,9 @@ class Reference extends Controller {
 		if($option['type'] == 'province'){
 			$mapper = new App\Mapper\ProvinceMapper();
 		}
+		if($option['type'] == 'city'){
+			$mapper = new App\Mapper\CityMapper();
+		}
 
 		$result = $mapper->selectDataTable($search['value'], $columns, $limit, $offset, $orders);
 
@@ -38,12 +41,48 @@ class Reference extends Controller {
 
   public function country(){
     $this->_template = 'templates/admin_main';
-    $this->view('reference/country');
+    $this->view('reference/country/list');
   }
 
 	public function add_country(){
+		$countryMapper = new App\Mapper\CountryMapper();
+		$data = array(
+				'country_id' => ''
+			,	'country_code' => ''
+			,	'country_name' => ''
+		);
+
+		if(!empty($_POST)){
+				$data['country_code'] = $_POST['country_code'];
+				$data['country_name'] = $_POST['country_name'];
+				$countryMapper->insert($data);
+		}
+		$this->_data['action'] = 'add';
+		$this->_data['form_data'] = $data;
+
 		$this->_template = 'templates/admin_main';
-    $this->view('reference/country');
+    $this->view('reference/country/form');
+	}
+
+	public function edit_country($id){
+		$countryMapper = new App\Mapper\CountryMapper();
+		$filter = array();
+		$filter[] = array('column'=>'country_id',
+											'value' => $id);
+
+		if(!empty($_POST)){
+				$data['country_code'] = $_POST['country_code'];
+				$data['country_name'] = $_POST['country_name'];
+				$countryMapper->update($data, $filter);
+		}
+		$country = $countryMapper->getByFilter($filter, true);
+		if(empty($country));//Show 404
+
+		$this->_data['action'] = 'edit';
+		$this->_data['form_data'] = $country;
+
+		$this->_template = 'templates/admin_main';
+    $this->view('reference/country/form');
 	}
 
 	public function region(){
@@ -54,6 +93,11 @@ class Reference extends Controller {
 	public function province(){
     $this->_template = 'templates/admin_main';
     $this->view('reference/province');
+  }
+
+	public function city(){
+    $this->_template = 'templates/admin_main';
+    $this->view('reference/city');
   }
 
 }

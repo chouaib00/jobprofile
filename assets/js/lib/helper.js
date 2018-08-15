@@ -29,8 +29,8 @@ var helper = {
             targets: -1,
             data: "country_id",
             render: function ( data, type, row, meta ) {
-              let html = '<div class="text-center"><a class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-pencil"></i></a> ' +
-              '<button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></button></div>'
+              let html = '<div class="text-center"><a class="btn btn-info has-tooltip" title="Edit"><i class="fa fa-pencil"></i></a> ' +
+              '<button class="btn btn-danger has-tooltip" title="Delete"><i class="fa fa-trash"></i></button></div>'
               return html;
             }
         } ],
