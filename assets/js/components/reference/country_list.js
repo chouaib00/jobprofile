@@ -11,7 +11,12 @@ $(document).ready(function(){
         { "data": "country_id"
         , "searchable": false}
       ],
-      add_url : global.site_name + 'reference/ref'
+      add_url : global.site_name + 'reference/add-country',
+      edit_url  : global.site_name + 'reference/edit-country',
+      delete_url : global.site_name + 'reference/delete-ref',
+      page_var : {
+        type : 'country'
+      }
     }
     helper.datatable_basic('.datatable-basic', config);
 

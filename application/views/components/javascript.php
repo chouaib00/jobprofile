@@ -13,4 +13,5 @@
   <script src="<?php echo THEME ?>js/plugins/iCheck/icheck.min.js"></script>
 
   <script src="<?php echo JS_DIR; ?>components/general/jquery_extension.js"></script>
+  <script src="<?php echo JS_DIR; ?>lib/bootbox.min.js"></script>
   <script src="<?php echo JS_DIR; ?>lib/helper.js"></script>

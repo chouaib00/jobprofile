@@ -13,7 +13,8 @@ $(document).ready(function(){
         { "data": "city_id"
         , "searchable": false}
       ],
-      add_url : global.site_name + 'reference/ref'
+      add_url : global.site_name + 'reference/add-city',
+      edit_url  : global.site_name + 'reference/edit-city'
     }
     helper.datatable_basic('.datatable-basic', config);
 

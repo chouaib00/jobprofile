@@ -61,25 +61,73 @@ class Mapper extends PdoAdapter{
 		return $result;
 	}
 
+	public function get($columns, $filter, $order){
+		$column_statement = '';
+		$where_statement = '';
+		$order_statement = '';
+
+		$column_statement = (is_array($columns))? implode(', ',$columns) : $columns;
+		$params = array();
+		if(is_array($filter)){
+			foreach($filter as $_filter){
+				$parameterized_column = ':'.$_filter['column'];
+				$where_statement .= $_filter['column'] ." = ". $parameterized_column;
+				$params[$parameterized_column] = $_filter['value'];
+				if(next($filter)){
+					$where_statement .= " AND ";
+				}
+			}
+		}
+		else{
+			$where_statement = $filter;
+		}
+
+		if(is_array($order)){
+			foreach($order as $_order){
+				$order_statement .= $_order['column'] ." ". $_order['order'];
+				if(next($order)){
+					$order_statement .= ", ";
+				}
+			}
+		}
+		else{
+			$order_statement = $order;
+		}
+
+		if(empty($column_statement)){
+			$column_statement = '*';
+		}
+		if(!empty($where_statement)){
+			$where_statement = 'WHERE '. $where_statement;
+		}
+		if(!empty($order_statement)){
+			$order_statement = 'ORDER BY '.$order_statement;
+		}
+
+		$sql_statement = "SELECT ".$column_statement." FROM ".$this->_table." ".$where_statement." ".$order_statement;
+		$stmt = $this->prepare($sql_statement);
+		$stmt->execute($params);
+		$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+		return $result;
+	}
+
 
 	public function insert($data){
 		$columns = '';
 		$columns_params = '';
 		$params = array();
 		foreach($data as $col=>$val){
-			$columns .=$col;
 			$parameterized_column = ':'.$col;
+			$columns .=$col;
 			$columns_params .=$parameterized_column;
 			$params[$parameterized_column] = $val;
-			if(next($data)){
-				$columns .=', ';
-				$columns_params .=', ';
-			}
+			$columns .=', ';
+			$columns_params .=', ';
 		}
-
+		$columns = substr($columns, 0, -2);
+		$columns_params = substr($columns_params, 0, -2);
 
 		$sql_statement = "INSERT INTO ".$this->_table."(".$columns.") VALUES (".$columns_params.")";
-
 		$stmt = $this->prepare($sql_statement);
 		$stmt->execute($params);
 		return $this->lastInsertId();
@@ -94,20 +142,18 @@ class Mapper extends PdoAdapter{
 			$parameterized_column = ':'.$col;
 			$columns .= $col.' = '.$parameterized_column;
 			$params[$parameterized_column] = $val;
-			if(next($data)){
-				$columns .=', ';
-			}
+			$columns .=', ';
 		}
+		$columns = substr($columns, 0, -2);
 
 		if(is_array($filter)){
 			foreach($filter as $_filter){
 				$parameterized_column = ':'.$_filter['column'];
 				$where_statement .= $_filter['column'] ." = ". $parameterized_column;
 				$params[$parameterized_column] = $_filter['value'];
-				if(next($filter)){
-					$where_statement .= " AND ";
-				}
+				$where_statement .= " AND ";
 			}
+			$where_statement = substr($where_statement, 0, -5);
 		}
 		else{
 			$where_statement = $filter;
@@ -139,7 +185,7 @@ class Mapper extends PdoAdapter{
 		$sql_statement = "DELETE FROM ".$this->_table."
 									".$where_statement;
 		$stmt = $this->prepare($sql_statement);
-		$stmt->execute($params);
+		$result = $stmt->execute($params);
 
 		return $result;
 	}

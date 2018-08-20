@@ -13,7 +13,12 @@ $(document).ready(function(){
         { "data": "province_id"
         , "searchable": false}
       ],
-      add_url : global.site_name + 'reference/ref'
+      add_url : global.site_name + 'reference/add-province',
+      edit_url  : global.site_name + 'reference/edit-province',
+      delete_url : global.site_name + 'reference/delete-ref',
+      page_var : {
+        type : 'province'
+      }
     }
     helper.datatable_basic('.datatable-basic', config);
 
