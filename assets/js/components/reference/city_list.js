@@ -14,7 +14,11 @@ $(document).ready(function(){
         , "searchable": false}
       ],
       add_url : global.site_name + 'reference/add-city',
-      edit_url  : global.site_name + 'reference/edit-city'
+      edit_url  : global.site_name + 'reference/edit-city',
+      delete_url : global.site_name + 'reference/delete-ref',
+      page_var : {
+        type : 'city'
+      }
     }
     helper.datatable_basic('.datatable-basic', config);
 

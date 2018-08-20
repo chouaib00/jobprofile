@@ -14,7 +14,7 @@
     <div class="col-lg-12">
         <div class="ibox">
             <div class="ibox-title">
-                <h5><?php echo ucfirst($action) ?> Province</h5>
+                <h5><?php echo ucfirst($action) ?> City</h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
@@ -26,24 +26,20 @@
             </div>
             <div class="ibox-content">
               <form id="main-form" action="" method="POST" class="form-horizontal">
-                  <h5>Region</h5>
+                  <h5>Province</h5>
                   <div class="form-group">
                       <div class="col-sm-12">
-                          <select class="select2-basic form-control" name="province_region_id" data-placeholder="Region">
+                          <select class="select2-basic form-control" name="city_province_id" data-placeholder="Province">
                                 <option></option>
-                              <?php foreach($region_list as $region){?>
-                                <option value="<?php echo $region['region_id'] ?>" <?php echo ($region['region_id'] == $form_data['province_region_id']) ? 'selected' : '' ?>><?php echo $region['region_desc'].' - '.$region['region_code'] ?></option>
+                              <?php foreach($province_list as $province){?>
+                                <option value="<?php echo $province['province_id'] ?>" <?php echo ($province['province_id'] == $form_data['city_province_id']) ? 'selected' : '' ?>><?php echo $province['province_name'].' - '.$province['province_code'] ?></option>
                               <?php }?>
                           </select>
                       </div>
                   </div>
-                  <h5>Province Code</h5>
+                  <h5>City Name</h5>
                   <div class="form-group">
-                      <div class="col-sm-12"><input type="text" name="province_code" class="form-control" placeholder="Province Code" value="<?php echo $form_data['province_code']?>"></div>
-                  </div>
-                  <h5>Province Name</h5>
-                  <div class="form-group">
-                      <div class="col-sm-12"><input type="text" name="province_name" class="form-control" placeholder="Province Name" value="<?php echo $form_data['province_name']?>"></div>
+                      <div class="col-sm-12"><input type="text" name="city_name" class="form-control" placeholder="City Name" value="<?php echo $form_data['city_name']?>"></div>
                   </div>
                 </form>
             </div>

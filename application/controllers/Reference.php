@@ -67,9 +67,7 @@ class Reference extends Controller {
 		if($option['type'] == 'city'){
 			$mapper = new App\Mapper\CityMapper();
 			$params[] = array(
-							'column'=>'region_id'
-						,	'value'=> $option['id']);
-			$params[] = array(	'column'=>'city_id'
+							'column'=>'city_id'
 						,	'value'=> $option['id']);
 		}
 		if($option['type'] == 'field-of-study'){
@@ -134,6 +132,53 @@ class Reference extends Controller {
     $this->view('reference/region/form');
 	}
 
+	public function add_province(){
+		$provinceMapper = new App\Mapper\ProvinceMapper();
+		$regionMapper = new App\Mapper\RegionMapper();
+		$data = array(
+				'province_id' => ''
+			,	'province_region_id' => ''
+			,	'province_code' => ''
+			,	'province_name' => ''
+		);
+
+		if(!empty($_POST)){
+				$insert_data = array();
+				$insert_data['province_region_id'] = $_POST['province_region_id'];
+				$insert_data['province_code'] = $_POST['province_code'];
+				$insert_data['province_name'] = $_POST['province_name'];
+				$provinceMapper->insert($insert_data);
+		}
+		$this->_data['region_list'] = $regionMapper->get(array(),array(),array(array('column'=>'region_desc', 'order'=>'ASC')));
+		$this->_data['action'] = 'add';
+		$this->_data['form_data'] = $data;
+
+		$this->_template = 'templates/admin_main';
+    $this->view('reference/province/form');
+	}
+
+	public function add_city(){
+		$cityMapper = new App\Mapper\CityMapper();
+		$provinceMapper = new App\Mapper\ProvinceMapper();
+		$data = array(
+				'city_province_id' => ''
+			,	'city_name' => ''
+		);
+
+		if(!empty($_POST)){
+				$insert_data = array();
+				$insert_data['city_province_id'] = $_POST['city_province_id'];
+				$insert_data['city_name'] = $_POST['city_name'];
+				$cityMapper->insert($insert_data);
+		}
+		$this->_data['province_list'] = $provinceMapper->get(array(),array(),array(array('column'=>'province_name', 'order'=>'ASC')));
+		$this->_data['action'] = 'add';
+		$this->_data['form_data'] = $data;
+
+		$this->_template = 'templates/admin_main';
+    $this->view('reference/city/form');
+	}
+
 	public function edit_country($id){
 		$countryMapper = new App\Mapper\CountryMapper();
 		$filter = array();
@@ -182,6 +227,58 @@ class Reference extends Controller {
 		$this->_template = 'templates/admin_main';
     $this->view('reference/region/form');
 
+	}
+
+	public function edit_province($id){
+		$regionMapper = new App\Mapper\RegionMapper();
+		$countryMapper = new App\Mapper\CountryMapper();
+		$provinceMapper = new App\Mapper\ProvinceMapper();
+
+		$filter = array();
+		$filter[] = array('column'=>'province_id',
+											'value' => $id);
+
+		if(!empty($_POST)){
+				$update_data = array();
+				$update_data['province_region_id'] = $_POST['province_region_id'];
+				$update_data['province_code'] = $_POST['province_code'];
+				$update_data['province_name'] = $_POST['province_name'];
+				$provinceMapper->update($update_data, $filter);
+		}
+		$province = $provinceMapper->getByFilter($filter, true);
+		if(empty($province));//Show 404
+		$this->_data['region_list'] = $regionMapper->get(array(),array(),array(array('column'=>'region_desc', 'order'=>'ASC')));
+
+		$this->_data['action'] = 'edit';
+		$this->_data['form_data'] = $province;
+
+		$this->_template = 'templates/admin_main';
+    $this->view('reference/province/form');
+	}
+
+	public function edit_city($id){
+		$cityMapper = new App\Mapper\CityMapper();
+		$provinceMapper = new App\Mapper\ProvinceMapper();
+
+		$filter = array();
+		$filter[] = array('column'=>'city_id',
+											'value' => $id);
+
+		if(!empty($_POST)){
+				$update_data = array();
+				$update_data['city_province_id'] = $_POST['city_province_id'];
+				$update_data['city_name'] = $_POST['city_name'];
+				$cityMapper->update($update_data, $filter);
+		}
+		$city = $cityMapper->getByFilter($filter, true);
+		if(empty($city));//Show 404
+		$this->_data['province_list'] = $provinceMapper->get(array(),array(),array(array('column'=>'province_name', 'order'=>'ASC')));
+
+		$this->_data['action'] = 'edit';
+		$this->_data['form_data'] = $city;
+
+		$this->_template = 'templates/admin_main';
+    $this->view('reference/city/form');
 	}
 
 
@@ -241,7 +338,7 @@ class Reference extends Controller {
 
 	public function city(){
     $this->_template = 'templates/admin_main';
-    $this->view('reference/city');
+    $this->view('reference/city/list');
   }
 
 	public function field_of_study(){

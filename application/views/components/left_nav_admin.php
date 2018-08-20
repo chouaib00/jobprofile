@@ -21,17 +21,19 @@
                 </div>
             </li>
             <li>
-                <a href=""><i class="fa fa-th-large"></i> <span class="nav-label">Reference</span> <span class="fa arrow"></span></a>
+                <a href=""><i class="fa fa-bars"></i> <span class="nav-label">Reference</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li><a href="<?php echo DOMAIN; ?>reference/country">Country</a></li>
                     <li><a href="<?php echo DOMAIN; ?>reference/region">Region</a></li>
                     <li><a href="<?php echo DOMAIN; ?>reference/province">Province</a></li>
                     <li><a href="<?php echo DOMAIN; ?>reference/city">City</a></li>
                     <li><a href="<?php echo DOMAIN; ?>reference/field-of-study">Field Of Study</a></li>
-                    <li><a href="dashboard_2.html">Dashboard v.2</a></li>
-                    <li><a href="dashboard_3.html">Dashboard v.3</a></li>
-                    <li><a href="dashboard_4_1.html">Dashboard v.4</a></li>
-                    <li><a href="dashboard_5.html">Dashboard v.5 </a></li>
+                </ul>
+            </li>
+            <li>
+                <a href=""><i class="fa fa-user"></i> <span class="nav-label"> Users</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="<?php echo DOMAIN; ?>administrator/list">Administrator</a></li>
                 </ul>
             </li>
         </ul>

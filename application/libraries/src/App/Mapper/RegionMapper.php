@@ -64,9 +64,6 @@ class RegionMapper extends Mapper{
 
     $result['total_count'] = $this->getAllCount();
 
-
-
-
 		return $result;
   }
 

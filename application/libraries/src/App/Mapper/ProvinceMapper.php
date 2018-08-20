@@ -47,6 +47,7 @@ class ProvinceMapper extends Mapper{
                       ON `province_region_id` = `region_id`
                       INNER JOIN `tbl_country`
                       ON region_country_id = country_id " . $where_str_query;
+                      
 		$stmt = $this->prepare($sql_statement);
 		$stmt->execute($params);
 		$result['count'] = $stmt->fetch(\PDO::FETCH_ASSOC)['num'];
@@ -57,7 +58,6 @@ class ProvinceMapper extends Mapper{
                       ON `province_region_id` = `region_id`
                       INNER JOIN `tbl_country`
                       ON region_country_id = country_id " . $where_str_query . " " . $order_str_query. " ".$limit_str_query;
-
 		$stmt = $this->prepare($sql_statement);
     $params[':limit'] = $limit;
     $params[':offset'] = $offset;

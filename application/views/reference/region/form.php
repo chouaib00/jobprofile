@@ -29,7 +29,7 @@
                   <h5>Country</h5>
                   <div class="form-group">
                       <div class="col-sm-12">
-                          <select class="select2-basic form-control" name="region_country_id" data-placeholder="Field of Study">
+                          <select class="select2-basic form-control" name="region_country_id" data-placeholder="Country">
                                 <option></option>
                               <?php foreach($country_list as $country){?>
                                 <option value="<?php echo $country['country_id'] ?>" <?php echo ($country['country_id'] == $form_data['region_country_id']) ? 'selected' : '' ?>><?php echo $country['country_name'].' - '.$country['country_code'] ?></option>
