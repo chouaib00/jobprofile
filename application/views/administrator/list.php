@@ -29,7 +29,8 @@
                         <thead>
                           <tr>
                             <th class="col-md-3 text-center">Name</th>
-                            <th class="col-md-3 text-center">UserID</th>
+                            <th class="col-md-3 text-center">User ID</th>
+                            <th class="col-md-3 text-center">Gender</th>
                             <th class="col-md-1 text-center no-sort">Action</th>
                           </tr>
                         </thead>

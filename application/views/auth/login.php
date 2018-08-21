@@ -7,7 +7,7 @@
         </div>
         <h3>Looking for a job?<br>Looking for workers?</h3>
 
-        <form class="m-t" role="form" method="POST" action="?">
+        <form class="m-t" role="form" method="POST" action="<?php echo $action_url ?>">
             <div class="form-group">
                 <input type="text" name="user_email" class="form-control" placeholder="Email / Username" required="">
             </div>

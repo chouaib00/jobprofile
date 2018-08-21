@@ -6,14 +6,19 @@ $(document).ready(function(){
       order_col : 0,
       req_data : {type : 'city'},
       column :[
-        { "data": "bc_first_name"},
+        {   "data": "full_name" },
         { "data": "user_name" },
-        { "data": "user_name"
+        { "data": "bc_gender",
+          "render" : function(data, type, full, meta) {
+            return '<span class="text-capitalize">' + data + '</span>';
+          }
+        },
+        { "data": "admin_id"
         , "searchable": false}
       ],
-      add_url : global.site_name + 'reference/add-admin',
-      edit_url  : global.site_name + 'reference/edit-admin',
-      delete_url : global.site_name + 'reference/delete-ref',
+      add_url : global.site_name + 'administrator/add-admin',
+      edit_url  : global.site_name + 'administrator/edit-admin',
+      delete_url : global.site_name + 'administrator/delete-ref',
       page_var : {
         type : 'city'
       }

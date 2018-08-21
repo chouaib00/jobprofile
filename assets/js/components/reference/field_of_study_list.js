@@ -19,7 +19,7 @@ $(document).ready(function(){
           }
         },
         {   "data"  : "child.fos_id"
-          , "searchable": false        
+          , "searchable": false
         }
       ],
       add_url : global.site_name + 'reference/add-field-of-study',

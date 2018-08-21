@@ -4,6 +4,7 @@ class Reference extends Controller {
 
 	public function __construct(){
 		parent::__construct();
+		$this->is_secure = true;
 	}
 
 	public function ref(){
