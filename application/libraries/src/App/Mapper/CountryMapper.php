@@ -33,12 +33,19 @@ class CountryMapper extends Mapper{
         }
       }
     }
-
-    foreach($order as $i=>$_order){
-      $order_str_query .= $_order['col']." ".$_order['type'];
-      if(next($order)){
-        $order_str_query .= ", ";
+    if(!empty($order)){
+      foreach($order as $i=>$_order){
+        $order_str_query .= $_order['col']." ".$_order['type'];
+        if(next($order)){
+          $order_str_query .= ", ";
+        }
       }
+    }
+    else{
+      $order_str_query = '';
+    }
+    if(strlen($where_str_query) <= 6){
+      $where_str_query = '';
     }
 
     $sql_statement = "SELECT COUNT(1) as 'num' FROM tbl_country " . $where_str_query;
@@ -48,7 +55,6 @@ class CountryMapper extends Mapper{
 		$result['count'] = $stmt->fetch(\PDO::FETCH_ASSOC)['num'];
 
     $sql_statement = "SELECT ".$column_str_query." FROM tbl_country " . $where_str_query . " " . $order_str_query. " ".$limit_str_query;
-
 		$stmt = $this->prepare($sql_statement);
     $params[':limit'] = $limit;
     $params[':offset'] = $offset;

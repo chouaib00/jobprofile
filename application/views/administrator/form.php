@@ -76,4 +76,3 @@
 
 
 </div>
-<script src="<?php echo JS_DIR ?>components/applicant/update_profile.js"></script>

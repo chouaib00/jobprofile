@@ -7,17 +7,18 @@ class Reference extends Controller {
 		$this->is_secure = true;
 	}
 
-	public function ref(){
-		$limit = $_POST['length'];
-		$offset = $_POST['start'];
+	public function ref(){//Use with DataTable
+		$limit = isset($_POST['length'])? $_POST['length'] : '0';
+		$offset = isset($_POST['start'])? $_POST['start'] : '0';
 		$search = $_POST['search'];
 		$columns = $_POST['columns'];
 		$option = $_POST['option'];
+		$order = isset($_POST['order'])? $_POST['order'] : array();
 		$orders = array();
 
-		foreach($_POST['order'] as $_order){
+		foreach($order as $_order){
 			array_push($orders, array(
-				'col'=> $_POST['columns'][$_order['column']]['data']
+				'col'=> $columns[$_order['column']]['data']
 			,	'type'	=> $_order['dir']
 			));
 		}
@@ -37,9 +38,14 @@ class Reference extends Controller {
 		if($option['type'] == 'field-of-study'){
 			$mapper = new App\Mapper\FieldOfStudyMapper();
 		}
+		if($option['type'] == 'educ-attainment'){
+			$mapper = new App\Mapper\EducAttainmentMapper();
+		}
+		if($option['type'] == 'school'){
+			$mapper = new App\Mapper\SchoolMapper();
+		}
 
 		$result = $mapper->selectDataTable($search['value'], $columns, $limit, $offset, $orders);
-
 		echo json_encode($result);
 	}
 
@@ -47,47 +53,57 @@ class Reference extends Controller {
 		$option = $_POST;
 		$params = array();
 		$mapper = '';
-		if($option['type'] == 'country'){
-			$mapper = new App\Mapper\CountryMapper();
-			$params[] = array(
-							'column'=>'country_id'
-						,	'value'=> $option['id']);
-		}
-		if($option['type'] == 'region'){
-			$mapper = new App\Mapper\RegionMapper();
-			$params[] = array(
-							'column'=>'region_id'
-						,	'value'=> $option['id']);
-		}
-		if($option['type'] == 'province'){
-			$mapper = new App\Mapper\ProvinceMapper();
-			$params[] = array(
-							'column'=>'province_id'
-						,	'value'=> $option['id']);
-		}
-		if($option['type'] == 'city'){
-			$mapper = new App\Mapper\CityMapper();
-			$params[] = array(
-							'column'=>'city_id'
-						,	'value'=> $option['id']);
-		}
-		if($option['type'] == 'field-of-study'){
-			$mapper = new App\Mapper\FieldOfStudyMapper();
-			$params[] = array(
-							'column'=>'fos_id'
-						,	'value'=> $option['id']);
+		switch($option['type']){
+			case 'country':
+				$mapper = new App\Mapper\CountryMapper();
+				$params[] = array(
+								'column'=>'country_id'
+							,	'value'=> $option['id']);
+			break;
+			case 'region':
+				$mapper = new App\Mapper\RegionMapper();
+				$params[] = array(
+								'column'=>'region_id'
+							,	'value'=> $option['id']);
+			break;
+			case 'province':
+				$mapper = new App\Mapper\ProvinceMapper();
+				$params[] = array(
+								'column'=>'province_id'
+							,	'value'=> $option['id']);
+			break;
+			case 'city':
+				$mapper = new App\Mapper\CityMapper();
+				$params[] = array(
+								'column'=>'city_id'
+							,	'value'=> $option['id']);
+			break;
+			case 'field-of-study':
+				$mapper = new App\Mapper\FieldOfStudyMapper();
+				$params[] = array(
+								'column'=>'fos_id'
+							,	'value'=> $option['id']);
+			break;
+			case 'educ-attainment':
+				$mapper = new App\Mapper\EducAttainmentMapper();
+				$params[] = array(
+								'column'=>'ea_id'
+							,	'value'=> $option['id']);
+			break;
+			case 'school':
+				$mapper = new App\Mapper\SchoolMapper();
+				$params[] = array(
+								'column'=>'school_id'
+							,	'value'=> $option['id']);
+			break;
+
 		}
 
 		$result = $mapper->delete($params);
 		echo json_encode($result);
 	}
 
-  public function country(){
-    $this->_template = 'templates/admin_main';
-    $this->view('reference/country/list');
-  }
-
-	public function add_country(){
+  public function add_country(){
 		$countryMapper = new App\Mapper\CountryMapper();
 		$data = array(
 				'country_id' => ''
@@ -178,6 +194,44 @@ class Reference extends Controller {
 
 		$this->_template = 'templates/admin_main';
     $this->view('reference/city/form');
+	}
+
+	public function add_educ_attainment(){
+		$educAttainmentMapper = new App\Mapper\EducAttainmentMapper();
+		$data = array(
+				'ea_id' => ''
+			,	'ea_name' => ''
+		);
+
+		if(!empty($_POST)){
+				$insert_data = array();
+				$insert_data['ea_name'] = $_POST['ea_name'];
+				$educAttainmentMapper->insert($insert_data);
+		}
+		$this->_data['action'] = 'add';
+		$this->_data['form_data'] = $data;
+
+		$this->_template = 'templates/admin_main';
+    $this->view('reference/educ_attainment/form');
+	}
+
+	public function add_school(){
+		$schoolMapper = new App\Mapper\SchoolMapper();
+		$data = array(
+				'school_name' => ''
+			,	'address_desc' => ''
+		);
+
+		if(!empty($_POST)){
+				$insert_data = array();
+				$insert_data['ea_name'] = $_POST['ea_name'];
+				$educAttainmentMapper->insert($insert_data);
+		}
+		$this->_data['action'] = 'add';
+		$this->_data['form_data'] = $data;
+
+		$this->_template = 'templates/admin_main';
+    $this->view('reference/school/form');
 	}
 
 	public function edit_country($id){
@@ -282,6 +336,28 @@ class Reference extends Controller {
     $this->view('reference/city/form');
 	}
 
+	public function edit_educ_attainment($id){
+		$educAttainmentMapper = new App\Mapper\EducAttainmentMapper();
+		$filter = array();
+		$filter[] = array('column'=>'ea_id',
+											'value' => $id);
+
+		if(!empty($_POST)){
+				$update_data = array();
+				$update_data['ea_name'] = $_POST['ea_name'];
+				$educAttainmentMapper->update($update_data, $filter);
+		}
+		$educAttainment = $educAttainmentMapper->getByFilter($filter, true);
+		if(empty($country));//Show 404
+
+		$this->_data['action'] = 'edit';
+		$this->_data['form_data'] = $educAttainment;
+
+		$this->_template = 'templates/admin_main';
+    $this->view('reference/educ_attainment/form');
+
+	}
+
 
 	public function add_field_of_study(){
 		$fieldOfStudyMapper = new App\Mapper\FieldOfStudyMapper();
@@ -327,6 +403,11 @@ class Reference extends Controller {
     $this->view('reference/field_of_study/form');
 	}
 
+	public function country(){
+    $this->_template = 'templates/admin_main';
+    $this->view('reference/country/list');
+  }
+
 	public function region(){
     $this->_template = 'templates/admin_main';
     $this->view('reference/region/list');
@@ -346,5 +427,17 @@ class Reference extends Controller {
     $this->_template = 'templates/admin_main';
     $this->view('reference/field_of_study/list');
   }
+
+	public function educ_attainment(){
+    $this->_template = 'templates/admin_main';
+    $this->view('reference/educ_attainment/list');
+  }
+
+	public function school(){
+    $this->_template = 'templates/admin_main';
+    $this->view('reference/school/list');
+  }
+
+
 
 }

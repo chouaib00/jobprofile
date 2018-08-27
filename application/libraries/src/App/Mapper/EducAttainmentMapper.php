@@ -2,9 +2,9 @@
 namespace App\Mapper;
 use Sys\Mapper\Mapper;
 
-class RegionMapper extends Mapper{
+class EducAttainmentMapper extends Mapper{
 
-  protected $_table = 'tbl_region';
+  protected $_table = 'tbl_educ_attainment';
 
   public function selectDataTable($filter, $columns, $limit, $offset, $order){
     $result = array(
@@ -33,7 +33,6 @@ class RegionMapper extends Mapper{
         }
       }
     }
-
     if(!empty($order)){
       foreach($order as $i=>$_order){
         $order_str_query .= $_order['col']." ".$_order['type'];
@@ -49,19 +48,13 @@ class RegionMapper extends Mapper{
       $where_str_query = '';
     }
 
-    $sql_statement = "SELECT COUNT(1) as 'num'
-                      FROM `tbl_region`
-                      INNER JOIN `tbl_country`
-                      ON region_country_id = country_id " . $where_str_query;
+    $sql_statement = "SELECT COUNT(1) as 'num' FROM tbl_educ_attainment " . $where_str_query;
 		$stmt = $this->prepare($sql_statement);
+
 		$stmt->execute($params);
 		$result['count'] = $stmt->fetch(\PDO::FETCH_ASSOC)['num'];
 
-    $sql_statement = "SELECT ".$column_str_query."
-                      FROM `tbl_region`
-                      INNER JOIN `tbl_country`
-                      ON region_country_id = country_id " . $where_str_query . " " . $order_str_query. " ".$limit_str_query;
-
+    $sql_statement = "SELECT ".$column_str_query." FROM tbl_educ_attainment " . $where_str_query . " " . $order_str_query. " ".$limit_str_query;
 		$stmt = $this->prepare($sql_statement);
     $params[':limit'] = $limit;
     $params[':offset'] = $offset;
@@ -69,9 +62,7 @@ class RegionMapper extends Mapper{
 		$stmt->execute($params);
 		$result['data'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-
     $result['total_count'] = $this->getAllCount();
-
 		return $result;
   }
 

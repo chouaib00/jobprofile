@@ -34,11 +34,19 @@ class ProvinceMapper extends Mapper{
       }
     }
 
-    foreach($order as $i=>$_order){
-      $order_str_query .= $_order['col']." ".$_order['type'];
-      if(next($order)){
-        $order_str_query .= ", ";
+    if(!empty($order)){
+      foreach($order as $i=>$_order){
+        $order_str_query .= $_order['col']." ".$_order['type'];
+        if(next($order)){
+          $order_str_query .= ", ";
+        }
       }
+    }
+    else{
+      $order_str_query = '';
+    }
+    if(strlen($where_str_query) <= 6){
+      $where_str_query = '';
     }
 
     $sql_statement = "SELECT COUNT(1) as 'num'
@@ -47,7 +55,7 @@ class ProvinceMapper extends Mapper{
                       ON `province_region_id` = `region_id`
                       INNER JOIN `tbl_country`
                       ON region_country_id = country_id " . $where_str_query;
-                      
+
 		$stmt = $this->prepare($sql_statement);
 		$stmt->execute($params);
 		$result['count'] = $stmt->fetch(\PDO::FETCH_ASSOC)['num'];

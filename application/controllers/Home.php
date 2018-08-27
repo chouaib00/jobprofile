@@ -5,9 +5,10 @@ class Home extends Controller {
 	public function __construct(){
 		parent::__construct();
 	}
-	
+
   public function dashboard(){
-			$this->_template = 'templates/main';
+			$this->is_secure = true;
+			$this->_template = 'templates/admin_main';
       $this->view('home/dashboard');
   }
 

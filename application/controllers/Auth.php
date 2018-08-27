@@ -32,6 +32,9 @@ class Auth extends Controller {
 				if(isset($_GET['redirect_url'])){
 					$this->redirect($_GET['redirect_url']);
 				}
+				else{
+					$this->redirect(DOMAIN.'dashboard');
+				}
 			}
 			else{
 				echo "Invalid User Credentials";

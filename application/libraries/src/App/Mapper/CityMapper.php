@@ -34,11 +34,19 @@ class CityMapper extends Mapper{
       }
     }
 
-    foreach($order as $i=>$_order){
-      $order_str_query .= $_order['col']." ".$_order['type'];
-      if(next($order)){
-        $order_str_query .= ", ";
+    if(!empty($order)){
+      foreach($order as $i=>$_order){
+        $order_str_query .= $_order['col']." ".$_order['type'];
+        if(next($order)){
+          $order_str_query .= ", ";
+        }
       }
+    }
+    else{
+      $order_str_query = '';
+    }
+    if(strlen($where_str_query) <= 6){
+      $where_str_query = '';
     }
 
     $sql_statement = "SELECT COUNT(1) as 'num'

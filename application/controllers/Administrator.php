@@ -56,8 +56,6 @@ class Administrator extends Controller {
 				,	'bc_phone_num3'	=>''
 				,	'bc_gender'	=>$_POST['gender']
 				,	'bc_email_address'	=>$_POST['user-email']
-				,	'bc_present_address_id'	=>NULL
-				,	'bc_permanent_address_id'	=> NULL
 				);
 				$bc_id = $basicContactMapper->insert($insert_basic_contact);
 

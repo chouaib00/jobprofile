@@ -11,6 +11,8 @@
   <script src="<?php echo THEME ?>js/plugins/select2/select2.full.min.js"></script>
   <!-- iCheck -->
   <script src="<?php echo THEME ?>js/plugins/iCheck/icheck.min.js"></script>
+  <!-- Bootstrap-Datepicker -->
+  <script src="<?php echo THEME ?>js/plugins/datapicker/bootstrap-datepicker.js"></script>
 
   <script src="<?php echo JS_DIR; ?>components/general/jquery_extension.js"></script>
   <script src="<?php echo JS_DIR; ?>lib/bootbox.min.js"></script>
