@@ -12,10 +12,10 @@ class SessionLoad{
 			return false;
 		}
 	}
-	public function setLogin($email/*, $displayname*/){
-		$_SESSION['current_user']['login-email'] = $email;
+public function setLogin($data/*, $displayname*/){
+		$_SESSION['current_user'] = $data;
 		//$_SESSION['current_user']['login-name'] = $displayname;
-	}	
+	}
 	public function clearLogin(){
 		unset($_SESSION['current_user']);
 	}

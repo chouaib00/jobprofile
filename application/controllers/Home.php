@@ -6,10 +6,20 @@ class Home extends Controller {
 		parent::__construct();
 	}
 
-
   public function dashboard(){
-			$this->_template = 'templates/main';
+			$this->is_secure = true;
+			if($_SESSION['current_user']['type'] == '1'){
+				//Means Admin
+				$this->_template = 'templates/admin_main';
+			}
+			if($_SESSION['current_user']['type'] == '2'){
+				//Means Applicant
+				$this->_template = 'templates/applicant_main';
+			}
       $this->view('home/dashboard');
   }
 
+	public function landing_page(){
+		$this->view('home/landing_page');
+	}
 }

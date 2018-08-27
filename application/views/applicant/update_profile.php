@@ -20,20 +20,107 @@
               <form method="get" class="form-horizontal">
                   <h5>First Name, Middle Name, Last Name, Name Extension</h5>
                   <div class="form-group">
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter First Name"></div>
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter Middle Name"></div>
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter Last Name"></div>
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter Name Extension"></div>
+                      <div class="col-sm-3"><input name="applicant-first-name" type="text" class="form-control" placeholder="First Name"></div>
+                      <div class="col-sm-3"><input name="applicant-middle-name" type="text" class="form-control" placeholder="Middle Name"></div>
+                      <div class="col-sm-3"><input name="applicant-last-name" type="text" class="form-control" placeholder="Last Name"></div>
+                      <div class="col-sm-3"><input name="applicant-name-ext" type="text" class="form-control" placeholder="Name Extension"></div>
                   </div>
                   <div class="hr-line-dashed"></div>
-                  <p><h5>First Name, Middle Name, Last Name, Name Extension</h5></p>
+
+                  <h5>Present Address</h5>
                   <div class="form-group">
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter First Name"></div>
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter Middle Name"></div>
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter Last Name"></div>
-                      <div class="col-sm-3"><input type="text" class="form-control" placeholder="Enter Name Extension"></div>
+                      <div class="col-sm-12"><input type="text" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)"></div>
+                      <div class="col-sm-3 m-t-sm">
+                        <select class="form-control select2-country" data-placeholder="Select Country">
+                            <option></option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3 m-t-sm">
+                        <select class="form-control select2-region" data-placeholder="Select Region">
+                            <option></option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3 m-t-sm">
+                        <select class="form-control select2-province" data-placeholder="Select Province">
+                            <option></option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3 m-t-sm">
+                        <select class="form-control select2-city" data-placeholder="Select City">
+                            <option></option>
+                        </select>
+                      </div>
+                  </div>
+                  <h5>Permanent Address</h5>
+
+                  <div class="form-group">
+                    <div class="col-sm-12"><input type="text" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)"></div>
+                      <div class="col-sm-3 m-t-sm">
+                      <select class="form-control select2-country" data-placeholder="Select Country">
+                          <option></option>
+                      </select>
+                      </div>
+                      <div class="col-sm-3 m-t-sm">
+                        <select class="form-control select2-region" data-placeholder="Select Region">
+                            <option></option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3 m-t-sm">
+                        <select class="form-control select2-province" data-placeholder="Select Province">
+                            <option></option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3 m-t-sm">
+                        <select class="form-control select2-city" data-placeholder="Select City">
+                            <option></option>
+                        </select>
+                      </div>
                   </div>
                   <div class="hr-line-dashed"></div>
+                  <div class="form-group">
+                    <div class="col-sm-3">
+                      <h5>Gender</h5>
+                      <label class="checkbox-inline i-checks"> <input type="radio" value="male" name="gender" checked> <i></i> Male </label>
+                      <label class="checkbox-inline i-checks"> <input type="radio" value="female" name="gender"> <i></i> Female</label>
+                    </div>
+                    <div class="col-sm-3">
+                      <h5>Birthday</h5>
+                      <div class="input-group">
+                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="applicant-birthday" class="form-control" value="03/04/2014">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-3">
+                      <h5>Civil Status</h5>
+                      <select class="form-control select2-basic" data-placeholder="Select Civil Status">
+                          <option></option>
+                          <option value="single">Single</option>
+                          <option value="married">Married</option>
+                          <option value="divorced">Divorced</option>
+                          <option value="separated">Separated</option>
+                          <option value="widowed">Widowed</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-3">
+                      <h5>Nationality</h5>
+                      <input name="applicant-nationality" type="text" class="form-control" placeholder="Enter Nationality">
+                    </div>
+                    <div class="col-sm-3">
+                      <h5>Citizenship</h5>
+                      <input name="applicant-citizenship" type="text" class="form-control" placeholder="Enter Citizenship">
+                    </div>
+                    <div class="col-sm-3">
+                      <h5>Highest Educational Attainment</h5>
+                      <select name="applicant-educ-attainment" class="form-control select2-educ-attainment" data-placeholder="Select Highest Educational Attainment">
+                          <option></option>
+                      </select>
+                    </div>
+                  </div>
+
+
+
+
                     <div class="form-group"><label class="col-sm-2 control-label">Help text</label>
                         <div class="col-sm-10"><input type="text" class="form-control"> <span class="help-block m-b-none">A block of help text that breaks onto a new line and may extend beyond one line.</span>
                         </div>
@@ -255,4 +342,4 @@
 
 
 </div>
-<script src="<?php echo THEME ?>js/plugins/pace/pace.min.js"></script>
+<script src="<?php echo JS_DIR ?>components/applicant/update_profile.js"></script>

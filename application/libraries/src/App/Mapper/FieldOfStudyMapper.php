@@ -2,22 +2,80 @@
 namespace App\Mapper;
 use Sys\Mapper\Mapper;
 
-class UserMapper extends Mapper{
+class FieldOfStudyMapper extends Mapper{
 
-  protected $_table = 'tbl_user';
+  protected $_table = 'tbl_field_of_study';
 
-  public function selectByLoginPassword($username_email, $password){
-    $sql_statement = "SELECT *
-                      FROM tbl_user
-                      WHERE (user_email = :user_email OR user_name = :user_name) AND  user_password = :user_password";
+  public function selectDataTable($filter, $columns, $limit, $offset, $order){
+    $result = array(
+      'data'  => array()
+    , 'total_count'=>0
+    , 'count'=>0
+    );
+    $order_str_query = "ORDER BY ";
+    $limit_str_query = "LIMIT :limit OFFSET :offset";
+    $column_str_query = "";
+    $where_str_query = (empty($filter))? "" : "WHERE ";
+    $params = array();
+
+    foreach($columns as $i=>$_columns){
+      $isSearchable = (!empty($filter)) && ($_columns['searchable'] === 'true');
+      $column_str_query .=  $_columns['data'];
+      $column_str_query .= (empty($_columns['name']))? '' : ' as \''. $_columns['name'] .'\'';
+      if($isSearchable){
+        $named_params = ':'.str_replace('.','',$_columns['data']);
+        $where_str_query .= $_columns['data'] ." LIKE ".$named_params." ";
+        $params[$named_params] = '%'.$filter.'%';
+      }
+      if(next($columns)){
+        $column_str_query .= ", ";
+        if(!empty($filter) && $columns[$i+1]['searchable'] === 'true'){
+            $where_str_query .= " OR ";
+        }
+      }
+    }
+
+    foreach($order as $i=>$_order){
+      $order_str_query .= $_order['col']." ".$_order['type'];
+      if(next($order)){
+        $order_str_query .= ", ";
+      }
+    }
+
+    $sql_statement = "SELECT COUNT(1) as 'num'
+                      FROM `tbl_field_of_study` child
+                      LEFT JOIN `tbl_field_of_study` parent
+                      ON child.fos_parent_fos_id = parent.fos_id " . $where_str_query;
 		$stmt = $this->prepare($sql_statement);
-		$stmt->execute(array(
-      ':user_email'   => $username_email
-    , ':user_name'   => $username_email
-    , ':user_password'=> $password
-    ));
-		$result = $stmt->fetch(\PDO::FETCH_ASSOC);
+		$stmt->execute($params);
+		$result['count'] = $stmt->fetch(\PDO::FETCH_ASSOC)['num'];
+    $sql_statement = "SELECT ".$column_str_query."
+                      FROM `tbl_field_of_study` child
+                      LEFT JOIN `tbl_field_of_study` parent
+                      ON child.fos_parent_fos_id = parent.fos_id " . $where_str_query . " " . $order_str_query. " ".$limit_str_query;
+
+		$stmt = $this->prepare($sql_statement);
+    $params[':limit'] = $limit;
+    $params[':offset'] = $offset;
+
+		$stmt->execute($params);
+		$result['data'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+
+    $result['total_count'] = $this->getAllCount();
+
+
+
+
 		return $result;
+  }
+
+  public function selectAllHeader(){
+    	$sql_statement = "SELECT * FROM tbl_field_of_study WHERE fos_parent_fos_id IS NULL";
+  		$stmt = $this->prepare($sql_statement);
+  		$stmt->execute();
+  		$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+  		return $result;
   }
 
 	// public function selectAll(){
