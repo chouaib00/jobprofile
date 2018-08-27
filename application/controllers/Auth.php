@@ -45,7 +45,7 @@ class Auth extends Controller {
 			$this->view('auth/login');
 		}
 		else{
-			$this->redirect(DOMAIN.'user/dashboard');
+			$this->redirect(DOMAIN.'dashboard');
 		}
 
 	}

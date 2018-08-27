@@ -8,7 +8,14 @@ class Home extends Controller {
 
   public function dashboard(){
 			$this->is_secure = true;
-			$this->_template = 'templates/admin_main';
+			if($_SESSION['current_user']['type'] == '1'){
+				//Means Admin
+				$this->_template = 'templates/admin_main';
+			}
+			if($_SESSION['current_user']['type'] == '2'){
+				//Means Applicant
+				$this->_template = 'templates/applicant_main';
+			}
       $this->view('home/dashboard');
   }
 

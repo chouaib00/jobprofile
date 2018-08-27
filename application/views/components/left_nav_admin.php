@@ -31,6 +31,7 @@
                     <li><a href="<?php echo DOMAIN; ?>administrator/list">Administrator</a></li>
                     <li><a href="<?php echo DOMAIN; ?>applicant/list">Applicants</a></li>
                     <li><a href="<?php echo DOMAIN; ?>administrator/list">Employer</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>applicant/update_profile">PDS</a></li>
                 </ul>
             </li>
         </ul>
