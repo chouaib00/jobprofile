@@ -23,7 +23,6 @@ class Controller extends CI_Controller {
 				);
 				$this->load->view('components/header', $this->_header);
 				$this->load->view($this->_template, $content);
-				$this->load->view('components/javascript');
 				$this->load->view('components/footer');
 			}
 			else{
@@ -35,8 +34,7 @@ class Controller extends CI_Controller {
 				'content'=> $this->load->view($file, $this->_data, true)
 			);
 			$this->load->view('components/header', $this->_header);
-			$this->load->view($this->_template, $content);
-			$this->load->view('components/javascript');
+			$this->load->view($this->_template, $content);			
 			$this->load->view('components/footer');
 		}
 	}

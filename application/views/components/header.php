@@ -24,5 +24,3 @@
     <script src="<?php echo THEME ?>js/jquery-3.1.1.min.js"></script>
     <script>var global = {site_name:<?php echo DOMAIN; ?>}</script>
 </head>
-
-<body class="skin-1">

@@ -14,4 +14,9 @@ class Users extends Controller {
 		echo "</pre>";
 	}
 
+	public function register_applicant(){
+		$this->_secure = false;
+		$this->view('user/registration');
+	}
+
 }
