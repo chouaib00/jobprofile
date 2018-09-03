@@ -1,7 +1,4 @@
 $(document).ready(function(){
-  let selectedCountry = '';
-
-
 
   $('.select2-country').select2({
     allowClear: true,
@@ -52,8 +49,10 @@ $(document).ready(function(){
         }
       }
     }
-  }).change(function(e){
-    selectedCountry = $(this).val();
+  }).change(function(){
+    $('.select2-region').select2("val", '');
+    $('.select2-province').select2("val", '');
+    $('.select2-city').select2("val", '');
   });
 
   $('.select2-region').select2({
@@ -94,7 +93,7 @@ $(document).ready(function(){
           };
           option.condition.push({
               column  : 'country_id'
-            , value   : selectedCountry
+            , value   : $('.select2-country').val()
           });
           return option;
       },
@@ -112,6 +111,9 @@ $(document).ready(function(){
         }
       }
     }
+  }).change(function(){
+    $('.select2-province').select2("val", '');
+    $('.select2-city').select2("val", '');
   });
 
   $('.select2-province').select2({
@@ -144,9 +146,13 @@ $(document).ready(function(){
             option : {
               'type' : 'province'
             },
-            length : 25
-
+            length : 25,
+            condition:[]
           };
+          option.condition.push({
+              column  : 'region_id'
+            , value   : $('.select2-region').val()
+          });
           return option;
       },
       processResults: function (data) {
@@ -163,11 +169,12 @@ $(document).ready(function(){
         }
       }
     }
+  }).change(function(){
+    $('.select2-city').select2("val", '');
   });
 
   $('.select2-city').select2({
     allowClear: true,
-    minimumInputLength: 3,
     ajax:{
       url: global.site_name + 'reference/ref',
       dataType: 'json',
@@ -196,9 +203,13 @@ $(document).ready(function(){
             option : {
               'type' : 'city'
             },
-            length : 25
-
+            length : 25,
+            condition:[]
           };
+          option.condition.push({
+              column  : 'province_id'
+            , value   : $('.select2-province').val()
+          });
           return option;
       },
       processResults: function (data) {
@@ -216,4 +227,8 @@ $(document).ready(function(){
       }
     }
   });
+
+
+
+  
 })

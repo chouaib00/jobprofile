@@ -32,25 +32,39 @@
                   </div>
                   <h5>Address</h5>
                   <div class="form-group">
-                      <div class="col-sm-12"><input type="text" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)"></div>
+                      <div class="col-sm-12">
+                        <input type="text" name="address_desc" class="form-control" value="<?php echo $form_data['address_desc'] ?>" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)">
+                      </div>
                       <div class="col-sm-3 m-t-sm">
                         <select class="form-control select2-country" data-placeholder="Select Country">
                             <option></option>
+                            <?php if($action == 'edit'){ ?>
+                            <option value="<?php echo $form_data['country_id'] ?>" selected><?php echo $form_data['country_name'] ?></option>
+                            <?php }?>
                         </select>
                       </div>
                       <div class="col-sm-3 m-t-sm">
                         <select class="form-control select2-region" data-placeholder="Select Region">
                             <option></option>
+                            <?php if($action == 'edit'){ ?>
+                            <option value="<?php echo $form_data['region_id'] ?>" selected><?php echo $form_data['region_code'].' - '.$form_data['region_desc'] ?></option>
+                            <?php }?>
                         </select>
                       </div>
                       <div class="col-sm-3 m-t-sm">
-                        <select class="form-control select2-province" data-placeholder="Select Province">
+                        <select class="form-control select2-province" name="province_id" data-placeholder="Select Province">
                             <option></option>
+                            <?php if($action == 'edit'){ ?>
+                            <option value="<?php echo $form_data['province_id'] ?>" selected><?php echo $form_data['province_name'] ?></option>
+                            <?php }?>
                         </select>
                       </div>
                       <div class="col-sm-3 m-t-sm">
-                        <select class="form-control select2-city" data-placeholder="Select City">
+                        <select class="form-control select2-city" name="city_id" data-placeholder="Select City">
                             <option></option>
+                            <?php if($action == 'edit'){ ?>
+                            <option value="<?php echo $form_data['city_id'] ?>" selected><?php echo $form_data['city_name'] ?></option>
+                            <?php }?>
                         </select>
                       </div>
                   </div>

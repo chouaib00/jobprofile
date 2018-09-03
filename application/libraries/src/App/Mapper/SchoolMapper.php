@@ -107,4 +107,27 @@ class SchoolMapper extends Mapper{
 		return $result;
   }
 
+  public function getByID($id){
+		$sql_statement = "SELECT *
+									FROM tbl_school
+                  LEFT JOIN tbl_address
+                  ON school_address_id = address_id
+                  LEFT JOIN tbl_city
+                  ON address_city_id = city_id
+                  LEFT JOIN tbl_province
+                  ON address_province_id = province_id
+                  LEFT JOIN tbl_region
+                  ON province_region_id = region_id
+                  LEFT JOIN tbl_country
+                  ON region_country_id = country_id
+                  WHERE school_id = :school_id";
+    $params = array(
+        ':school_id' => $id
+    );
+		$stmt = $this->prepare($sql_statement);
+		$stmt->execute($params);
+		$result = $stmt->fetch(\PDO::FETCH_ASSOC);
+		return $result;
+	}
+
 }

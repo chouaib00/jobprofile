@@ -218,15 +218,23 @@ class Reference extends Controller {
 
 	public function add_school(){
 		$schoolMapper = new App\Mapper\SchoolMapper();
+		$addressMapper = new App\Mapper\AddressMapper();
 		$data = array(
 				'school_name' => ''
 			,	'address_desc' => ''
 		);
 
 		if(!empty($_POST)){
-				$insert_data = array();
-				$insert_data['ea_name'] = $_POST['ea_name'];
-				$educAttainmentMapper->insert($insert_data);
+				$insert_address = array();
+				$insert_address['address_city_id'] = $_POST['city_id'];
+				$insert_address['address_province_id'] = $_POST['province_id'];
+				$insert_address['address_desc'] = $_POST['address_desc'];
+				$address_id = $addressMapper->insert($insert_address);
+
+				$insert_school = array();
+				$insert_school['school_address_id'] = $address_id;
+				$insert_school['school_name'] = $_POST['school_name'];
+				$schoolMapper->insert($insert_school);
 		}
 		$this->_data['action'] = 'add';
 		$this->_data['form_data'] = $data;
@@ -238,10 +246,8 @@ class Reference extends Controller {
 	public function edit_school($id){
 		$schoolMapper = new App\Mapper\SchoolMapper();
 		$addressMapper = new App\Mapper\AddressMapper();
-
-		$filter = array();
-		$filter[] = array('column'=>'school_id',
-											'value' => $id);
+		$cityMapper = new App\Mapper\CityMapper();
+		$provinceMapper = new App\Mapper\ProvinceMapper();
 
 		if(!empty($_POST)){
 				$update_data = array();
@@ -249,13 +255,8 @@ class Reference extends Controller {
 				$update_data['city_name'] = $_POST['city_name'];
 				$addressMapper->update($update_data, $filter);
 		}
-		$school = $schoolMapper->getByFilter($filter, true);
-		echo "<pre>";
-		print_r($school);
-		echo "</pre>";
+		$school = $schoolMapper->getByID($id);
 		if(empty($school));//Show 404
-		//$this->_data['province_list'] = $provinceMapper->get(array(),array(),array(array('column'=>'province_name', 'order'=>'ASC')));
-
 		$this->_data['action'] = 'edit';
 		$this->_data['form_data'] = $school;
 
