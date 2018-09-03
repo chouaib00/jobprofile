@@ -6,7 +6,7 @@ class SchoolMapper extends Mapper{
 
   protected $_table = 'tbl_school';
 
-  public function selectDataTable($filter, $columns, $limit, $offset, $order){
+  public function selectDataTable($filter, $columns, $limit, $offset, $order, $condition){
     $result = array(
       'data'  => array()
     , 'total_count'=>0
@@ -17,6 +17,7 @@ class SchoolMapper extends Mapper{
     $limit_str_query = "LIMIT :limit OFFSET :offset";
     $column_str_query = "";
     $where_str_query = "";
+    $condition_query = "";//Additional Condition goes here
     $params = array();
 
     foreach($columns as $i=>$_columns){
@@ -27,21 +28,36 @@ class SchoolMapper extends Mapper{
       if($isSearchable){
         $where_str_query .= $_columns['data'] ." LIKE :".$_columns['data']." ";
         $params[":".$_columns['data']] = '%'.$filter_value.'%';
+        $where_str_query .= " OR ";
       }
-      if(next($columns)){
-        $column_str_query .= ", ";
-        if(!empty($filter) && $columns[$i+1]['searchable'] === 'true'){
-            $where_str_query .= " OR ";
-        }
+      $column_str_query .= ", ";
+    }
+    $column_str_query = substr($column_str_query, 0, -2); //Remove excess ', '
+    if(strlen($where_str_query)>0){
+      $where_str_query = substr($where_str_query, 0, -3); //Remove excess 'OR '
+      $where_str_query = '('.$where_str_query.')';
+    }
+
+
+    foreach($condition as $_condition){
+      if(!empty($_condition['value'])){
+        $condition_query .= $_condition['column'].' = :'.$_condition['column'].' AND ';
+        $params[":".$_condition['column']] = $_condition['value'];
       }
     }
+    if(strlen($condition_query) > 0){
+      $condition_query = substr($condition_query, 0, -4); //Remove excess 'AND '
+      $condition_query = '('.$condition_query.')';
+      $where_str_query .= (strlen($where_str_query)>0)? ' AND '.$condition_query : $condition_query;
+
+    }
+
     if(!empty($order)){
       foreach($order as $i=>$_order){
         $order_str_query .= $_order['col']." ".$_order['type'];
-        if(next($order)){
-          $order_str_query .= ", ";
-        }
+        $order_str_query .= ", ";
       }
+      $order_str_query = substr($order_str_query, 0, -2); //Remove excess ', '
     }
     else{
       $order_str_query = '';

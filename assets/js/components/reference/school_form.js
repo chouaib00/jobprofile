@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  let selectedCountry;
+  let selectedCountry = '';
 
 
 
@@ -71,12 +71,9 @@ $(document).ready(function(){
               , "searchable": false },
               {
                 "data": "region_desc"
-              , "searchable": false },
+              , "searchable": true },
               { "data": "region_id"
-              , "searchable": true,
-              "search": {
-                  "value": selectedCountry,
-              }}
+              , "searchable": false}
             ],
             order : [
               {
@@ -91,9 +88,14 @@ $(document).ready(function(){
             option : {
               'type' : 'region'
             },
-            length : 25
+            length : 25,
+            condition:[]
 
           };
+          option.condition.push({
+              column  : 'country_id'
+            , value   : selectedCountry
+          });
           return option;
       },
       processResults: function (data) {

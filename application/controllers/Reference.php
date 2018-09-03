@@ -10,6 +10,7 @@ class Reference extends Controller {
 	public function ref(){//Use with DataTable
 		$limit = isset($_POST['length'])? $_POST['length'] : '0';
 		$offset = isset($_POST['start'])? $_POST['start'] : '0';
+		$condition = isset($_POST['condition'])? $_POST['condition'] : array();
 		$search = $_POST['search'];
 		$columns = $_POST['columns'];
 		$option = $_POST['option'];
@@ -45,7 +46,7 @@ class Reference extends Controller {
 			$mapper = new App\Mapper\SchoolMapper();
 		}
 
-		$result = $mapper->selectDataTable($search['value'], $columns, $limit, $offset, $orders);
+		$result = $mapper->selectDataTable($search['value'], $columns, $limit, $offset, $orders, $condition);
 		echo json_encode($result);
 	}
 
