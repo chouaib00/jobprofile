@@ -29,10 +29,9 @@
                         <thead>
                           <tr>
                               <th class="col-md-3 text-center">School</th>
-                              <th class="col-md-3 text-center">School</th>
-                              <th class="col-md-3 text-center">School</th>
-                              <th class="col-md-3 text-center">School</th>
-                              <th class="col-md-3 text-center">School</th>
+                              <th class="col-md-3 text-center"></th>
+                              <th class="col-md-3 text-center"></th>
+                              <th class="col-md-3 text-center"></th>
                               <th class="col-md-8 text-center">Address</th>
                               <th class="col-md-1 text-center no-sort">Action</th>
                           </tr>

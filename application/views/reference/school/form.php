@@ -30,6 +30,30 @@
                   <div class="form-group">
                       <div class="col-sm-12"><input type="text" name="school_name" class="form-control" placeholder="School" value="<?php echo $form_data['school_name']?>"></div>
                   </div>
+                  <h5>Address</h5>
+                  <div class="form-group">
+                      <div class="col-sm-12"><input type="text" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)"></div>
+                      <div class="col-sm-3 m-t-sm">
+                        <select class="form-control select2-country" data-placeholder="Select Country">
+                            <option></option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3 m-t-sm">
+                        <select class="form-control select2-region" data-placeholder="Select Region">
+                            <option></option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3 m-t-sm">
+                        <select class="form-control select2-province" data-placeholder="Select Province">
+                            <option></option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3 m-t-sm">
+                        <select class="form-control select2-city" data-placeholder="Select City">
+                            <option></option>
+                        </select>
+                      </div>
+                  </div>
             </div>
         </div>
     </div>
@@ -37,3 +61,4 @@
 
 
 </div>
+<script src="<?php echo JS_DIR ?>components/reference/school_form.js"></script>

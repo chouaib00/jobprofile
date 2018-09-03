@@ -16,15 +16,17 @@ class SchoolMapper extends Mapper{
     $order_str_query = "ORDER BY ";
     $limit_str_query = "LIMIT :limit OFFSET :offset";
     $column_str_query = "";
-    $where_str_query = (empty($filter))? "" : "WHERE ";
+    $where_str_query = "";
     $params = array();
 
     foreach($columns as $i=>$_columns){
-      $isSearchable = (!empty($filter)) && ($_columns['searchable'] === 'true');
+      $filter_value = (empty($_columns['search']['value']))? $filter : $_columns['search']['value'];
+      $isSearchable = (!empty($filter_value)) && ($_columns['searchable'] === 'true');
       $column_str_query .= $_columns['data'];
+      $column_str_query .= (empty($_columns['name']))? '' : ' as \''. $_columns['name'] .'\'';
       if($isSearchable){
         $where_str_query .= $_columns['data'] ." LIKE :".$_columns['data']." ";
-        $params[":".$_columns['data']] = '%'.$filter.'%';
+        $params[":".$_columns['data']] = '%'.$filter_value.'%';
       }
       if(next($columns)){
         $column_str_query .= ", ";
@@ -44,8 +46,8 @@ class SchoolMapper extends Mapper{
     else{
       $order_str_query = '';
     }
-    if(strlen($where_str_query) <= 6){
-      $where_str_query = '';
+    if(strlen($where_str_query) > 0){
+      $where_str_query = 'WHERE '.$where_str_query;
     }
 
     $sql_statement = "SELECT COUNT(1) as 'num'

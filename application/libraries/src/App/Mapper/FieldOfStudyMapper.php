@@ -12,20 +12,53 @@ class FieldOfStudyMapper extends Mapper{
     , 'total_count'=>0
     , 'count'=>0
     );
+
+    // $order_str_query = "ORDER BY ";
+    // $limit_str_query = "LIMIT :limit OFFSET :offset";
+    // $column_str_query = "";
+    // $where_str_query = (empty($filter))? "" : "WHERE ";
+    // $params = array();
+    //
+    // foreach($columns as $i=>$_columns){
+    //   $isSearchable = (!empty($filter)) && ($_columns['searchable'] === 'true');
+    //   $column_str_query .=  $_columns['data'];
+    //   $column_str_query .= (empty($_columns['name']))? '' : ' as \''. $_columns['name'] .'\'';
+    //   if($isSearchable){
+    //     $named_params = ':'.str_replace('.','',$_columns['data']);
+    //     $where_str_query .= $_columns['data'] ." LIKE ".$named_params." ";
+    //     $params[$named_params] = '%'.$filter.'%';
+    //   }
+    //   if(next($columns)){
+    //     $column_str_query .= ", ";
+    //     if(!empty($filter) && $columns[$i+1]['searchable'] === 'true'){
+    //         $where_str_query .= " OR ";
+    //     }
+    //   }
+    // }
+    //
+    // foreach($order as $i=>$_order){
+    //   $order_str_query .= $_order['col']." ".$_order['type'];
+    //   if(next($order)){
+    //     $order_str_query .= ", ";
+    //   }
+    // }
+
+
+
     $order_str_query = "ORDER BY ";
     $limit_str_query = "LIMIT :limit OFFSET :offset";
     $column_str_query = "";
-    $where_str_query = (empty($filter))? "" : "WHERE ";
+    $where_str_query = "";
     $params = array();
 
     foreach($columns as $i=>$_columns){
-      $isSearchable = (!empty($filter)) && ($_columns['searchable'] === 'true');
-      $column_str_query .=  $_columns['data'];
+      $filter_value = (empty($_columns['search']['value']))? $filter : $_columns['search']['value'];
+      $isSearchable = (!empty($filter_value)) && ($_columns['searchable'] === 'true');
+      $column_str_query .= $_columns['data'];
       $column_str_query .= (empty($_columns['name']))? '' : ' as \''. $_columns['name'] .'\'';
       if($isSearchable){
-        $named_params = ':'.str_replace('.','',$_columns['data']);
-        $where_str_query .= $_columns['data'] ." LIKE ".$named_params." ";
-        $params[$named_params] = '%'.$filter.'%';
+        $where_str_query .= $_columns['data'] ." LIKE :".$_columns['data']." ";
+        $params[":".$_columns['data']] = '%'.$filter_value.'%';
       }
       if(next($columns)){
         $column_str_query .= ", ";
@@ -34,12 +67,19 @@ class FieldOfStudyMapper extends Mapper{
         }
       }
     }
-
-    foreach($order as $i=>$_order){
-      $order_str_query .= $_order['col']." ".$_order['type'];
-      if(next($order)){
-        $order_str_query .= ", ";
+    if(!empty($order)){
+      foreach($order as $i=>$_order){
+        $order_str_query .= $_order['col']." ".$_order['type'];
+        if(next($order)){
+          $order_str_query .= ", ";
+        }
       }
+    }
+    else{
+      $order_str_query = '';
+    }
+    if(strlen($where_str_query) > 0){
+      $where_str_query = 'WHERE '.$where_str_query;
     }
 
     $sql_statement = "SELECT COUNT(1) as 'num'

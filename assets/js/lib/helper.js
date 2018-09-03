@@ -6,6 +6,7 @@ var helper = {
     config.delete_url = (typeof config.delete_url === "undefined")? '' : config.delete_url;
     config.page_var = (typeof config.page_var === "undefined")? '' : config.page_var;
     config.key = (typeof config.key === "undefined")? '' : config.key;
+    config.columnDefs = (typeof config.columnDefs === "undefined")? '' : config.columnDefs;
 
 
 
@@ -35,6 +36,7 @@ var helper = {
           cache: true
         },
         columnDefs: [ {
+          //This is for the custom button
             targets: -1,
             data: "id",
             render: function ( data, type, row, meta ) {
@@ -44,7 +46,8 @@ var helper = {
               '<button class="btn btn-danger has-tooltip delete-row" title="Delete" value="' + id + '"><i class="fa fa-trash"></i></button></div>'
               return html;
             }
-        } ],
+        }, config.columnDefs],
+
         processing : function( e, settings, processing ) {
           //Loading animation here
           //$('#processingIndicator').css( 'display', processing ? 'block' : 'none' );

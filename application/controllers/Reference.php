@@ -234,6 +234,34 @@ class Reference extends Controller {
     $this->view('reference/school/form');
 	}
 
+	public function edit_school($id){
+		$schoolMapper = new App\Mapper\SchoolMapper();
+		$addressMapper = new App\Mapper\AddressMapper();
+
+		$filter = array();
+		$filter[] = array('column'=>'school_id',
+											'value' => $id);
+
+		if(!empty($_POST)){
+				$update_data = array();
+				$update_data['school_name'] = $_POST['school_name'];
+				$update_data['city_name'] = $_POST['city_name'];
+				$addressMapper->update($update_data, $filter);
+		}
+		$school = $schoolMapper->getByFilter($filter, true);
+		echo "<pre>";
+		print_r($school);
+		echo "</pre>";
+		if(empty($school));//Show 404
+		//$this->_data['province_list'] = $provinceMapper->get(array(),array(),array(array('column'=>'province_name', 'order'=>'ASC')));
+
+		$this->_data['action'] = 'edit';
+		$this->_data['form_data'] = $school;
+
+		$this->_template = 'templates/admin_main';
+    $this->view('reference/school/form');
+	}
+
 	public function edit_country($id){
 		$countryMapper = new App\Mapper\CountryMapper();
 		$filter = array();
