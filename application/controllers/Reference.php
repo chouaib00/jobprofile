@@ -468,6 +468,11 @@ class Reference extends Controller {
     $this->view('reference/school/list');
   }
 
+	public function education_form(){
+		$this->view('applicant/education_form');
+	}
+
+
 
 
 }

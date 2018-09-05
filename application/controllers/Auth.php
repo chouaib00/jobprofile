@@ -18,13 +18,14 @@ class Auth extends Controller {
 				if($user['user_type'] == 1){
 					//Admin
 					$adminMapper = new App\Mapper\AdminMapper();
-					$admin = $adminMapper->getByUsername($user['user_name']);
+					$admin = $adminMapper->getByID($user['user_id']);
 				}
 
 				$basicContact = $basicContactMapper->getByID($admin['admin_bc_id']);
 				$displayname = $basicContact['bc_first_name'] . ' ' . $basicContact['bc_middle_name'] . ' ' . $basicContact['bc_last_name'] . ' ' . $basicContact['bc_name_ext'];
 				$user_details = array(
 						'displayname'=>	$displayname
+					,	'id'=>	$user['user_id']
 					,	'email'		=>$user['user_email']
 					,	'type'		=>$user['user_type']
 				);

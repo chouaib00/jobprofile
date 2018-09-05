@@ -34,7 +34,7 @@ class Applicant extends Controller {
 
   public function update_profile(){
 		$this->is_secure = true;
-    $this->_template = 'templates/admin_main';
+    $this->_template = 'templates/applicant_main';
     $this->view('applicant/update_profile');
   }
 

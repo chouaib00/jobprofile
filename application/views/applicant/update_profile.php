@@ -117,6 +117,40 @@
                       </select>
                     </div>
                   </div>
+                  <div class="hr-line-dashed"></div>
+                  <h4>Contact Details</h4>
+                  <div class="form-group">
+                    <div class="col-sm-4">
+                      <h5>Main Contact Number</h5>
+                      <input name="phone-number-1" type="text" class="form-control" placeholder="Enter Main Contact Number">
+                    </div>
+                    <div class="col-sm-4">
+                      <h5>Mobile Number</h5>
+                      <input name="phone-number-2" type="text" class="form-control" placeholder="Enter Mobile Number">
+                    </div>
+                    <div class="col-sm-4">
+                      <h5>Home Number</h5>
+                      <input name="phone-number-3" type="text" class="form-control" placeholder="Enter Home Number">
+                    </div>
+                  </div>
+                  <div class="hr-line-dashed"></div>
+                  <h4>Education</h4>
+                  <div class="form-group">
+                    <div class="table-responsive col-md-12">
+                      <table class="table table-striped table-bordered table-hover datatable-basic">
+                        <thead>
+                          <tr>
+                            <th class="col-md-1 text-center no-sort">Action</th>
+                            <th class="col-md-3 text-center">Type</th>
+                            <th class="col-md-2 text-center">Field of Study</th>
+                            <th class="col-md-6 text-center">School</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
 
 
 
@@ -339,7 +373,54 @@
         </div>
     </div>
   </div>
-
-
 </div>
+<div class="modal inmodal fade" id="modal-educ-type" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Add Education</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-5">
+                    <h5>Education Type</h5>
+                    <select class="form-control select2-basic" data-placeholder="Select Education Type" style="width: 100%">
+                        <option></option>
+                        <option value="1">Primary</option>
+                        <option value="2">Secondary</option>
+                        <option value="3">Tertiary</option>
+                        <option value="4">Diploma</option>
+                        <option value="5">Vocational / Trade Course</option>
+                        <option value="6">Master's Degree</option>
+                        <option value="7">Doctorate Degree</option>
+                        <option value="8">Training Seminar</option>
+                    </select>
+                  </div>
+                  <div class="col-md-7">
+                    <h5>Field of Study</h5>
+                    <select class="form-control select2-educ-fos" data-placeholder="Select Field of Study" style="width: 100%">
+                      <option></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <h5>School</h5>
+                    <select class="form-control select2-school" data-placeholder="Select School" style="width: 100%">
+                      <option></option>
+                    </select>
+                  </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
+                <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="<?php echo JS_DIR ?>components/applicant/update_profile.js"></script>

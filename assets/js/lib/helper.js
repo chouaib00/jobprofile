@@ -47,7 +47,10 @@ var helper = {
               return html;
             }
         }, config.columnDefs],
-
+        initComplete: function(){
+          let toolbar = '<div class="pull-right"><a class="btn btn-default" role="button" href="' + config.add_url + '"><i class="fa fa-file">&nbsp</i> ADD</a></div>';;
+          $("div.dt-toolbar").html(toolbar);
+        },
         processing : function( e, settings, processing ) {
           //Loading animation here
           //$('#processingIndicator').css( 'display', processing ? 'block' : 'none' );
@@ -109,7 +112,7 @@ var helper = {
         columns: config.column
     });
 
-    var toolbar = '<div class="pull-right"><a class="btn btn-default" role="button" href="' + config.add_url + '"><i class="fa fa-file">&nbsp</i> ADD</a></a></div>';;
+    var toolbar = '<div class="pull-right"><a class="btn btn-default" role="button" href="' + config.add_url + '"><i class="fa fa-file">&nbsp</i> ADD</a></div>';;
     $("div.dt-toolbar").html(toolbar);
   }
 }
