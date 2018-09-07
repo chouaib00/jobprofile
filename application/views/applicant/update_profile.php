@@ -17,36 +17,35 @@
                 </div>
             </div>
             <div class="ibox-content">
-              <form method="get" class="form-horizontal">
+              <form method="POST" action="?" class="form-horizontal">
                   <h5>First Name, Middle Name, Last Name, Name Extension</h5>
                   <div class="form-group">
-                      <div class="col-sm-3"><input name="applicant-first-name" type="text" class="form-control" placeholder="First Name"></div>
-                      <div class="col-sm-3"><input name="applicant-middle-name" type="text" class="form-control" placeholder="Middle Name"></div>
-                      <div class="col-sm-3"><input name="applicant-last-name" type="text" class="form-control" placeholder="Last Name"></div>
-                      <div class="col-sm-3"><input name="applicant-name-ext" type="text" class="form-control" placeholder="Name Extension"></div>
+                      <div class="col-sm-3"><input name="applicant-first-name" type="text" class="form-control" placeholder="First Name" value="<?php echo $form_data['applicant_first_name'] ?>"></div>
+                      <div class="col-sm-3"><input name="applicant-middle-name" type="text" class="form-control" placeholder="Middle Name" value="<?php echo $form_data['applicant_middle_name'] ?>"></div>
+                      <div class="col-sm-3"><input name="applicant-last-name" type="text" class="form-control" placeholder="Last Name" value="<?php echo $form_data['applicant_last_name'] ?>"></div>
+                      <div class="col-sm-3"><input name="applicant-name-ext" type="text" class="form-control" placeholder="Name Extension" value="<?php echo $form_data['applicant_name_ext'] ?>"></div>
                   </div>
                   <div class="hr-line-dashed"></div>
-
                   <h5>Present Address</h5>
                   <div class="form-group">
-                      <div class="col-sm-12"><input type="text" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)"></div>
+                      <div class="col-sm-12"><input type="text" name="present-add-desc" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)"></div>
                       <div class="col-sm-3 m-t-sm">
-                        <select class="form-control select2-country" data-placeholder="Select Country">
+                        <select class="form-control select2-country" name="present-add-country" data-placeholder="Select Country">
                             <option></option>
                         </select>
                       </div>
                       <div class="col-sm-3 m-t-sm">
-                        <select class="form-control select2-region" data-placeholder="Select Region">
+                        <select class="form-control select2-region" name="present-add-region" data-placeholder="Select Region" disabled>
                             <option></option>
                         </select>
                       </div>
                       <div class="col-sm-3 m-t-sm">
-                        <select class="form-control select2-province" data-placeholder="Select Province">
+                        <select class="form-control select2-province" name="present-add-province" data-placeholder="Select Province" disabled>
                             <option></option>
                         </select>
                       </div>
                       <div class="col-sm-3 m-t-sm">
-                        <select class="form-control select2-city" data-placeholder="Select City">
+                        <select class="form-control select2-city" name="present-add-city" data-placeholder="Select City" disabled>
                             <option></option>
                         </select>
                       </div>
@@ -54,24 +53,24 @@
                   <h5>Permanent Address</h5>
 
                   <div class="form-group">
-                    <div class="col-sm-12"><input type="text" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)"></div>
+                    <div class="col-sm-12"><input type="text" name="permanent-add-desc" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)"></div>
                       <div class="col-sm-3 m-t-sm">
-                      <select class="form-control select2-country" data-placeholder="Select Country">
+                      <select class="form-control select2-country" name="permanent-add-country" data-placeholder="Select Country">
                           <option></option>
                       </select>
                       </div>
                       <div class="col-sm-3 m-t-sm">
-                        <select class="form-control select2-region" data-placeholder="Select Region">
+                        <select class="form-control select2-region" name="permanent-add-region"  data-placeholder="Select Region" disabled>
                             <option></option>
                         </select>
                       </div>
                       <div class="col-sm-3 m-t-sm">
-                        <select class="form-control select2-province" data-placeholder="Select Province">
+                        <select class="form-control select2-province" name="permanent-add-province" data-placeholder="Select Province" disabled>
                             <option></option>
                         </select>
                       </div>
                       <div class="col-sm-3 m-t-sm">
-                        <select class="form-control select2-city" data-placeholder="Select City">
+                        <select class="form-control select2-city" name="permanent-add-city" data-placeholder="Select City" disabled>
                             <option></option>
                         </select>
                       </div>
@@ -80,35 +79,35 @@
                   <div class="form-group">
                     <div class="col-sm-3">
                       <h5>Gender</h5>
-                      <label class="checkbox-inline i-checks"> <input type="radio" value="male" name="gender" checked> <i></i> Male </label>
-                      <label class="checkbox-inline i-checks"> <input type="radio" value="female" name="gender"> <i></i> Female</label>
+                      <label class="checkbox-inline i-checks"> <input type="radio" value="male" name="applicant-gender" <?php echo $form_data['applicant_gender'] == 'male'? 'checked': '' ?>> <i></i> Male </label>
+                      <label class="checkbox-inline i-checks"> <input type="radio" value="female" name="applicant-gender" <?php echo $form_data['applicant_gender'] == 'female'? 'checked': '' ?>> <i></i> Female</label>
                     </div>
                     <div class="col-sm-3">
                       <h5>Birthday</h5>
                       <div class="input-group">
-                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="applicant-birthday" class="form-control" value="03/04/2014">
+                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="applicant-birthday" class="form-control datepicker">
                       </div>
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-sm-3">
                       <h5>Civil Status</h5>
-                      <select class="form-control select2-basic" data-placeholder="Select Civil Status">
+                      <select class="form-control select2-basic" name="applicant-civil-status" data-placeholder="Select Civil Status">
                           <option></option>
-                          <option value="single">Single</option>
-                          <option value="married">Married</option>
-                          <option value="divorced">Divorced</option>
-                          <option value="separated">Separated</option>
-                          <option value="widowed">Widowed</option>
+                          <option value="single" <?php echo $form_data['applicant_civil_status'] == 'single'? 'selected' : '' ?>>Single</option>
+                          <option value="married" <?php echo $form_data['applicant_civil_status'] == 'married'? 'selected' : '' ?>>Married</option>
+                          <option value="divorced" <?php echo $form_data['applicant_civil_status'] == 'divorced'? 'selected' : '' ?>>Divorced</option>
+                          <option value="separated" <?php echo $form_data['applicant_civil_status'] == 'separated'? 'selected' : '' ?>>Separated</option>
+                          <option value="widowed" <?php echo $form_data['applicant_civil_status'] == 'widowed'? 'selected' : '' ?>>Widowed</option>
                       </select>
                     </div>
                     <div class="col-sm-3">
                       <h5>Nationality</h5>
-                      <input name="applicant-nationality" type="text" class="form-control" placeholder="Enter Nationality">
+                      <input name="applicant-nationality" type="text" class="form-control" placeholder="Enter Nationality" value="<?php echo $form_data['applicant_nationality'] ?>">
                     </div>
                     <div class="col-sm-3">
                       <h5>Citizenship</h5>
-                      <input name="applicant-citizenship" type="text" class="form-control" placeholder="Enter Citizenship">
+                      <input name="applicant-citizenship" type="text" class="form-control" placeholder="Enter Citizenship" value="<?php echo $form_data['applicant_citizenship'] ?>">
                     </div>
                     <div class="col-sm-3">
                       <h5>Highest Educational Attainment</h5>
@@ -137,7 +136,7 @@
                   <h4>Education</h4>
                   <div class="form-group">
                     <div class="table-responsive col-md-12">
-                      <table class="table table-striped table-bordered table-hover datatable-basic">
+                      <table id="education-list" class="table table-striped table-bordered table-hover datatable-basic">
                         <thead>
                           <tr>
                             <th class="col-md-1 text-center no-sort">Action</th>
@@ -152,229 +151,22 @@
                     </div>
                   </div>
 
+                  <hr class="hr-line-solid"></hr>
+                  <div class="form-group">
+                      <div class="col-sm-8 col-sm-offset-2">
+                        <button id="update-profile" class="btn btn-primary col-sm-12 btn-outline" type="button">
+                          <h3 class="font-bold"><i class="fa fa-id-card"></i> Update Profile</h3>
+                        </button>
+                      </div>
+                  </div>
 
-
-
-                    <div class="form-group"><label class="col-sm-2 control-label">Help text</label>
-                        <div class="col-sm-10"><input type="text" class="form-control"> <span class="help-block m-b-none">A block of help text that breaks onto a new line and may extend beyond one line.</span>
-                        </div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Password</label>
-
-                        <div class="col-sm-10"><input type="password" class="form-control" name="password"></div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Placeholder</label>
-
-                        <div class="col-sm-10"><input type="text" placeholder="placeholder" class="form-control"></div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-lg-2 control-label">Disabled</label>
-
-                        <div class="col-lg-10"><input type="text" disabled="" placeholder="Disabled input here..." class="form-control"></div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-lg-2 control-label">Static control</label>
-
-                        <div class="col-lg-10"><p class="form-control-static">email@example.com</p></div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Checkboxes and radios <br>
-                        <small class="text-navy">Normal Bootstrap elements</small></label>
-
-                        <div class="col-sm-10">
-                            <div><label> <input type="checkbox" value=""> Option one is this and that—be sure to include why it's great </label></div>
-                            <div><label> <input type="radio" checked="" value="option1" id="optionsRadios1" name="optionsRadios"> Option one is this and that—be sure to
-                                include why it's great </label></div>
-                            <div><label> <input type="radio" value="option2" id="optionsRadios2" name="optionsRadios"> Option two can be something else and selecting it will
-                                deselect option one </label></div>
-                        </div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Inline checkboxes</label>
-
-                        <div class="col-sm-10"><label class="checkbox-inline"> <input type="checkbox" value="option1" id="inlineCheckbox1"> a </label> <label class="checkbox-inline">
-                            <input type="checkbox" value="option2" id="inlineCheckbox2"> b </label> <label class="checkbox-inline">
-                            <input type="checkbox" value="option3" id="inlineCheckbox3"> c </label></div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Checkboxes &amp; radios <br><small class="text-navy">Custom elements</small></label>
-
-                        <div class="col-sm-10">
-                            <div class="i-checks"><label> <div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" value="" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> <i></i> Option one </label></div>
-                            <div class="i-checks"><label> <div class="icheckbox_square-green checked" style="position: relative;"><input type="checkbox" value="" checked="" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> <i></i> Option two checked </label></div>
-                            <div class="i-checks"><label> <div class="icheckbox_square-green checked disabled" style="position: relative;"><input type="checkbox" value="" disabled="" checked="" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> <i></i> Option three checked and disabled </label></div>
-                            <div class="i-checks"><label> <div class="icheckbox_square-green disabled" style="position: relative;"><input type="checkbox" value="" disabled="" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> <i></i> Option four disabled </label></div>
-                            <div class="i-checks"><label> <div class="iradio_square-green" style="position: relative;"><input type="radio" value="option1" name="a" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> <i></i> Option one </label></div>
-                            <div class="i-checks"><label> <div class="iradio_square-green checked" style="position: relative;"><input type="radio" checked="" value="option2" name="a" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> <i></i> Option two checked </label></div>
-                            <div class="i-checks"><label> <div class="iradio_square-green checked disabled" style="position: relative;"><input type="radio" disabled="" checked="" value="option2" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> <i></i> Option three checked and disabled </label></div>
-                            <div class="i-checks"><label> <div class="iradio_square-green disabled" style="position: relative;"><input type="radio" disabled="" name="a" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> <i></i> Option four disabled </label></div>
-                        </div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Inline checkboxes</label>
-
-                        <div class="col-sm-10"><label class="checkbox-inline i-checks"> <div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" value="option1" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>a </label>
-                            <label class="checkbox-inline i-checks"> <div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" value="option2" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> b </label>
-                            <label class="checkbox-inline i-checks"> <div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" value="option3" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> c </label></div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Select</label>
-
-                        <div class="col-sm-10"><select class="form-control m-b" name="account">
-                            <option>option 1</option>
-                            <option>option 2</option>
-                            <option>option 3</option>
-                            <option>option 4</option>
-                        </select>
-
-                            <div class="col-lg-4 m-l-n"><select class="form-control" multiple="">
-                                <option>option 1</option>
-                                <option>option 2</option>
-                                <option>option 3</option>
-                                <option>option 4</option>
-                            </select></div>
-                        </div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group has-success"><label class="col-sm-2 control-label">Input with success</label>
-
-                        <div class="col-sm-10"><input type="text" class="form-control"></div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group has-warning"><label class="col-sm-2 control-label">Input with warning</label>
-
-                        <div class="col-sm-10"><input type="text" class="form-control"></div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group has-error"><label class="col-sm-2 control-label">Input with error</label>
-
-                        <div class="col-sm-10"><input type="text" class="form-control"></div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Control sizing</label>
-
-                        <div class="col-sm-10"><input type="text" placeholder=".input-lg" class="form-control input-lg m-b">
-                            <input type="text" placeholder="Default input" class="form-control m-b"> <input type="text" placeholder=".input-sm" class="form-control input-sm">
-                        </div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Column sizing</label>
-
-                        <div class="col-sm-10">
-                            <div class="row">
-                                <div class="col-md-2"><input type="text" placeholder=".col-md-2" class="form-control"></div>
-                                <div class="col-md-3"><input type="text" placeholder=".col-md-3" class="form-control"></div>
-                                <div class="col-md-4"><input type="text" placeholder=".col-md-4" class="form-control"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Input groups</label>
-
-                        <div class="col-sm-10">
-                            <div class="input-group m-b"><span class="input-group-addon">@</span> <input type="text" placeholder="Username" class="form-control"></div>
-                            <div class="input-group m-b"><input type="text" class="form-control"> <span class="input-group-addon">.00</span></div>
-                            <div class="input-group m-b"><span class="input-group-addon">$</span> <input type="text" class="form-control"> <span class="input-group-addon">.00</span></div>
-                            <div class="input-group m-b"><span class="input-group-addon"> <input type="checkbox"> </span> <input type="text" class="form-control"></div>
-                            <div class="input-group"><span class="input-group-addon"> <input type="radio"> </span> <input type="text" class="form-control"></div>
-                        </div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Button addons</label>
-
-                        <div class="col-sm-10">
-                            <div class="input-group m-b"><span class="input-group-btn">
-                                <button type="button" class="btn btn-primary">Go!</button> </span> <input type="text" class="form-control">
-                            </div>
-                            <div class="input-group"><input type="text" class="form-control"> <span class="input-group-btn"> <button type="button" class="btn btn-primary">Go!
-                            </button> </span></div>
-                        </div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">With dropdowns</label>
-
-                        <div class="col-sm-10">
-                            <div class="input-group m-b">
-                                <div class="input-group-btn">
-                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">Action <span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </div>
-                                 <input type="text" class="form-control"></div>
-                            <div class="input-group"><input type="text" class="form-control">
-
-                                <div class="input-group-btn">
-                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">Action <span class="caret"></span></button>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </div>
-                                </div>
-                        </div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Segmented</label>
-
-                        <div class="col-sm-10">
-                            <div class="input-group m-b">
-                                <div class="input-group-btn">
-                                    <button tabindex="-1" class="btn btn-white" type="button">Action</button>
-                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button"><span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </div>
-                                <input type="text" class="form-control"></div>
-                            <div class="input-group"><input type="text" class="form-control">
-
-                                <div class="input-group-btn">
-                                    <button tabindex="-1" class="btn btn-white" type="button">Action</button>
-                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button"><span class="caret"></span></button>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </div>
-                                </div>
-                        </div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group">
-                        <div class="col-sm-4 col-sm-offset-2">
-                            <button class="btn btn-white" type="submit">Cancel</button>
-                            <button class="btn btn-primary" type="submit">Save changes</button>
-                        </div>
-                    </div>
                 </form>
-                <p>
-                    Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. </p>
-                <p>
-                    Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.
-                </p>
             </div>
         </div>
     </div>
   </div>
 </div>
-<div class="modal inmodal fade" id="modal-educ-type" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal inmodal fade" id="modal-educ" role="dialog" data-no="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -385,7 +177,7 @@
                 <div class="row">
                   <div class="col-md-5">
                     <h5>Education Type</h5>
-                    <select class="form-control select2-basic" data-placeholder="Select Education Type" style="width: 100%">
+                    <select id="modal-educ-type" class="form-control select2-basic" data-placeholder="Select Education Type" style="width: 100%">
                         <option></option>
                         <option value="1">Primary</option>
                         <option value="2">Secondary</option>
@@ -399,7 +191,7 @@
                   </div>
                   <div class="col-md-7">
                     <h5>Field of Study</h5>
-                    <select class="form-control select2-educ-fos" data-placeholder="Select Field of Study" style="width: 100%">
+                    <select id="modal-educ-fos" class="form-control select2-educ-fos" data-placeholder="Select Field of Study" style="width: 100%">
                       <option></option>
                     </select>
                   </div>
@@ -407,17 +199,45 @@
                 <div class="row">
                   <div class="col-md-12">
                     <h5>School</h5>
-                    <select class="form-control select2-school" data-placeholder="Select School" style="width: 100%">
+                    <select id="modal-educ-school" class="form-control select2-school" data-placeholder="Select School" style="width: 100%">
                       <option></option>
                     </select>
                   </div>
                 </div>
-
+                <div class="row">
+                  <div class="col-md-5">
+                    <h5>Start Date</h5>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="modal-educ-start-date" type="text" placeholder="Select Date Start" class="form-control datepicker-month-year" value="">
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <h5>End Date</h5>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="modal-educ-end-date" type="text" placeholder="Select End Start" class="form-control datepicker-month-year" value="">
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <h5>&nbsp;</h5>
+                    <label class="checkbox-inline i-checks"> <input id="modal-educ-end-date-current" type="checkbox" value="current"> <i></i> Current </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <h5>Course / Program Taken</h5>
+                    <input type="text" id="modal-educ-course" class="form-control" placeholder="Enter Course / Program Taken">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <h5>Additional Info</h5>
+                    <textarea class="form-control" id="modal-educ-add-info" rows="4" placeholder="Enter Additional Info like 'With Honors, 'Awards, 'GWA, 'Scholarship, etc."></textarea>
+                  </div>
+                </div>
             </div>
-
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
-                <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
+                <button type="button" id="modal-educ-add" class="btn btn-primary" value="add"><i class="fa fa-floppy-o"></i> Save</button>
             </div>
         </div>
     </div>

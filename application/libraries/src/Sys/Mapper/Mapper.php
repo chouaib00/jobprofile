@@ -32,7 +32,7 @@ class Mapper extends PdoAdapter{
 			}
 		}
 		else{
-			$where_statement = $filter;
+			$where_statement .= $filter;
 		}
 		$sql_statement = "SELECT *
 									FROM ".$this->_table."

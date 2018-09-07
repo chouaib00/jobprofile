@@ -26,8 +26,9 @@ class FieldOfStudyMapper extends Mapper{
       $column_str_query .= $_columns['data'];
       $column_str_query .= (empty($_columns['name']))? '' : ' as \''. $_columns['name'] .'\'';
       if($isSearchable){
-        $where_str_query .= $_columns['data'] ." LIKE :".$_columns['data']." ";
-        $params[":".$_columns['data']] = '%'.$filter_value.'%';
+        $named_params = ':'.str_replace('.','',$_columns['data']);
+        $where_str_query .= $_columns['data'] ." LIKE ".$named_params." ";
+        $params[$named_params] = '%'.$filter_value.'%';
         $where_str_query .= " OR ";
       }
       $column_str_query .= ", ";
