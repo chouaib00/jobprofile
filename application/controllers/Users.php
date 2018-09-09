@@ -46,14 +46,15 @@ class Users extends Controller {
 			$insert_applicant['applicant_citizenship'] = '';
 			$insert_applicant['applicant_civil_status'] = '';
 			$insert_applicant['applicant_ea_id'] = NULL;
-			$insert_applicant['applicant_present_id_id'] = NULL;
-			$insert_applicant['applicant_pemanent_add_id'] = NULL;
+			$insert_applicant['applicant_present_id'] = NULL;
+			$insert_applicant['applicant_permanent_add_id'] = NULL;
 
 			$applicant_id = $applicantmapper->insert($insert_applicant);
 
 			$applicant = $applicantmapper->getByID($user_id);
 			$basicContact = $basiccontactmapper->getByID($applicant['applicant_bc_id']);
 			$displayname = $basicContact['bc_first_name'] . ' ' . $basicContact['bc_middle_name'] . ' ' . $basicContact['bc_last_name'] . ' ' . $basicContact['bc_name_ext'];
+			$user = $usermapper->selectByID($user_id);
 			$user_details = array(
 					'displayname'=>	$displayname
 				,	'id'=>	$user['user_id']

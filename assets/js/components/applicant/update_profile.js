@@ -1,30 +1,33 @@
 $(document).ready(function(){
 
   $('#update-profile').click(function(){
+    helper.button_state('#update-profile', 'loading');
     let post_data = $('form').serializeArray();
 
     let educ_table = [];
-    $('#education-list tbody tr').each(function(){
-      console.log($(this).data('summary'));
-      educ_table.push(JSON.parse(decodeURIComponent($(this).data('summary'))))
-      // educ_table.push({}
+    $('#education-list tbody .educ-row').each(function(){
+      educ_table.push(JSON.parse(decodeURIComponent($(this).data('summary'))));
     });
 
     post_data.push({
-      educ_table : educ_table
-    })
-
-    // $.ajax({
-		// 	type: 'POST',
-		// 	dataType: 'json',
-		// 	url: global.site_name + 'applicant/save_profile',
-		// 	data : post_data,
-		// 	success : function(result){
-		// 		if(result.success){
-		// 			window.location.reload();
-		// 		}
-		// 	}
-		// });
+      name :  'educ-table'
+    , value:  JSON.stringify(educ_table)
+    });
+    console.log(post_data)
+    $.ajax({
+			type: 'POST',
+			dataType: 'json',
+			url: global.site_name + 'applicant/save_profile',
+			data : post_data,
+      complete : function(){
+        helper.button_state('#update-profile', 'loading');
+      },
+			success : function(result){
+				if(result.success){
+					window.location.reload();
+				}
+			}
+		});
 
 
   });
@@ -130,6 +133,52 @@ $(document).ready(function(){
           result.push({
             id  : d.school_id
           , text: d.school_name + ' - ' + d.province_name
+          });
+        });
+        return {
+          results: result
+        }
+      }
+    }
+  });
+
+
+  $('.select2-educ-attainment').select2({
+    allowClear: true,
+    ajax:{
+      url: global.site_name + 'reference/ref',
+      dataType: 'json',
+      type:'post',
+      data: function(params){
+          let search = $.isEmptyObject(params)? '' : params.term;
+          let option = {
+            columns :[
+              {   "data": "ea_name"
+                , "searchable": true
+              },
+              {   "data"  : "ea_id"
+                , "searchable": false
+              }
+            ],
+            search : {
+              'value' : search
+            , 'regex' : false
+            },
+            option : {
+              'type' : 'educ-attainment'
+            },
+            length : 25
+
+          };
+          return option;
+      },
+      processResults: function (data) {
+      // Tranforms the top-level key of the response object from 'items' to 'results'
+        let result = [];
+        data['data'].forEach(function(d){
+          result.push({
+            id  : d.ea_id
+          , text: d.ea_name
           });
         });
         return {
@@ -673,7 +722,8 @@ $(document).ready(function(){
 
 var educ_table = {
   generate_row : function(params){
-    return '<tr data-no="' + params.no + '" data-summary="' + params.data + '">' +
+    console.log(params)
+    return '<tr class="educ-row" data-no="' + params.no + '" data-summary="' + params.data + '">' +
               '<td>' +
                 '<div class="text-center"><button type="button" disabled class="btn btn-info has-tooltip edit-row" title="Edit"><i class="fa fa-pencil"></i></button> ' +
                 '<button type="button" disabled class="btn btn-danger has-tooltip delete-row" title="Delete" value=""><i class="fa fa-trash"></i></button></div>'+

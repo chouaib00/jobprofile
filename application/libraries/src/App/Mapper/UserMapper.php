@@ -20,4 +20,18 @@ class UserMapper extends Mapper{
 		return $result;
   }
 
+  public function selectByID($user_id){
+    $sql_statement = "SELECT *
+                      FROM tbl_user
+                      WHERE user_id = :user_id";
+		$stmt = $this->prepare($sql_statement);
+		$stmt->execute(array(
+      ':user_id'   => $user_id
+    ));
+		$result = $stmt->fetch(\PDO::FETCH_ASSOC);
+		return $result;
+  }
+
+
+
 }

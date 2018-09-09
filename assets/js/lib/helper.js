@@ -1,4 +1,16 @@
 var helper = {
+  button_state : function(selector, state){
+    switch(state){
+      case 'loading':
+        $(selector).prop('disabled', true);
+      break;
+      case 'complete':
+        $(selector).prop('disabled', false);
+      break;
+    }
+  },
+
+
   datatable_basic : function(table, config){
     config.on_load = (typeof config.on_load === "undefined")? function(){ return} : config.on_load;
     config.add_url = (typeof config.add_url === "undefined")? '' : config.add_url;
@@ -7,8 +19,6 @@ var helper = {
     config.page_var = (typeof config.page_var === "undefined")? '' : config.page_var;
     config.key = (typeof config.key === "undefined")? '' : config.key;
     config.columnDefs = (typeof config.columnDefs === "undefined")? '' : config.columnDefs;
-
-
 
     let datatable = $(table).DataTable( {
         responsive: true,

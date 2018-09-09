@@ -156,7 +156,7 @@ class Mapper extends PdoAdapter{
 			$where_statement = substr($where_statement, 0, -5);
 		}
 		else{
-			$where_statement = $filter;
+			$where_statement .= $filter;
 		}
 
 		$sql_statement = "UPDATE ".$this->_table." SET ".$columns." ".$where_statement;

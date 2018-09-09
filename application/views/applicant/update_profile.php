@@ -18,6 +18,7 @@
             </div>
             <div class="ibox-content">
               <form method="POST" action="?" class="form-horizontal">
+                  <input type="hidden" name="applicant-username" value="<?php echo $form_data['applicant_username'] ?>">
                   <h5>First Name, Middle Name, Last Name, Name Extension</h5>
                   <div class="form-group">
                       <div class="col-sm-3"><input name="applicant-first-name" type="text" class="form-control" placeholder="First Name" value="<?php echo $form_data['applicant_first_name'] ?>"></div>
@@ -28,50 +29,77 @@
                   <div class="hr-line-dashed"></div>
                   <h5>Present Address</h5>
                   <div class="form-group">
-                      <div class="col-sm-12"><input type="text" name="present-add-desc" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)"></div>
+                      <div class="col-sm-12"><input type="text" name="present-add-desc" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)" value="<?php echo $form_data['present_add_desc'] ?>"></div>
                       <div class="col-sm-3 m-t-sm">
                         <select class="form-control select2-country" name="present-add-country" data-placeholder="Select Country">
                             <option></option>
+                            <?php if($form_data['present_add_country']['country_id']){ ?>
+                            <option value="<?php echo $form_data['present_add_country']['country_id'] ?>" selected><?php echo $form_data['present_add_country']['country_name'] ?></option>
+                            <?php } ?>
                         </select>
                       </div>
                       <div class="col-sm-3 m-t-sm">
-                        <select class="form-control select2-region" name="present-add-region" data-placeholder="Select Region" disabled>
+                        <select class="form-control select2-region" name="present-add-region" data-placeholder="Select Region" <?php echo ($form_data['present_add_region']['region_id'])? '': 'disabled' ?>>
                             <option></option>
+                            <?php if($form_data['present_add_region']['region_id']){ ?>
+                            <option value="<?php echo $form_data['present_add_region']['region_id'] ?>" selected><?php echo $form_data['present_add_region']['region_code'].' - '.$form_data['present_add_region']['region_desc'] ?></option>
+                            <?php } ?>
                         </select>
                       </div>
                       <div class="col-sm-3 m-t-sm">
-                        <select class="form-control select2-province" name="present-add-province" data-placeholder="Select Province" disabled>
+                        <select class="form-control select2-province" name="present-add-province" data-placeholder="Select Province" <?php echo ($form_data['present_add_province']['province_id'])? '': 'disabled' ?>>
                             <option></option>
+                            <?php if($form_data['present_add_province']['province_id']){ ?>
+                            <option value="<?php echo $form_data['present_add_province']['province_id'] ?>" selected><?php echo $form_data['present_add_province']['province_name'] ?></option>
+                            <?php } ?>
+
                         </select>
                       </div>
                       <div class="col-sm-3 m-t-sm">
-                        <select class="form-control select2-city" name="present-add-city" data-placeholder="Select City" disabled>
+                        <select class="form-control select2-city" name="present-add-city" data-placeholder="Select City" <?php echo ($form_data['present_add_city']['city_id'])? '': 'disabled' ?>>
                             <option></option>
+                            <?php if($form_data['present_add_city']['city_id']){ ?>
+                            <option value="<?php echo $form_data['present_add_city']['city_id'] ?>" selected><?php echo $form_data['present_add_city']['city_name'] ?></option>
+                            <?php } ?>
                         </select>
                       </div>
                   </div>
                   <h5>Permanent Address</h5>
 
                   <div class="form-group">
-                    <div class="col-sm-12"><input type="text" name="permanent-add-desc" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)"></div>
+                    <div class="col-sm-12">
+                      <input type="text" name="permanent-add-desc" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)" value="<?php echo $form_data['permanent_add_desc'] ?>">
+                    </div>
                       <div class="col-sm-3 m-t-sm">
                       <select class="form-control select2-country" name="permanent-add-country" data-placeholder="Select Country">
                           <option></option>
+                          <?php if($form_data['permanent_add_country']['country_id']){ ?>
+                          <option value="<?php echo $form_data['permanent_add_country']['country_id'] ?>" selected><?php echo $form_data['permanent_add_country']['country_name'] ?></option>
+                          <?php } ?>
                       </select>
                       </div>
                       <div class="col-sm-3 m-t-sm">
-                        <select class="form-control select2-region" name="permanent-add-region"  data-placeholder="Select Region" disabled>
+                        <select class="form-control select2-region" name="permanent-add-region"  data-placeholder="Select Region" <?php echo ($form_data['permanent_add_region']['region_id'])? '': 'disabled' ?>>
                             <option></option>
+                            <?php if($form_data['permanent_add_region']['region_id']){ ?>
+                            <option value="<?php echo $form_data['permanent_add_region']['region_id'] ?>" selected><?php echo $form_data['permanent_add_region']['region_code'].' - '.$form_data['permanent_add_region']['region_desc'] ?></option>
+                            <?php } ?>
                         </select>
                       </div>
                       <div class="col-sm-3 m-t-sm">
-                        <select class="form-control select2-province" name="permanent-add-province" data-placeholder="Select Province" disabled>
+                        <select class="form-control select2-province" name="permanent-add-province" data-placeholder="Select Province" <?php echo ($form_data['permanent_add_province']['province_id'])? '': 'disabled' ?>>
                             <option></option>
+                            <?php if($form_data['permanent_add_province']['province_id']){ ?>
+                            <option value="<?php echo $form_data['permanent_add_province']['province_id'] ?>" selected><?php echo $form_data['permanent_add_province']['province_name'] ?></option>
+                            <?php } ?>
                         </select>
                       </div>
                       <div class="col-sm-3 m-t-sm">
-                        <select class="form-control select2-city" name="permanent-add-city" data-placeholder="Select City" disabled>
+                        <select class="form-control select2-city" name="permanent-add-city" data-placeholder="Select City" <?php echo ($form_data['permanent_add_city']['city_id'])? '': 'disabled' ?>>
                             <option></option>
+                            <?php if($form_data['permanent_add_city']['city_id']){ ?>
+                            <option value="<?php echo $form_data['permanent_add_city']['city_id'] ?>" selected><?php echo $form_data['permanent_add_city']['city_name'] ?></option>
+                            <?php } ?>
                         </select>
                       </div>
                   </div>
@@ -79,13 +107,13 @@
                   <div class="form-group">
                     <div class="col-sm-3">
                       <h5>Gender</h5>
-                      <label class="checkbox-inline i-checks"> <input type="radio" value="male" name="applicant-gender" <?php echo $form_data['applicant_gender'] == 'male'? 'checked': '' ?>> <i></i> Male </label>
+                      <label class="checkbox-inline i-checks"> <input type="radio" value="male" name="applicant-gender" checked> <i></i> Male </label>
                       <label class="checkbox-inline i-checks"> <input type="radio" value="female" name="applicant-gender" <?php echo $form_data['applicant_gender'] == 'female'? 'checked': '' ?>> <i></i> Female</label>
                     </div>
                     <div class="col-sm-3">
                       <h5>Birthday</h5>
                       <div class="input-group">
-                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="applicant-birthday" class="form-control datepicker">
+                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="applicant-birthday" class="form-control datepicker" value="<?php echo $form_data['applicant_birthday'] ?>">
                       </div>
                     </div>
                   </div>
@@ -113,6 +141,7 @@
                       <h5>Highest Educational Attainment</h5>
                       <select name="applicant-educ-attainment" class="form-control select2-educ-attainment" data-placeholder="Select Highest Educational Attainment">
                           <option></option>
+                          <option value="<?php echo $form_data['applicant_educ_attainment']['ea_id'] ?>" selected><?php echo $form_data['applicant_educ_attainment']['ea_name'] ?></option>
                       </select>
                     </div>
                   </div>
@@ -121,15 +150,15 @@
                   <div class="form-group">
                     <div class="col-sm-4">
                       <h5>Main Contact Number</h5>
-                      <input name="phone-number-1" type="text" class="form-control" placeholder="Enter Main Contact Number">
+                      <input name="phone-number-1" type="text" class="form-control" placeholder="Enter Main Contact Number" value="<?php echo $form_data['phone_number_1'] ?>">
                     </div>
                     <div class="col-sm-4">
                       <h5>Mobile Number</h5>
-                      <input name="phone-number-2" type="text" class="form-control" placeholder="Enter Mobile Number">
+                      <input name="phone-number-2" type="text" class="form-control" placeholder="Enter Mobile Number" value="<?php echo $form_data['phone_number_2'] ?>">
                     </div>
                     <div class="col-sm-4">
                       <h5>Home Number</h5>
-                      <input name="phone-number-3" type="text" class="form-control" placeholder="Enter Home Number">
+                      <input name="phone-number-3" type="text" class="form-control" placeholder="Enter Home Number" value="<?php echo $form_data['phone_number_3'] ?>">
                     </div>
                   </div>
                   <div class="hr-line-dashed"></div>
@@ -146,6 +175,17 @@
                           </tr>
                         </thead>
                         <tbody>
+                          <?php foreach($form_data['education_table'] as $education){ ?>
+                            <tr class="educ-row" data-no="<?php echo $education['no'] ?>" data-summary="<?php echo $education['data'] ?>">
+                                <td>
+                                    <div class="text-center"><button type="button" disabled class="btn btn-info has-tooltip edit-row" title="Edit"><i class="fa fa-pencil"></i></button>
+                                    <button type="button" disabled class="btn btn-danger has-tooltip delete-row" title="Delete" value=""><i class="fa fa-trash"></i></button></div>
+                                </td>
+                                <td><?php echo $education['educ_type_desc'] ?></td>
+                                <td><?php echo $education['field_of_study_desc'] ?></td>
+                                <td><?php echo $education['school_desc'] ?></td>
+                            </tr>
+                            <?php }?>
                         </tbody>
                       </table>
                     </div>
