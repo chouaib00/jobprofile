@@ -21,6 +21,10 @@
                           <tr>
                               <th class="col-md-3 text-center">Date</th>
                               <th class="col-md-6 text-center">Title</th>
+                              <th class="col-md-2 text-center">Posted By</th>
+                              <th class="col-md-2 text-center"></th>
+                              <th class="col-md-2 text-center"></th>
+                              <th class="col-md-2 text-center"></th>
                               <th class="col-md-1 text-center no-sort">Action</th>
                           </tr>
                         </thead>

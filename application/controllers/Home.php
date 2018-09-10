@@ -19,7 +19,19 @@ class Home extends Controller {
       $this->view('home/dashboard');
   }
 
+	public function error_404(){
+		$this->_template = 'templates/main';
+		$this->view('home/error_404');
+	}
+
 	public function landing_page(){
+		$this->is_secure = false;
+		$announcementMapper = new App\Mapper\AnnouncementMapper();
+		$this->_data['announcement_list'] = $announcementMapper->get(array(), array(), array(array(
+			'column'=>'announcement_date'
+		,	'order'=>'DESC'
+		)));
+		$this->_template = 'templates/public';
 		$this->view('home/landing_page');
 	}
 }

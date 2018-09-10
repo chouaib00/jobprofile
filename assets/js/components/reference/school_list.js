@@ -15,7 +15,6 @@ $(document).ready(function(){
         },
         {   "data": "address_desc"
           ,  "render": function(data, type, full, meta) {
-              console.log(full)
               return full['address_desc'] + ', ' + full['city_name'] + ' City, ' + full['province_name'] + ', ' + full['country_name'];
           }
         },

@@ -8,9 +8,6 @@ class Users extends Controller {
 
 	public function search($z){
 		$usermapper = new App\Mapper\UserMapper();
-		echo "<pre>";
-		print_r($usermapper->getAll());
-		echo "</pre>";
 	}
 
 	public function register_applicant(){
@@ -18,7 +15,7 @@ class Users extends Controller {
 		$basiccontactmapper = new App\Mapper\BasicContactMapper();
 		$applicantmapper = new App\Mapper\ApplicantMapper();
 		$this->_secure = false;
-		$this->_template = 'templates/main';
+		$this->_template = 'templates/public';
 		if(!empty($_POST)){
 			$insert_user = array();
 			$insert_user['user_name'] = $_POST['reg-username'];

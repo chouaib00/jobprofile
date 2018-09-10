@@ -180,7 +180,7 @@ class Mapper extends PdoAdapter{
 			}
 		}
 		else{
-			$where_statement = $filter;
+			$where_statement .= $filter;
 		}
 		$sql_statement = "DELETE FROM ".$this->_table."
 									".$where_statement;

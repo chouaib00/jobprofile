@@ -90,13 +90,20 @@ class AnnouncementMapper extends Mapper{
 
 		$stmt->execute($params);
 		$result['data'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-
     $result['total_count'] = $this->getAllCount();
-
-
-
-
 		return $result;
   }
+
+  public function getByID($id){
+		$sql_statement = "SELECT *
+									FROM tbl_announcement
+                  WHERE annoucement_id = :annoucement_id";
+    $params = array(
+        ':annoucement_id' => $id
+    );
+		$stmt = $this->prepare($sql_statement);
+		$stmt->execute($params);
+		$result = $stmt->fetch(\PDO::FETCH_ASSOC);
+		return $result;
+	}
 }

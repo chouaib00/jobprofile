@@ -216,7 +216,36 @@ class Applicant extends Controller {
 
 		$this->is_secure = true;
     $this->_template = 'templates/applicant_main';
-    $this->view('applicant/update_profile', $form_data);
+    $this->view('applicant/update_profile');
   }
+
+	public function my_skills(){
+		$userMapper = new App\Mapper\UserMapper();
+		$applicantMapper = new App\Mapper\ApplicantMapper();
+		$skillTagMapper = new App\Mapper\SkillTagMapper();
+		$user = null;
+		$applicant = null;
+		if($this->sess->isLogin()){
+			$user = $userMapper->getByFilter(array(
+				array(
+					'column'=>'user_id'
+				,	'value'	=>$_SESSION['current_user']['id']
+				)
+			), true);
+		}
+		if(!$user){
+			$user = $userMapper->getByFilter(array(
+				array(
+					'column'=>'user_name'
+				,	'value'	=>$username
+				)
+			), true);
+		}
+		if(!$user){ };//Show 404;
+		$this->_data['skill_list'] = $skillTagMapper->getAll();
+		$this->_template = 'templates/applicant_main';
+    $this->view('applicant/my_skills');
+	}
+
 
 }

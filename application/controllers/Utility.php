@@ -39,6 +39,54 @@ class Utility extends Controller {
 				//Means Applicant
 				$this->_template = 'templates/applicant_main';
 			}
-      $this->view('utility/announcement');
+      $this->view('utility/announcement/list');
   }
+
+	public function add_announcement(){
+		$announcementMapper = new App\Mapper\AnnouncementMapper();
+		$adminMapper = new App\Mapper\AdminMapper();
+		$this->_template = 'templates/admin_main';
+		$data = array(
+				'announcement_title'=>''
+			,	'announcement_content'=>''
+		);
+		if(!empty($_POST)){
+				$admin = $adminMapper->getByID($_SESSION['current_user']['id']);
+				$insert_data = array();
+				$insert_data['announcement_title'] = $_POST['announcement-title'];
+				$insert_data['announcement_content'] = $_POST['announcement-content'];
+				$insert_data['announcement_admin_id'] = $admin['admin_id'];
+				$announcementMapper->insert($insert_data);
+		}
+		$this->_data['action'] = 'add';
+		$this->_data['form_data'] = $data;
+		$this->view('utility/announcement/form');
+	}
+
+	public function edit_announcement($id){
+		$announcementMapper = new App\Mapper\AnnouncementMapper();
+
+		if(!empty($_POST)){
+				$update_data = array();
+				$update_data['announcement_title'] = $_POST['announcement-title'];
+				$update_data['announcement_content'] = $_POST['announcement-content'];
+				$announcementMapper->update($update_data, " annoucement_id ='".$id."'");
+		}
+		$announcement = $announcementMapper->getByID($id);
+		if(empty($school));//Show 404
+		$this->_data['action'] = 'edit';
+		$this->_data['form_data'] = $announcement;
+
+		$this->_template = 'templates/admin_main';
+    $this->view('utility/announcement/form');
+	}
+
+	public function delete_announcement(){
+		$announcementMapper = new App\Mapper\AnnouncementMapper();
+		$id = $_POST['id'];
+		$announcementMapper->delete("annoucement_id = '".$id."'");
+		echo json_encode(array('success'=>true));
+
+	}
+
 }
