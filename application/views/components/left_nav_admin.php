@@ -34,6 +34,12 @@
                     <li><a href="<?php echo DOMAIN; ?>applicant/update_profile">PDS</a></li>
                 </ul>
             </li>
+            <li>
+                <a href=""><i class="fa fa-puzzle-piece"></i> <span class="nav-label"> Utilities</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="<?php echo DOMAIN; ?>utility/announcement">Announcement</a></li>
+                </ul>
+            </li>
         </ul>
 
     </div>

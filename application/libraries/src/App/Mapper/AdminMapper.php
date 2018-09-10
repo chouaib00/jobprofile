@@ -6,13 +6,13 @@ class AdminMapper extends Mapper{
 
   protected $_table = 'tbl_admin';
 
-  public function getByUsername($username){
+  public function getByID($id){
     $sql_statement = "SELECT *
                       FROM tbl_admin
-                      WHERE admin_user_name = :admin_user_name";
+                      WHERE admin_user_id = :admin_user_id";
 		$stmt = $this->prepare($sql_statement);
 		$stmt->execute(array(
-      ':admin_user_name'   => $username
+      ':admin_user_id'   => $id
     ));
 		$result = $stmt->fetch(\PDO::FETCH_ASSOC);
 		return $result;
@@ -69,7 +69,7 @@ class AdminMapper extends Mapper{
     $sql_statement = "SELECT COUNT(1) as 'num'
                       FROM `tbl_admin`
                       INNER JOIN `tbl_user`
-                      ON admin_user_name = user_name
+                      ON admin_user_id = user_id
                       INNER JOIN `tbl_basic_contact`
                       ON admin_bc_id = bc_id " . $where_str_query;
 		$stmt = $this->prepare($sql_statement);
@@ -79,7 +79,7 @@ class AdminMapper extends Mapper{
     $sql_statement = "SELECT ".$column_str_query."
                       FROM `tbl_admin`
                       INNER JOIN `tbl_user`
-                      ON admin_user_name = user_name
+                      ON admin_user_id = user_id
                       INNER JOIN `tbl_basic_contact`
                       ON admin_bc_id = bc_id " . $where_str_query . " " . $order_str_query. " ".$limit_str_query;
 		$stmt = $this->prepare($sql_statement);

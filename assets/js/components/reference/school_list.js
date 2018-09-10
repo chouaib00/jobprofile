@@ -13,10 +13,9 @@ $(document).ready(function(){
         },
         {   "data": "country_name"
         },
-        {   "name" : 'address'
-          , "data": "address_desc"
+        {   "data": "address_desc"
           ,  "render": function(data, type, full, meta) {
-              return full['address_desc'];
+              return full['address_desc'] + ', ' + full['city_name'] + ' City, ' + full['province_name'] + ', ' + full['country_name'];
           }
         },
         {   "data"  : "school_id"
@@ -28,7 +27,9 @@ $(document).ready(function(){
       delete_url : global.site_name + 'reference/delete-ref',
       page_var : {
         type : 'school'
-      }
+      },
+      columnDefs : { targets: [1,2,3], visible: false}
+
     }
     helper.datatable_basic('.datatable-basic', config);
 

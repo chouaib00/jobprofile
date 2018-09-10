@@ -3,20 +3,11 @@
       <div class="col-lg-12">
               <div class="ibox float-e-margins">
                   <div class="ibox-title">
-                      <h5>School List</h5>
+                      <h5>Announcement List</h5>
                       <div class="ibox-tools">
                           <a class="collapse-link">
                               <i class="fa fa-chevron-up"></i>
                           </a>
-                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                              <i class="fa fa-wrench"></i>
-                          </a>
-                          <ul class="dropdown-menu dropdown-user">
-                              <li><a href="#">Config option 1</a>
-                              </li>
-                              <li><a href="#">Config option 2</a>
-                              </li>
-                          </ul>
                           <a class="close-link">
                               <i class="fa fa-times"></i>
                           </a>
@@ -28,11 +19,12 @@
                       <table class="table table-striped table-bordered table-hover datatable-basic" data-config="{}">
                         <thead>
                           <tr>
-                              <th class="col-md-3 text-center">School</th>
-                              <th class="col-md-3 text-center"></th>
-                              <th class="col-md-3 text-center"></th>
-                              <th class="col-md-3 text-center"></th>
-                              <th class="col-md-8 text-center">Address</th>
+                              <th class="col-md-3 text-center">Date</th>
+                              <th class="col-md-6 text-center">Title</th>
+                              <th class="col-md-2 text-center">Posted By</th>
+                              <th class="col-md-2 text-center"></th>
+                              <th class="col-md-2 text-center"></th>
+                              <th class="col-md-2 text-center"></th>
                               <th class="col-md-1 text-center no-sort">Action</th>
                           </tr>
                         </thead>
@@ -49,4 +41,4 @@
 
 </div>
 
-<script src="<?php echo JS_DIR ?>components/reference/school_list.js"></script>
+<script src="<?php echo JS_DIR ?>components/utility/announcement_list.js"></script>

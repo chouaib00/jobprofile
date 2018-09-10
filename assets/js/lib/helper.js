@@ -1,4 +1,16 @@
 var helper = {
+  button_state : function(selector, state){
+    switch(state){
+      case 'loading':
+        $(selector).prop('disabled', true);
+      break;
+      case 'complete':
+        $(selector).prop('disabled', false);
+      break;
+    }
+  },
+
+
   datatable_basic : function(table, config){
     config.on_load = (typeof config.on_load === "undefined")? function(){ return} : config.on_load;
     config.add_url = (typeof config.add_url === "undefined")? '' : config.add_url;
@@ -6,8 +18,7 @@ var helper = {
     config.delete_url = (typeof config.delete_url === "undefined")? '' : config.delete_url;
     config.page_var = (typeof config.page_var === "undefined")? '' : config.page_var;
     config.key = (typeof config.key === "undefined")? '' : config.key;
-
-
+    config.columnDefs = (typeof config.columnDefs === "undefined")? '' : config.columnDefs;
 
     let datatable = $(table).DataTable( {
         responsive: true,
@@ -35,6 +46,7 @@ var helper = {
           cache: true
         },
         columnDefs: [ {
+          //This is for the custom button
             targets: -1,
             data: "id",
             render: function ( data, type, row, meta ) {
@@ -44,7 +56,11 @@ var helper = {
               '<button class="btn btn-danger has-tooltip delete-row" title="Delete" value="' + id + '"><i class="fa fa-trash"></i></button></div>'
               return html;
             }
-        } ],
+        }, config.columnDefs],
+        initComplete: function(){
+          let toolbar = '<div class="pull-right"><a class="btn btn-default" role="button" href="' + config.add_url + '"><i class="fa fa-file">&nbsp</i> ADD</a></div>';;
+          $("div.dt-toolbar").html(toolbar);
+        },
         processing : function( e, settings, processing ) {
           //Loading animation here
           //$('#processingIndicator').css( 'display', processing ? 'block' : 'none' );
@@ -106,7 +122,7 @@ var helper = {
         columns: config.column
     });
 
-    var toolbar = '<div class="pull-right"><a class="btn btn-default" role="button" href="' + config.add_url + '"><i class="fa fa-file">&nbsp</i> ADD</a></a></div>';;
+    var toolbar = '<div class="pull-right"><a class="btn btn-default" role="button" href="' + config.add_url + '"><i class="fa fa-file">&nbsp</i> ADD</a></div>';;
     $("div.dt-toolbar").html(toolbar);
   }
 }

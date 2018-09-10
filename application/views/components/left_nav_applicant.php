@@ -29,7 +29,8 @@
             <li>
                 <a href=""><i class="fa fa-user"></i> <span class="nav-label">My Profile</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="<?php echo DOMAIN; ?>">Edit Profile</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>applicant/update_profile">Edit Profile</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>applicant/my-skills">My Skills</a></li>
                     <li><a href="<?php echo DOMAIN; ?>">File Attachments</a></li>
                 </ul>
             </li>

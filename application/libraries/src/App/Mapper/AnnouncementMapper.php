@@ -2,9 +2,9 @@
 namespace App\Mapper;
 use Sys\Mapper\Mapper;
 
-class SchoolMapper extends Mapper{
+class AnnouncementMapper extends Mapper{
 
-  protected $_table = 'tbl_school';
+  protected $_table = 'tbl_announcement';
 
   public function selectDataTable($filter, $columns, $limit, $offset, $order, $condition){
     $result = array(
@@ -68,67 +68,42 @@ class SchoolMapper extends Mapper{
     }
 
     $sql_statement = "SELECT COUNT(1) as 'num'
-                      FROM tbl_school
-                      LEFT JOIN tbl_address
-                      ON school_address_id = address_id
-                      LEFT JOIN tbl_city
-                      ON address_city_id = city_id
-                      LEFT JOIN tbl_province
-                      ON address_province_id = province_id
-                      LEFT JOIN tbl_region
-                      ON province_region_id = region_id
-                      LEFT JOIN tbl_country
-                      ON region_country_id = country_id
-                      " . $where_str_query;
+                      FROM `tbl_announcement`
+                      INNER JOIN `tbl_admin`
+                      ON `announcement_admin_id` = `admin_id`
+                      INNER JOIN `tbl_basic_contact`
+                      ON `admin_bc_id` = `bc_id` " . $where_str_query;
 		$stmt = $this->prepare($sql_statement);
-
 		$stmt->execute($params);
 		$result['count'] = $stmt->fetch(\PDO::FETCH_ASSOC)['num'];
 
     $sql_statement = "SELECT ".$column_str_query."
-                      FROM tbl_school
-                      LEFT JOIN tbl_address
-                      ON school_address_id = address_id
-                      LEFT JOIN tbl_city
-                      ON address_city_id = city_id
-                      LEFT JOIN tbl_province
-                      ON address_province_id = province_id
-                      LEFT JOIN tbl_region
-                      ON province_region_id = region_id
-                      LEFT JOIN tbl_country
-                      ON region_country_id = country_id " . $where_str_query . " " . $order_str_query. " ".$limit_str_query;
+                      FROM `tbl_announcement`
+                      INNER JOIN `tbl_admin`
+                      ON `announcement_admin_id` = `admin_id`
+                      INNER JOIN `tbl_basic_contact`
+                      ON `admin_bc_id` = `bc_id` " . $where_str_query . " " . $order_str_query. " ".$limit_str_query;
+
 		$stmt = $this->prepare($sql_statement);
     $params[':limit'] = $limit;
     $params[':offset'] = $offset;
 
 		$stmt->execute($params);
 		$result['data'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
     $result['total_count'] = $this->getAllCount();
 		return $result;
   }
 
   public function getByID($id){
 		$sql_statement = "SELECT *
-									FROM tbl_school
-                  LEFT JOIN tbl_address
-                  ON school_address_id = address_id
-                  LEFT JOIN tbl_city
-                  ON address_city_id = city_id
-                  LEFT JOIN tbl_province
-                  ON address_province_id = province_id
-                  LEFT JOIN tbl_region
-                  ON province_region_id = region_id
-                  LEFT JOIN tbl_country
-                  ON region_country_id = country_id
-                  WHERE school_id = :school_id";
+									FROM tbl_announcement
+                  WHERE annoucement_id = :annoucement_id";
     $params = array(
-        ':school_id' => $id
+        ':annoucement_id' => $id
     );
 		$stmt = $this->prepare($sql_statement);
 		$stmt->execute($params);
 		$result = $stmt->fetch(\PDO::FETCH_ASSOC);
 		return $result;
 	}
-
 }

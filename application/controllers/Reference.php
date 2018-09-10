@@ -10,6 +10,7 @@ class Reference extends Controller {
 	public function ref(){//Use with DataTable
 		$limit = isset($_POST['length'])? $_POST['length'] : '0';
 		$offset = isset($_POST['start'])? $_POST['start'] : '0';
+		$condition = isset($_POST['condition'])? $_POST['condition'] : array();
 		$search = $_POST['search'];
 		$columns = $_POST['columns'];
 		$option = $_POST['option'];
@@ -45,7 +46,7 @@ class Reference extends Controller {
 			$mapper = new App\Mapper\SchoolMapper();
 		}
 
-		$result = $mapper->selectDataTable($search['value'], $columns, $limit, $offset, $orders);
+		$result = $mapper->selectDataTable($search['value'], $columns, $limit, $offset, $orders, $condition);
 		echo json_encode($result);
 	}
 
@@ -217,18 +218,47 @@ class Reference extends Controller {
 
 	public function add_school(){
 		$schoolMapper = new App\Mapper\SchoolMapper();
+		$addressMapper = new App\Mapper\AddressMapper();
 		$data = array(
 				'school_name' => ''
 			,	'address_desc' => ''
 		);
 
 		if(!empty($_POST)){
-				$insert_data = array();
-				$insert_data['ea_name'] = $_POST['ea_name'];
-				$educAttainmentMapper->insert($insert_data);
+				$insert_address = array();
+				$insert_address['address_city_id'] = $_POST['city_id'];
+				$insert_address['address_province_id'] = $_POST['province_id'];
+				$insert_address['address_desc'] = $_POST['address_desc'];
+				$address_id = $addressMapper->insert($insert_address);
+
+				$insert_school = array();
+				$insert_school['school_address_id'] = $address_id;
+				$insert_school['school_name'] = $_POST['school_name'];
+				$schoolMapper->insert($insert_school);
 		}
 		$this->_data['action'] = 'add';
 		$this->_data['form_data'] = $data;
+
+		$this->_template = 'templates/admin_main';
+    $this->view('reference/school/form');
+	}
+
+	public function edit_school($id){
+		$schoolMapper = new App\Mapper\SchoolMapper();
+		$addressMapper = new App\Mapper\AddressMapper();
+		$cityMapper = new App\Mapper\CityMapper();
+		$provinceMapper = new App\Mapper\ProvinceMapper();
+
+		if(!empty($_POST)){
+				$update_data = array();
+				$update_data['school_name'] = $_POST['school_name'];
+				$update_data['city_name'] = $_POST['city_name'];
+				$addressMapper->update($update_data, $filter);
+		}
+		$school = $schoolMapper->getByID($id);
+		if(empty($school));//Show 404
+		$this->_data['action'] = 'edit';
+		$this->_data['form_data'] = $school;
 
 		$this->_template = 'templates/admin_main';
     $this->view('reference/school/form');
@@ -437,6 +467,11 @@ class Reference extends Controller {
     $this->_template = 'templates/admin_main';
     $this->view('reference/school/list');
   }
+
+	public function education_form(){
+		$this->view('applicant/education_form');
+	}
+
 
 
 
