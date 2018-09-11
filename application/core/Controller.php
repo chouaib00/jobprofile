@@ -14,6 +14,19 @@ class Controller extends CI_Controller {
 		parent::__construct();
 		$this->sess = new Sys\Sess\SessionLoad();
 	}
+	protected function set_alert($config){
+		$_SESSION['alert_message'] = array(
+			'message'	=> $config['message']
+		,	'type'		=> $config['type']);
+		if(isset($config['href'])){
+			$_SESSION['alert_message']['link'] = array(
+					'href'=>$config['href']
+				,	'text'=>$config['text']
+				);
+		}
+
+	}
+
 
 	protected function view($file){
 		if($this->is_secure){

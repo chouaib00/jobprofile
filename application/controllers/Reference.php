@@ -117,6 +117,12 @@ class Reference extends Controller {
 				$insert_data['country_code'] = $_POST['country_code'];
 				$insert_data['country_name'] = $_POST['country_name'];
 				$countryMapper->insert($insert_data);
+				$this->set_alert(array(
+					'message'=>	'Successfully added a country.'
+				,	'type'	=> 	'success'
+				,	'href'	=> 	DOMAIN.'reference/country'
+				,	'text'	=>	'Country List'
+				));
 		}
 		$this->_data['action'] = 'add';
 		$this->_data['form_data'] = $data;
@@ -141,6 +147,12 @@ class Reference extends Controller {
 				$insert_data['region_code'] = $_POST['region_code'];
 				$insert_data['region_desc'] = $_POST['region_desc'];
 				$regionMapper->insert($insert_data);
+				$this->set_alert(array(
+					'message'=>	'Successfully added a region.'
+				,	'type'	=> 	'success'
+				,	'href'	=> 	DOMAIN.'reference/region'
+				,	'text'	=>	'Region List'
+				));
 		}
 		$this->_data['country_list'] = $countryMapper->get(array(),array(),array(array('column'=>'country_name', 'order'=>'ASC')));
 		$this->_data['action'] = 'add';
@@ -166,6 +178,12 @@ class Reference extends Controller {
 				$insert_data['province_code'] = $_POST['province_code'];
 				$insert_data['province_name'] = $_POST['province_name'];
 				$provinceMapper->insert($insert_data);
+				$this->set_alert(array(
+					'message'=>	'Successfully added a province.'
+				,	'type'	=> 	'success'
+				,	'href'	=> 	DOMAIN.'reference/province'
+				,	'text'	=>	'Province List'
+				));
 		}
 		$this->_data['region_list'] = $regionMapper->get(array(),array(),array(array('column'=>'region_desc', 'order'=>'ASC')));
 		$this->_data['action'] = 'add';
@@ -188,6 +206,12 @@ class Reference extends Controller {
 				$insert_data['city_province_id'] = $_POST['city_province_id'];
 				$insert_data['city_name'] = $_POST['city_name'];
 				$cityMapper->insert($insert_data);
+				$this->set_alert(array(
+					'message'=>	'Successfully added a city.'
+				,	'type'	=> 	'success'
+				,	'href'	=> 	DOMAIN.'reference/city'
+				,	'text'	=>	'City List'
+				));
 		}
 		$this->_data['province_list'] = $provinceMapper->get(array(),array(),array(array('column'=>'province_name', 'order'=>'ASC')));
 		$this->_data['action'] = 'add';
@@ -208,6 +232,12 @@ class Reference extends Controller {
 				$insert_data = array();
 				$insert_data['ea_name'] = $_POST['ea_name'];
 				$educAttainmentMapper->insert($insert_data);
+				$this->set_alert(array(
+					'message'=>	'Successfully added a educational attainment.'
+				,	'type'	=> 	'success'
+				,	'href'	=> 	DOMAIN.'reference/educ-attainment'
+				,	'text'	=>	'Educational Attainment List'
+				));
 		}
 		$this->_data['action'] = 'add';
 		$this->_data['form_data'] = $data;
@@ -235,6 +265,12 @@ class Reference extends Controller {
 				$insert_school['school_address_id'] = $address_id;
 				$insert_school['school_name'] = $_POST['school_name'];
 				$schoolMapper->insert($insert_school);
+				$this->set_alert(array(
+					'message'=>	'Successfully added a school'
+				,	'type'	=> 	'success'
+				,	'href'	=> 	DOMAIN.'reference/school'
+				,	'text'	=>	'School List'
+				));
 		}
 		$this->_data['action'] = 'add';
 		$this->_data['form_data'] = $data;
@@ -254,6 +290,12 @@ class Reference extends Controller {
 				$update_data['school_name'] = $_POST['school_name'];
 				$update_data['city_name'] = $_POST['city_name'];
 				$addressMapper->update($update_data, $filter);
+				$this->set_alert(array(
+					'message'=>	'Successfully updated a school'
+				,	'type'	=> 	'success'
+				,	'href'	=> 	DOMAIN.'reference/school'
+				,	'text'	=>	'School List'
+				));
 		}
 		$school = $schoolMapper->getByID($id);
 		if(empty($school));//Show 404
@@ -275,6 +317,12 @@ class Reference extends Controller {
 				$update_data['country_code'] = $_POST['country_code'];
 				$update_data['country_name'] = $_POST['country_name'];
 				$countryMapper->update($update_data, $filter);
+				$this->set_alert(array(
+					'message'=>	'Successfully updated a country.'
+				,	'type'	=> 	'success'
+				,	'href'	=> 	DOMAIN.'reference/country'
+				,	'text'	=>	'Country List'
+				));
 		}
 		$country = $countryMapper->getByFilter($filter, true);
 		if(empty($country));//Show 404
@@ -301,6 +349,12 @@ class Reference extends Controller {
 				$update_data['region_code'] = $_POST['region_code'];
 				$update_data['region_desc'] = $_POST['region_desc'];
 				$regionMapper->update($update_data, $filter);
+				$this->set_alert(array(
+					'message'=>	'Successfully updated a region.'
+				,	'type'	=> 	'success'
+				,	'href'	=> 	DOMAIN.'reference/region'
+				,	'text'	=>	'Region List'
+				));
 		}
 		$region = $regionMapper->getByFilter($filter, true);
 		if(empty($region));//Show 404
@@ -329,6 +383,12 @@ class Reference extends Controller {
 				$update_data['province_code'] = $_POST['province_code'];
 				$update_data['province_name'] = $_POST['province_name'];
 				$provinceMapper->update($update_data, $filter);
+				$this->set_alert(array(
+					'message'=>	'Successfully updated a province.'
+				,	'type'	=> 	'success'
+				,	'href'	=> 	DOMAIN.'reference/province'
+				,	'text'	=>	'Province List'
+				));
 		}
 		$province = $provinceMapper->getByFilter($filter, true);
 		if(empty($province));//Show 404
@@ -354,6 +414,12 @@ class Reference extends Controller {
 				$update_data['city_province_id'] = $_POST['city_province_id'];
 				$update_data['city_name'] = $_POST['city_name'];
 				$cityMapper->update($update_data, $filter);
+				$this->set_alert(array(
+					'message'=>	'Successfully updated a city.'
+				,	'type'	=> 	'success'
+				,	'href'	=> 	DOMAIN.'reference/city'
+				,	'text'	=>	'City List'
+				));
 		}
 		$city = $cityMapper->getByFilter($filter, true);
 		if(empty($city));//Show 404
@@ -376,6 +442,12 @@ class Reference extends Controller {
 				$update_data = array();
 				$update_data['ea_name'] = $_POST['ea_name'];
 				$educAttainmentMapper->update($update_data, $filter);
+				$this->set_alert(array(
+					'message'=>	'Successfully updated a educational attainment.'
+				,	'type'	=> 	'success'
+				,	'href'	=> 	DOMAIN.'reference/educ-attainment'
+				,	'text'	=>	'Educational Attainment List'
+				));
 		}
 		$educAttainment = $educAttainmentMapper->getByFilter($filter, true);
 		if(empty($country));//Show 404
@@ -401,7 +473,12 @@ class Reference extends Controller {
 				$insert_data['fos_name'] = $_POST['fos_name'];
 				$insert_data['fos_parent_fos_id'] = (empty($_POST['fos_parent_fos_id']))? NULL: $_POST['fos_parent_fos_id'];
 				$fieldOfStudyMapper->insert($insert_data);
-
+				$this->set_alert(array(
+					'message'=>	'Successfully added a field of study.'
+				,	'type'	=> 	'success'
+				,	'href'	=> 	DOMAIN.'reference/field-of-study'
+				,	'text'	=>	'Field of Study List'
+				));
 		}
 		$this->_data['action'] = 'add';
 		$this->_data['form_data'] = $data;
@@ -422,6 +499,12 @@ class Reference extends Controller {
 				$update_data['fos_name'] = $_POST['fos_name'];
 				$update_data['fos_parent_fos_id'] = (empty($_POST['fos_parent_fos_id']))? NULL: $_POST['fos_parent_fos_id'];
 				$fieldOfStudyMapper->update($update_data, $filter);
+				$this->set_alert(array(
+					'message'=>	'Successfully updated a field of study.'
+				,	'type'	=> 	'success'
+				,	'href'	=>	DOMAIN.'reference/field-of-study'
+				,	'text'	=>	'Field of Study List'
+				));
 		}
 		$fieldOfStudy = $fieldOfStudyMapper->getByFilter($filter, true);
 		if(empty($country));//Show 404
