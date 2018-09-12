@@ -34,6 +34,18 @@ class Controller extends CI_Controller {
 				$content = array(
 					'content'=> $this->load->view($file, $this->_data, true)
 				);
+				switch($_SESSION['current_user']['type']){
+					case 1:
+						$this->_template = 'templates/admin_main';
+					break;
+					case 2:
+						$this->_template = 'templates/applicant_main';
+					break;
+					default:
+
+				}
+
+
 				$this->load->view('components/header', $this->_header);
 				$this->load->view($this->_template, $content);
 				$this->load->view('components/footer');

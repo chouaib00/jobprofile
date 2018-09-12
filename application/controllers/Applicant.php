@@ -21,10 +21,123 @@ class Applicant extends Controller {
 			));
 		}
 		$mapper = new App\Mapper\AdminMapper();
-
 		$result = $mapper->selectDataTable($search['value'], $columns, $limit, $offset, $orders);
-
 		echo json_encode($result);
+	}
+
+	public function fa_ref(){
+		$limit = $_POST['length'];
+		$offset = $_POST['start'];
+		$search = $_POST['search'];
+		$columns = $_POST['columns'];
+
+		$applicantMapper = new App\Mapper\ApplicantMapper();
+		$applicant = $applicantMapper->getByFilter("applicant_user_id = '". $_SESSION['current_user']['id']."' ", true);
+		$condition = array(
+			array(
+				'column'=>'aattachment_applicant_id'
+			,	'value'	=>$applicant['applicant_id']
+			)
+		);
+
+		$orders = array();
+
+		foreach($_POST['order'] as $_order){
+			array_push($orders, array(
+				'col'=> $_POST['columns'][$_order['column']]['data']
+			,	'type'	=> $_order['dir']
+			));
+		}
+		$mapper = new App\Mapper\ApplicantAttachmentMapper();
+		$result = $mapper->selectDataTable($search['value'], $columns, $limit, $offset, $orders, $condition);
+		echo json_encode($result);
+	}
+
+	public function file_attachment(){
+		$this->is_secure = true;
+    $this->view('applicant/file_attachment');
+	}
+
+	public function add_file(){
+		$this->load->model('FileManagement/Upload_Model');
+		$fileManagerMapper = new App\Mapper\FileManagerMapper();
+		$applicantAttachmentMapper = new App\Mapper\ApplicantAttachmentMapper();
+		$applicantMapper = new App\Mapper\ApplicantMapper();
+		if(!empty($_POST)){
+			if($_FILES['file']["error"] == 0){
+				$result = $this->Upload_Model->upload_file($_FILES);
+
+				$applicant = $applicantMapper->getByFilter("applicant_user_id = '". $_SESSION['current_user']['id']."' ", true);
+
+				$fm_id = $fileManagerMapper->insert(array(
+					'fm_encypted_name'	=> $result['new_file_name']
+				));
+
+				$fa_id = $applicantAttachmentMapper->insert(array(
+					'aattachment_fm_id'=>$fm_id
+				,	'aattachment_applicant_id'=>$applicant['applicant_id']
+				,	'aattachment_visible'=> isset($_POST['file-visible'])? 1: 0
+				,	'aattachment_name'=>$_POST['file-tag']
+				));
+				$this->set_alert(array(
+					'message'=>'<i class="fa fa-check"></i> Successfully uploaded a file!'
+				,	'type'=>'success'
+				,	'href'=>DOMAIN.'applicant/file-attachment'
+				,	'text'=>'File Attachment List'
+				));
+			}
+			else{
+				$this->set_alert(array(
+					'message'=>'<i class="fa fa-exclamation"></i> Failed to upload!'
+				,	'type'=>'danger'
+				));
+			}
+		}
+		$this->is_secure = true;
+		$this->view('applicant/file_form');
+	}
+
+	public function delete_file(){
+		$option = $_POST;
+		$this->load->model('FileManagement/Upload_Model');
+		$applicantAttachmentMapper = new App\Mapper\ApplicantAttachmentMapper();
+		$fileManagerMapper = new App\Mapper\FileManagerMapper();
+
+		$applicantAttachment = $applicantAttachmentMapper->getByFilter("aattachment_id = '". $option['id']."' ", true);
+		$fileManager = $fileManagerMapper->getByFilter("fm_id = '". $applicantAttachment['aattachment_fm_id']."' ", true);
+
+		$file_path = 'upload/files/'.$fileManager['fm_encypted_name'];
+		if(file_exists($file_path)){
+			$this->Upload_Model->delete_file($file_path);
+		}
+		//echo
+		$applicantAttachmentMapper->delete(array(
+			array(
+							'column'=>'aattachment_id'
+						,	'value'=> $option['id'])
+		));
+		$result = $fileManagerMapper->delete(array(
+			array(
+							'column'=>'fm_id'
+						,	'value'=> $fileManager['fm_id'])
+		));
+		echo json_encode($result);
+	}
+
+	public function save_file(){
+		$option = $_POST;
+		$this->load->model('FileManagement/Copy_Model');
+		$applicantAttachmentMapper = new App\Mapper\ApplicantAttachmentMapper();
+		$fileManagerMapper = new App\Mapper\FileManagerMapper();
+
+		$applicantAttachment = $applicantAttachmentMapper->getByFilter("aattachment_id = '". $option['id']."' ", true);
+		$fileManager = $fileManagerMapper->getByFilter("fm_id = '". $applicantAttachment['aattachment_fm_id']."' ", true);
+
+		$file = $this->Copy_Model->copyFile(array(
+			'file_name' => $applicantAttachment['aattachment_name']
+		,	'encrypted_name'=>$fileManager['fm_encypted_name']
+		));
+		echo json_encode($file);
 	}
 
 	public function list(){

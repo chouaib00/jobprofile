@@ -3,7 +3,7 @@
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element"> <span>
-                        <img alt="image" class="img-circle img-responsive" src="<?php echo IMG_DIR ?>emp_img_default.png" />
+                        <img alt="image" class="img-circle img-responsive" src="<?php echo UPLOAD ?>profile/emp_img_default.png" />
                          </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php echo $_SESSION['current_user']['displayname'] ?></strong>
@@ -31,7 +31,7 @@
                 <ul class="nav nav-second-level collapse">
                     <li><a href="<?php echo DOMAIN; ?>applicant/update_profile">Edit Profile</a></li>
                     <li><a href="<?php echo DOMAIN; ?>applicant/my-skills">My Skills</a></li>
-                    <li><a href="<?php echo DOMAIN; ?>">File Attachments</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>applicant/file-attachment">File Attachments</a></li>
                 </ul>
             </li>
         </ul>
