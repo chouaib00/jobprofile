@@ -41,6 +41,9 @@ class Controller extends CI_Controller {
 					case 2:
 						$this->_template = 'templates/applicant_main';
 					break;
+					case 2:
+						$this->_template = 'templates/employer_main';
+					break;
 					default:
 
 				}

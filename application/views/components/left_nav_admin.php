@@ -40,6 +40,12 @@
                     <li><a href="<?php echo DOMAIN; ?>utility/announcement">Announcement</a></li>
                 </ul>
             </li>
+            <li>
+                <a href=""><i class="fa fa-group"></i> <span class="nav-label"> Applicant</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="<?php echo DOMAIN; ?>applicant/filter">Filter Applicant</a></li>
+                </ul>
+            </li>
         </ul>
 
     </div>
