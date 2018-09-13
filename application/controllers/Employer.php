@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Applicant extends Controller {
+class Employer extends Controller {
 
 	public function __construct(){
 		parent::__construct();
@@ -23,11 +23,6 @@ class Applicant extends Controller {
 		$mapper = new App\Mapper\AdminMapper();
 		$result = $mapper->selectDataTable($search['value'], $columns, $limit, $offset, $orders);
 		echo json_encode($result);
-	}
-
-	public function applicant_list(){
-		$this->is_secure = true;
-    $this->view('applicant/list');
 	}
 
 	public function fa_ref(){
@@ -143,14 +138,6 @@ class Applicant extends Controller {
 		,	'encrypted_name'=>$fileManager['fm_encypted_name']
 		));
 		echo json_encode($file);
-	}
-
-	public function filter(){
-
-
-
-		$this->is_secure = true;
-		$this->view('applicant/filter');
 	}
 
 	public function list(){

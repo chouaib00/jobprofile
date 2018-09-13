@@ -14,6 +14,19 @@ class Controller extends CI_Controller {
 		parent::__construct();
 		$this->sess = new Sys\Sess\SessionLoad();
 	}
+	protected function set_alert($config){
+		$_SESSION['alert_message'] = array(
+			'message'	=> $config['message']
+		,	'type'		=> $config['type']);
+		if(isset($config['href'])){
+			$_SESSION['alert_message']['link'] = array(
+					'href'=>$config['href']
+				,	'text'=>$config['text']
+				);
+		}
+
+	}
+
 
 	protected function view($file){
 		if($this->is_secure){
@@ -21,6 +34,21 @@ class Controller extends CI_Controller {
 				$content = array(
 					'content'=> $this->load->view($file, $this->_data, true)
 				);
+				switch($_SESSION['current_user']['type']){
+					case 1:
+						$this->_template = 'templates/admin_main';
+					break;
+					case 2:
+						$this->_template = 'templates/applicant_main';
+					break;
+					case 2:
+						$this->_template = 'templates/employer_main';
+					break;
+					default:
+
+				}
+
+
 				$this->load->view('components/header', $this->_header);
 				$this->load->view($this->_template, $content);
 				$this->load->view('components/footer');

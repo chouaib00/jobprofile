@@ -6,7 +6,7 @@
     <div class="col-lg-12">
         <div class="ibox">
             <div class="ibox-title">
-                <h5><?php echo ucfirst($action) ?> Country</h5>
+                <h5>Attach File</h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
@@ -17,14 +17,18 @@
                 </div>
             </div>
             <div class="ibox-content">
-              <form id="main-form" action="" method="POST" class="form-horizontal">
-                  <h5>Country Code</h5>
+              <form id="main-form" action="" enctype="multipart/form-data" method="POST" class="form-horizontal">
+                  <h5>File Tag</h5>
                   <div class="form-group">
-                      <div class="col-sm-12"><input type="text" name="country_code" class="form-control" placeholder="Country Code" value="<?php echo $form_data['country_code']?>"></div>
-                  </div>
-                  <h5>Country Name</h5>
-                  <div class="form-group">
-                      <div class="col-sm-12"><input type="text" name="country_name" class="form-control" placeholder="Country Name" value="<?php echo $form_data['country_name']?>"></div>
+                      <div class="col-sm-3">
+                        <input type="text" name="file-tag" class="form-control" placeholder="Enter File Tag Name" >
+                      </div>
+                      <div class="col-sm-3">
+                        <input type="file" id="file" name="file" accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf">
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="checkbox-inline i-checks"> <input type="checkbox" value="1" name="file-visible" value="1"> <i></i> Make file visible to employer </label>
+                      </div>
                   </div>
                 </form>
             </div>

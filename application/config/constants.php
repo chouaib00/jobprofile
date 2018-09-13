@@ -95,3 +95,4 @@ defined('CSS_DIR')      OR define('CSS_DIR', DOMAIN.'assets/css/');
 defined('REF_DIR')      OR define('REF_DIR', DOMAIN.'assets/ref/');
 defined('IMG_DIR')      OR define('IMG_DIR', DOMAIN.'assets/img/');
 defined('THEME')      OR define('THEME', DOMAIN.'assets/theme/');
+defined('UPLOAD')      OR define('UPLOAD', DOMAIN.'upload/');

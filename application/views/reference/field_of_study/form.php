@@ -1,11 +1,3 @@
-
-<div class="m-sm alert alert-success alert-dismissable">
-    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-    A wonderful serenity has taken possession. <a class="alert-link" href="#">Alert Link</a>.
-</div>
-
-
-
 <div class="wrapper wrapper-content animated fadeInLeft">
   <div class="row">
     <div class="col-lg-12 text-right">
