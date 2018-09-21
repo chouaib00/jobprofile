@@ -18,7 +18,6 @@ class Users extends Controller {
 		$this->_secure = false;
 		$this->_template = 'templates/public';
 		if(!empty($_POST)){
-			die();
 			$insert_user = array();
 			$insert_user['user_name'] = $_POST['reg-username'];
 			$insert_user['user_email'] = $_POST['reg-email'];

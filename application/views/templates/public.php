@@ -9,7 +9,7 @@
                   </button>
                   <a href="<?php echo DOMAIN; ?>" class="navbar-brand">PESO Batangas City</a>
               </div>
-              <div class="navbar-collapse collapse" id="navbar">
+
                   <ul class="nav navbar-top-links navbar-right">
                       <li>
                           <a href="<?php echo DOMAIN?>login">
@@ -17,7 +17,6 @@
                           </a>
                       </li>
                   </ul>
-              </div>
           </nav>
           </div>
           <?php echo $content; ?>
