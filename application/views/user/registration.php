@@ -68,7 +68,7 @@ $(document).ready(function(){
       },
       'reg-re-password':{
         required : true,
-        equalTo : "#reg-password"
+        equalTo : "[name=reg-password]"
       }
 
     }
