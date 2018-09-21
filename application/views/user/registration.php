@@ -1,3 +1,4 @@
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <div class="wrapper wrapper-content">
     <div class="container white-bg">
         <div class="row">
@@ -22,7 +23,7 @@
                         <input type="password" name="reg-re-password" placeholder="Reenter Password" class="form-control">
                     </div>
                     <div class="form-group col-md-12">
-                      <input type="checkbox" > I am not a robot</input>
+                      <div class="g-recaptcha" data-sitekey="6LcAc3EUAAAAAFH489r8o8RhDeQ_xRCfR8IHeD0F"></div>
                     </div>
                 </form>
 
@@ -42,3 +43,30 @@
     </div>
 
 </div>
+
+<script>
+$(document).ready(function(){
+  $("#main-form").validate({
+    rules :{
+      'reg-email': {
+        required : true,
+        email : true
+      },
+      'reg-username':{
+        required : true,
+        minlength: 6
+      },
+      'reg-password':{
+        required : true,
+        minlength: 6
+      },
+      'reg-re-password':{
+        required : true,
+        equalTo : "#reg-password"
+      }
+
+    }
+
+  });
+});
+</script>

@@ -388,6 +388,7 @@ class Applicant extends Controller {
 			,	'applicant_middle_name' => $basicContact['bc_middle_name']
 			,	'applicant_last_name' => $basicContact['bc_last_name']
 			,	'applicant_name_ext' => $basicContact['bc_name_ext']
+			,	'applicant_summary'	=>	$applicant['applicant_summary']
 			,	'present_add_desc' => $presentAddress['address_desc']
 			,	'present_add_country' => array(
 					'country_id'	=> $presentAddress['country_id']
@@ -499,6 +500,7 @@ class Applicant extends Controller {
 			,	'applicant_middle_name' => $basicContact['bc_middle_name']
 			,	'applicant_last_name' => $basicContact['bc_last_name']
 			,	'applicant_name_ext' => $basicContact['bc_name_ext']
+			,	'applicant_summary'	=>	$applicant['applicant_summary']
 			,	'present_add_desc' => $presentAddress['address_desc']
 			,	'present_add_country' => array(
 					'country_id'	=> $presentAddress['country_id']
@@ -567,6 +569,7 @@ class Applicant extends Controller {
 		$educationMapper = new App\Mapper\EducationMapper();
 		$workExperienceMapper = new App\Mapper\WorkExperienceMapper();
 		$applicantSkillMapper = new App\Mapper\ApplicantSkillMapper();
+		$fileManagerMapper = new App\Mapper\FileManagerMapper();
 		$user = null;
 		$applicant = null;
 		// if($this->sess->isLogin()){
@@ -602,13 +605,15 @@ class Applicant extends Controller {
 		$education = $educationMapper->getEducationTable($applicant['applicant_id']);
 		$work = $workExperienceMapper->getWorkTable($applicant['applicant_id']);
 		$applicantSkill = $applicantSkillMapper->getSkill($applicant['applicant_id']);
-
+		$fileManager = $fileManagerMapper->getByFilter("fm_id = '". $user['user_fm_id']."' ", true);
 		$form_data = array(
 				'applicant_username'	=> $user['user_name']
 			,	'applicant_first_name' => $basicContact['bc_first_name']
 			,	'applicant_middle_name' => $basicContact['bc_middle_name']
 			,	'applicant_last_name' => $basicContact['bc_last_name']
 			,	'applicant_name_ext' => $basicContact['bc_name_ext']
+			,	'applicant_summary'	=>	$applicant['applicant_summary']
+			, 'applicant_email'	=> $user['user_email']
 			,	'present_add_desc' => $presentAddress['address_desc']
 			,	'present_add_country' => array(
 					'country_id'	=> $presentAddress['country_id']
@@ -660,9 +665,10 @@ class Applicant extends Controller {
 			,	'education_table'=> $education
 			,	'work_table'=> $work
 			,	'skill_tag'=>$applicantSkill
+			,	'fm_file'=>(empty($fileManager)? 'emp_img_default.png' : $fileManager['fm_encypted_name'])
 		);
-		$data['form_data'] = $form_data;
 
+		$data['form_data'] = $form_data;
 
 		$html = $this->load->view('applicant/resume_format', $data, true);
 

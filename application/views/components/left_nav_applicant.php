@@ -29,6 +29,7 @@
             <li>
                 <a href=""><i class="fa fa-user"></i> <span class="nav-label">My Profile</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
+                    <li><a href="<?php echo DOMAIN; ?>applicant/view-profile">View Profile</a></li>
                     <li><a href="<?php echo DOMAIN; ?>applicant/update-profile">Edit Profile</a></li>
                     <li><a href="<?php echo DOMAIN; ?>applicant/file-attachment">File Attachments</a></li>
                     <li><a href="<?php echo DOMAIN; ?>applicant/upload-image">Profile Image</a></li>

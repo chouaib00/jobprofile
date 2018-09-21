@@ -506,7 +506,7 @@ var row_format = function(data){
                   '</a>' +
                   '</h3>' +
                   '<p class="small">' +
-                      'Description Here' +
+                      data.applicant_summary +
                   '</p>' +
                   '<dl class="small m-b-none">' +
                       '<dt>Current Address</dt>' +
@@ -532,9 +532,9 @@ var row_format = function(data){
                   // <input type="text" class="form-control" placeholder="1">
               '</td>' +
               '<td>' +
-                  // <h4>
-                  //     $180,00
-                  // </h4>
+                  '<h3>' +
+                    '<a class="text-navy has-tooltip" title="Print" href="' + global.site_name + 'applicant/print-resume/' + data.user_name + '"><i class="fa fa-external-link"></i></a>' +
+                  '</h3>' +
               '</td>' +
           '</tr>';
 
