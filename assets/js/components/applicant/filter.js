@@ -1,9 +1,8 @@
 $(document).ready(function(){
 
-
-  $('.form-submit').click(function(){
-    $("#filter-fields").submit();
-  });
+  // $('.form-submit').click(function(){
+  //   $("#filter-fields").submit();
+  // });
 
   $('#filter-applicants').click(function(){
     var filter = [];
@@ -15,8 +14,90 @@ $(document).ready(function(){
 
       filter.push(entry);
     });
-    console.log(filter)
+    filter.push({
+      name : 'age-range'
+    , value: $("[name=age-range]").attr("value")
+    });
+    $.ajax({
+			type: 'POST',
+			dataType: 'json',
+			url: global.site_name + 'applicant/filter-applicants',
+			data : filter,
+      complete : function(){
+      },
+			success : function(result){
+        let html_data = '';
+        result.forEach(function(row){
+          html_data += row_format(row);
+        });
+        console.log(html_data);
+        $('#applicant-list tbody').html('')
+        $('#applicant-list tbody').html(html_data)
+        console.log(result)
+				// if(result.success){
+				// 	window.location.reload();
+				// }
+			}
+		});
   });
+
+  $("[name=age-range]").ionRangeSlider({
+      min: 10,
+      max: 90,
+      from: $("[name=age-range]").data('default').split(';')[0],
+      to: $("[name=age-range]").data('default').split(';')[1],
+      type: 'double',
+      postfix: " years",
+      maxPostfix: "+",
+      prettify: true,
+      hasGrid: true
+  });
+
+  $('.select2-skill').select2({
+    allowClear: true,
+    ajax:{
+      url: global.site_name + 'reference/ref',
+      dataType: 'json',
+      type:'post',
+      data: function(params){
+          let search = $.isEmptyObject(params)? '' : params.term;
+          let option = {
+            columns :[
+              {   "data": "st_name"
+                , "searchable": true
+              },
+              {   "data"  : "st_id"
+                , "searchable": false
+              }
+            ],
+            search : {
+              'value' : search
+            , 'regex' : false
+            },
+            option : {
+              'type' : 'skill'
+            },
+            length : 25
+
+          };
+          return option;
+      },
+      processResults: function (data) {
+      // Tranforms the top-level key of the response object from 'items' to 'results'
+        let result = [];
+        data['data'].forEach(function(d){
+          result.push({
+            id  : d.st_id
+          , text: d.st_name
+          });
+        });
+        return {
+          results: result
+        }
+      }
+    }
+  });
+
 
   $('#update-profile').click(function(){
     helper.button_state('#update-profile', 'loading');
@@ -207,102 +288,11 @@ $(document).ready(function(){
   });
 
 
-  $('#education-list').DataTable({
-    dom: '<"dt-toolbar">rt',
-    initComplete: function(){
-      let toolbar = '<div><button type="button" id="add-education" class="btn btn-default" role="button" ><i class="fa fa-file">&nbsp</i> ADD</button></div>';;
-      $("div.dt-toolbar").html(toolbar);
-      $('#add-education').click(function(){
-        educ_modal_controller.clear();
-        let row_no = 0;
-        $('#education-list tbody tr').each(function(){
-          if(row_no<=$(this).data('no')){
-            row_no = $(this).data('no');
-          }
-        });
-        row_no++;
-        $("#modal-educ").data('no', row_no)
-
-        educ_modal_controller.show();
-      });
-    },
-    fnDrawCallback: function (oSettings) {
-      $('#education-list .edit-row').unbind();
-      $('#education-list .edit-row').click(function(){
-        educ_modal_controller.clear();
-        educ_modal_controller.show();
-
-        let row_data = JSON.parse(decodeURIComponent($(this).closest('tr').data('summary')));
-        educ_modal_controller.set_data(row_data);
-      });
-    }
-  });
-
   // $('.select2-educ-type').select2({
   //   dropdownParent: $("#modal-educ-type")
   // })
 
-  $('[name=present-add-country]').select2({
-    allowClear: true,
-    ajax:{
-      url: global.site_name + 'reference/ref',
-      dataType: 'json',
-      type:'post',
-      data: function(params){
-          let search = $.isEmptyObject(params)? '' : params.term;
-          let option = {
-            columns :[
-              {
-                "data": "country_name"
-              , "searchable": true},
-              { "data": "country_id"
-              , "searchable": false
-              }
-            ],
-            order : [
-              {
-                'column' : 0,
-                'dir'   : 'asc'
-              }
-            ],
-            search : {
-              'value' : search
-            , 'regex' : false
-            },
-            option : {
-              'type' : 'country'
-            },
-            length : 25
-
-          };
-          return option;
-      },
-      processResults: function (data) {
-      // Tranforms the top-level key of the response object from 'items' to 'results'
-        let result = [];
-        data['data'].forEach(function(d){
-          result.push({
-            id  : d.country_id
-          , text: d.country_name
-          });
-        });
-        return {
-          results: result
-        }
-      }
-    }
-  }).change(function(){
-    if($(this).val()){
-      $('[name=present-add-region]').select2("enable",true)
-    }
-    else{
-      $('[name=present-add-region]').select2("enable",false)
-    }
-
-    $('[name=present-add-region]').select2("val", '');
-  });
-
-  $('[name=present-add-region]').select2({
+  $('[name=add-region]').select2({
     allowClear: true,
     ajax:{
       url: global.site_name + 'reference/ref',
@@ -340,7 +330,7 @@ $(document).ready(function(){
           };
           option.condition.push({
               column  : 'country_id'
-            , value   : $('[name=present-add-country]').val()
+            , value   : '178'
           });
           return option;
       },
@@ -360,15 +350,15 @@ $(document).ready(function(){
     }
   }).change(function(){
     if($(this).val()){
-      $('[name=present-add-province]').select2("enable",true)
+      $('[name=add-province]').select2("enable",true)
     }
     else{
-      $('[name=present-add-province]').select2("enable",false)
+      $('[name=add-province]').select2("enable",false)
     }
-    $('[name=present-add-province]').select2("val", '');
+    $('[name=add-province]').select2("val", '');
   });
 
-  $('[name=present-add-province]').select2({
+  $('[name=add-province]').select2({
     allowClear: true,
     ajax:{
       url: global.site_name + 'reference/ref',
@@ -403,7 +393,7 @@ $(document).ready(function(){
           };
           option.condition.push({
               column  : 'region_id'
-            , value   : $('[name=present-add-region]').val()
+            , value   : $('[name=add-region]').val()
           });
           return option;
       },
@@ -423,15 +413,15 @@ $(document).ready(function(){
     }
   }).change(function(){
     if($(this).val()){
-      $('[name=present-add-city]').select2("enable",true)
+      $('[name=add-city]').select2("enable",true)
     }
     else{
-      $('[name=present-add-city]').select2("enable",false)
+      $('[name=add-city]').select2("enable",false)
     }
-    $('[name=present-add-city]').select2("val", '');
+    $('[name=add-city]').select2("val", '');
   });
 
-  $('[name=present-add-city]').select2({
+  $('[name=add-city]').select2({
     allowClear: true,
     ajax:{
       url: global.site_name + 'reference/ref',
@@ -466,252 +456,7 @@ $(document).ready(function(){
           };
           option.condition.push({
               column  : 'province_id'
-            , value   : $('[name=present-add-province]').val()
-          });
-          return option;
-      },
-      processResults: function (data) {
-      // Tranforms the top-level key of the response object from 'items' to 'results'
-        let result = [];
-        data['data'].forEach(function(d){
-          result.push({
-            id  : d.city_id
-          , text: d.city_name
-          });
-        });
-        return {
-          results: result
-        }
-      }
-    }
-  });
-
-
-  $('[name=permanent-add-country]').select2({
-    allowClear: true,
-    ajax:{
-      url: global.site_name + 'reference/ref',
-      dataType: 'json',
-      type:'post',
-      data: function(params){
-          let search = $.isEmptyObject(params)? '' : params.term;
-          let option = {
-            columns :[
-              {
-                "data": "country_name"
-              , "searchable": true},
-              { "data": "country_id"
-              , "searchable": false
-              }
-            ],
-            order : [
-              {
-                'column' : 0,
-                'dir'   : 'asc'
-              }
-            ],
-            search : {
-              'value' : search
-            , 'regex' : false
-            },
-            option : {
-              'type' : 'country'
-            },
-            length : 25
-
-          };
-          return option;
-      },
-      processResults: function (data) {
-      // Tranforms the top-level key of the response object from 'items' to 'results'
-        let result = [];
-        data['data'].forEach(function(d){
-          result.push({
-            id  : d.country_id
-          , text: d.country_name
-          });
-        });
-        return {
-          results: result
-        }
-      }
-    }
-  }).change(function(){
-    if($(this).val()){
-      $('[name=permanent-add-region]').select2("enable",true)
-    }
-    else{
-      $('[name=permanent-add-region]').select2("enable",false)
-    }
-
-    $('[name=permanent-add-region]').select2("val", '');
-  });
-
-  $('[name=permanent-add-region]').select2({
-    allowClear: true,
-    ajax:{
-      url: global.site_name + 'reference/ref',
-      dataType: 'json',
-      type:'post',
-      data: function(params){
-          let search = $.isEmptyObject(params)? '' : params.term;
-          let option = {
-            columns :[
-              {
-                "data": "region_code"
-              , "searchable": false },
-              {
-                "data": "region_desc"
-              , "searchable": true },
-              { "data": "region_id"
-              , "searchable": false}
-            ],
-            order : [
-              {
-                'column' : 2,
-                'dir'   : 'asc'
-              }
-            ],
-            search : {
-              'value' : search
-            , 'regex' : false
-            },
-            option : {
-              'type' : 'region'
-            },
-            length : 25,
-            condition:[]
-
-          };
-          option.condition.push({
-              column  : 'country_id'
-            , value   : $('[name=permanent-add-country]').val()
-          });
-          return option;
-      },
-      processResults: function (data) {
-      // Tranforms the top-level key of the response object from 'items' to 'results'
-        let result = [];
-        data['data'].forEach(function(d){
-          result.push({
-            id  : d.region_id
-          , text: d.region_code + ' - ' + d.region_desc
-          });
-        });
-        return {
-          results: result
-        }
-      }
-    }
-  }).change(function(){
-    if($(this).val()){
-      $('[name=permanent-add-province]').select2("enable",true)
-    }
-    else{
-      $('[name=permanent-add-province]').select2("enable",false)
-    }
-    $('[name=permanent-add-province]').select2("val", '');
-  });
-
-  $('[name=permanent-add-province]').select2({
-    allowClear: true,
-    ajax:{
-      url: global.site_name + 'reference/ref',
-      dataType: 'json',
-      type:'post',
-      data: function(params){
-          let search = $.isEmptyObject(params)? '' : params.term;
-          let option = {
-            columns :[
-              {
-                "data": "province_name"
-              , "searchable": true },
-              {
-                "data": "province_id"
-              , "searchable": false }
-            ],
-            order : [
-              {
-                'column' : 1,
-                'dir'   : 'asc'
-              }
-            ],
-            search : {
-              'value' : search
-            , 'regex' : false
-            },
-            option : {
-              'type' : 'province'
-            },
-            length : 25,
-            condition:[]
-          };
-          option.condition.push({
-              column  : 'region_id'
-            , value   : $('[name=permanent-add-region]').val()
-          });
-          return option;
-      },
-      processResults: function (data) {
-      // Tranforms the top-level key of the response object from 'items' to 'results'
-        let result = [];
-        data['data'].forEach(function(d){
-          result.push({
-            id  : d.province_id
-          , text: d.province_name
-          });
-        });
-        return {
-          results: result
-        }
-      }
-    }
-  }).change(function(){
-    if($(this).val()){
-      $('[name=permanent-add-city]').select2("enable",true)
-    }
-    else{
-      $('[name=permanent-add-city]').select2("enable",false)
-    }
-    $('[name=permanent-add-city]').select2("val", '');
-  });
-
-  $('[name=permanent-add-city]').select2({
-    allowClear: true,
-    ajax:{
-      url: global.site_name + 'reference/ref',
-      dataType: 'json',
-      type:'post',
-      data: function(params){
-          let search = $.isEmptyObject(params)? '' : params.term;
-          let option = {
-            columns :[
-              {
-                "data": "city_name"
-              , "searchable": true },
-              {
-                "data": "city_id"
-              , "searchable": false }
-            ],
-            order : [
-              {
-                'column' : 0,
-                'dir'   : 'asc'
-              }
-            ],
-            search : {
-              'value' : search
-            , 'regex' : false
-            },
-            option : {
-              'type' : 'city'
-            },
-            length : 25,
-            condition:[]
-          };
-          option.condition.push({
-              column  : 'province_id'
-            , value   : $('[name=permanent-add-province]').val()
+            , value   : $('[name=add-province]').val()
           });
           return option;
       },
@@ -738,129 +483,114 @@ $(document).ready(function(){
 });
 
 
-var educ_table = {
-  generate_row : function(params){
-    console.log(params)
-    return '<tr class="educ-row" data-no="' + params.no + '" data-summary="' + params.data + '">' +
-              '<td>' +
-                '<div class="text-center"><button type="button" disabled class="btn btn-info has-tooltip edit-row" title="Edit"><i class="fa fa-pencil"></i></button> ' +
-                '<button type="button" disabled class="btn btn-danger has-tooltip delete-row" title="Delete" value=""><i class="fa fa-trash"></i></button></div>'+
-              '</td>' +
-              '<td>' + params.educ_type_desc + '</td>' +
-              '<td>' + params.field_of_study_desc + '</td>' +
-              '<td>' + params.school_desc + '</td>' +
-            '</tr>';
-    }
-}
+var row_format = function(data){
+  let contact = data.bc_phone_num1;
 
-var educ_modal_controller = {
-  show: function(){
-
-
-
-    $("#modal-educ").modal();
-    $("#modal-educ-add").unbind();
-    $('#modal-educ-add').click(function(){
-
-
-
-      let educ = educ_modal_controller.get_data();
-      educ.data = encodeURIComponent(JSON.stringify(educ));
-      console.log(educ)
-      let el = $('#education-list').DataTable();
-      let newRow = educ_table.generate_row(educ);
-      if($(this).val() == 'add'){
-        el.row.add($(newRow)).draw();
-      }
-      if($(this).val() == 'edit'){
-        let inde = $('#education-list tbody tr[data-no="' + educ.no + '"]').index()
-        console.log(inde)
-        el.row(':eq(' + inde + ')').edit().draw();
-      }
-
-
-      $("#modal-educ").modal('toggle');
-    })
-  },
-  validate : function(){
-    let isValid = true;
-
-    $('#modal-educ-school').select2("val", "");
-    $('#modal-educ-fos').select2("val", "");
-    $('#modal-educ-type').select2("val", "");
-    $('#modal-educ-start-date').val('')
-    $('#modal-educ-add-info').val('')
-    $('#modal-educ-end-date-current').val('')
-    $('#modal-educ-course').val('')
-    $('#modal-educ-add-info').val('')
-    return isValid;
-  },
-  clear : function(){
-    $('#modal-educ-school').select2("val", "");
-    $('#modal-educ-fos').select2("val", "");
-    $('#modal-educ-type').select2("val", "");
-    $('#modal-educ-start-date').val('')
-    $('#modal-educ-end-date-date').val('')
-    $('#modal-educ-add-info').val('')
-    $('#modal-educ-end-date-current').val('')
-    $('#modal-educ-course').val('')
-    $('#modal-educ-add-info').val('')
-  },
-  set_data : function(content){
-    console.log(content);
-    $('#modal-educ-type').select2('val', content.educ_type); //Without Ajax
-
-    //With Ajax
-    $("#modal-educ-school").append('<option selected val="' + content.school + '"' + content.school_desc + '></option>');
-    $("#modal-educ-school").select2('val', content.school);
-
-    $("#modal-educ-fos").append('<option selected val="' + content.field_of_study + '"' + content.field_of_study_desc + '></option>');
-    $("#modal-educ-fos").select2('val', content.field_of_study);
-
-    $('#modal-educ-start-date').val(moment(content.start_date).format('MMMM YYYY'));
-    $('#modal-educ-end-date').val(moment(content.end_date).format('MMMM YYYY'));
-
-    $('#modal-educ-end-date-current').prop('checked', content.end_date_current);
-    $('#modal-educ-course').val(content.course)
-    $('#modal-educ-add-info').val(content.add_info)
-
-    $('#modal-educ-add').val('edit')
-    // let content = {
-    //   school : $('#modal-educ-school').val()
-    // , school_desc : $('#modal-educ-school option:selected').text()
-    // , field_of_study : $('#modal-educ-fos').val()
-    // , field_of_study_desc: $('#modal-educ-fos option:selected').text()
-    // , educ_type : $('#modal-educ-type').val()
-    // , educ_type_desc : $('#modal-educ-type option:selected').text()
-    // , start_date : $('#modal-educ-start-date').val()
-    // , end_date : $('#modal-educ-end-date').val()
-    // , end_date_current : $('#modal-educ-end-date-current').val()
-    // , course : $('#modal-educ-course').val()
-    // , add_info : $('#modal-educ-add-info').val()
-    // , action : $('#modal-educ-add').val()
-    // };
-  },
-  get_data : function(){
-    let tempStartDate = ($('#modal-educ-start-date').val() + ' 01').split(' ');
-    let startDate = moment().month(tempStartDate[0]).year(tempStartDate[1]).date(tempStartDate[2]).format('YYYY-MM-DD');
-    let tempEndDate = ($('#modal-educ-end-date').val() + ' 01').split(' ');
-    let endDate = moment().month(tempEndDate[0]).year(tempEndDate[1]).date(tempEndDate[2]).format('YYYY-MM-DD');
-
-    let content = {
-      school : $('#modal-educ-school').val()
-    , school_desc : $('#modal-educ-school option:selected').text()
-    , field_of_study : $('#modal-educ-fos').val()
-    , field_of_study_desc: $('#modal-educ-fos option:selected').text()
-    , educ_type : $('#modal-educ-type').val()
-    , educ_type_desc : $('#modal-educ-type option:selected').text()
-    , start_date : startDate
-    , end_date : endDate
-    , end_date_current : $('#modal-educ-end-date-current').is(':checked')
-    , course : $('#modal-educ-course').val()
-    , add_info : $('#modal-educ-add-info').val()
-    , action : $('#modal-educ-add').val()
-    , no     : $("#modal-educ").data('no')
-    };
-    return content;
+  if(data.bc_phone_num2){
+    contact += ' / ' + data.bc_phone_num2;
   }
-};
+  if(data.bc_phone_num3){
+    contact += ' / ' + data.bc_phone_num3;
+  }
+  let img_src = (data.fm_encypted_name)? data.fm_encypted_name : 'emp_img_default.png'
+  return  '<tr>' +
+              '<td width="90">' +
+                  '<div>' +
+                    '<img class="img-circle img-responsive" src="' + global.site_name + 'upload/profile/' + img_src + '">' +
+                  '</div>' +
+              '</td>' +
+              '<td class="desc">' +
+                  '<h3>' +
+                  '<a href="' + global.site_name + 'applicant/view_profile/' + data.user_name + '" class="text-navy">' +
+                      data.bc_first_name + ' ' + data.bc_middle_name + ' ' + data.bc_last_name + ' ' + data.bc_name_ext +
+                  '</a>' +
+                  '</h3>' +
+                  '<p class="small">' +
+                      'Description Here' +
+                  '</p>' +
+                  '<dl class="small m-b-none">' +
+                      '<dt>Current Address</dt>' +
+                      '<dd>' + data.address_desc + ', ' + data.city_name + ' City, ' + data.province_name + '</dd>' +
+                  '</dl>' +
+                  '<dl class="small m-b-none">' +
+                      '<dt>Contact</dt>' +
+                      '<dd>' + contact +  '</dd>' +
+                  '</dl>' +
+
+                  '<div class="m-t-sm">' +
+                      // <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a>
+                      // |
+                      // <a href="#" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
+                  '</div>' +
+              '</td>' +
+
+              '<td>' +
+                  // $180,00
+                  // <s class="small text-muted">$230,00</s>
+              '</td>' +
+              '<td width="65">' +
+                  // <input type="text" class="form-control" placeholder="1">
+              '</td>' +
+              '<td>' +
+                  // <h4>
+                  //     $180,00
+                  // </h4>
+              '</td>' +
+          '</tr>';
+
+
+
+  // return '<tr>' +
+  //           '<td width="90">' +
+  //               <div class="cart-product-imitation">' +
+  //               </div>' +
+  //           </td>' +
+  //           <td class="desc">' +
+  //               <h3>' +
+  //               <a href="#" class="text-navy">' +
+  //                   Desktop publishing software' +
+  //               </a>' +
+  //               </h3>' +
+  //               <p class="small">' +
+  //                 It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is' +
+  //               </p>' +
+  //               <dl class="small m-b-none">' +
+  //                   <dt>Description lists</dt>' +
+  //                   <dd>A description list is perfect for defining terms.</dd>' +
+  //               </dl>' +
+  //
+  //               <div class="m-t-sm">' +
+  //                   <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a>' +
+  //                   |
+  //                   <a href="#" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
+  //               </div>
+  //           </td>
+  //
+  //           <td>
+  //               $180,00
+  //               <s class="small text-muted">$230,00</s>
+  //           </td>
+  //           <td width="65">
+  //               <input type="text" class="form-control" placeholder="1">
+  //           </td>
+  //           <td>
+  //               <h4>
+  //                   $180,00
+  //               </h4>
+  //           </td>
+  //       </tr>
+  // return  '<tr>' +
+  //           '<td class="col-md-2 text-center text-capitalize">' +
+  //             data.bc_first_name + ' ' + data.bc_middle_name + ' ' +
+  //             data.bc_last_name + ' ' + data.bc_name_ext +
+  //           '</td>' +
+  //           '<td class="col-md-1 text-center text-capitalize">' + data.bc_gender + '</td>' +
+  //           '<td class="col-md-1 text-center">' + moment().diff(data.applicant_birthday, 'years') + '</td>' +
+  //           '<td class="col-md-2 text-center">' + contact + '</td>' +
+  //           '<td class="col-md-1 text-center"></td>' +
+  //           '<td class="col-md-1 text-center">' + data.bc_email_address + '</td>' +
+  //           '<td class="col-md-3 text-center">' + data.address_desc + ', ' + data.city_name + ' City, ' + data.province_name + '</td>' +
+  //           '<td class="col-md-1 text-center">Skillset</td>' +
+  //           '<td class="col-md-1 text-center no-sort">Action</td>' +
+  //         '</tr>';
+}

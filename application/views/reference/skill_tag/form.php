@@ -6,7 +6,7 @@
     <div class="col-lg-12">
         <div class="ibox">
             <div class="ibox-title">
-                <h5>Skills</h5>
+                <h5><?php echo ucfirst($action) ?> Skill Tag</h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
@@ -18,18 +18,10 @@
             </div>
             <div class="ibox-content">
               <form id="main-form" action="" method="POST" class="form-horizontal">
-                  <h5>Skills</h5>
+                  <h5>Skill Tag</h5>
                   <div class="form-group">
-                      <div class="col-sm-12">
-                          <select class="select2-basic form-control" name="city_province_id" data-placeholder="Select Skills" multiple="multiple">
-                          <option></option>
-                        <?php foreach($skill_list as $skill){?>
-                          <option value="<?php echo $skill['st_id'] ?>"><?php echo $skill['st_name']?></option>
-                        <?php }?>
-                          </select>
-                      </div>
+                      <div class="col-sm-12"><input type="text" name="st_name" class="form-control" placeholder="Skill Tag" value="<?php echo $form_data['st_name']?>"></div>
                   </div>
-                </form>
             </div>
         </div>
     </div>
@@ -37,4 +29,4 @@
 
 
 </div>
-<script src="<?php echo JS_DIR ?>components/applicant/update_profile.js"></script>
+<script src="<?php echo JS_DIR ?>components/reference/skill_tag_form.js"></script>

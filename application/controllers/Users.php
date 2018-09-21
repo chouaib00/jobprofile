@@ -22,6 +22,7 @@ class Users extends Controller {
 			$insert_user['user_email'] = $_POST['reg-email'];
 			$insert_user['user_password'] = encrypt($_POST['reg-password']);
 			$insert_user['user_type'] = '2';
+			$insert_user['user_fm_id'] = '0';
 			$user_id = $usermapper->insert($insert_user);
 
 			$insert_bc = array();

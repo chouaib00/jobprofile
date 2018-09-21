@@ -23,6 +23,7 @@
                     <li><a href="<?php echo DOMAIN; ?>reference/field-of-study">Field Of Study</a></li>
                     <li><a href="<?php echo DOMAIN; ?>reference/educ_attainment">Educational Attainment</a></li>
                     <li><a href="<?php echo DOMAIN; ?>reference/school">School</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>reference/skill-tag">Skill Tag</a></li>
                 </ul>
             </li>
             <li>

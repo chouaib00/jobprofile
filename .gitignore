@@ -1,5 +1,9 @@
 .DS_Store
 
+upload/files/*
+upload/pdf/*
+upload/temp/*
+
 application/cache/*
 !application/cache/index.html
 

@@ -3,17 +3,15 @@
 
 class Upload_Model extends CI_Model{
 
-	public function upload_profile_image($file, $options){
+	public function upload_profile_image($file){
 		$key = array_keys($file);
 
-		$options['image_name'] = (isset($options['image_name']))? $options['image_name']: '';
-
 		$ext = pathinfo($file[$key[0]]['name'], PATHINFO_EXTENSION);
-		$new_image_name = $options['image_name'].'.'.$ext;
+		$new_image_name = $this->generateKey().'.'.$ext;
 
 		$config =  array(
 				  'upload_path'     => 'upload/profile/',
-				  'upload_url'      => UPLOADS,
+				  'upload_url'      => UPLOAD,
 				  'allowed_types'   => "gif|jpg|png|jpeg",
 				  'file_name'		=> $new_image_name,
 				  'file_ext_tolower'=> TRUE,
@@ -25,7 +23,7 @@ class Upload_Model extends CI_Model{
 
 		$this->load->library('upload', $config);
 		if(!$this->upload->do_upload($key[0])){
-			//echo $this->upload->display_errors();
+			echo $this->upload->display_errors();
 		}
 		else{
 			return array('image_name'=>$new_image_name);
