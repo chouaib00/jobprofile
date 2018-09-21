@@ -17,6 +17,9 @@
     <link href="<?php echo THEME ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <link href="<?php echo THEME; ?>css/plugins/select2/select2.min.css" rel="stylesheet">
     <link href="<?php echo THEME; ?>css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="<?php echo THEME; ?>css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
+    <link href="<?php echo THEME; ?>css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+
     <link href="<?php echo THEME; ?>css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 
 

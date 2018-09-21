@@ -11,17 +11,20 @@ class Users extends Controller {
 	}
 
 	public function register_applicant(){
+
 		$usermapper = new App\Mapper\UserMapper();
 		$basiccontactmapper = new App\Mapper\BasicContactMapper();
 		$applicantmapper = new App\Mapper\ApplicantMapper();
 		$this->_secure = false;
 		$this->_template = 'templates/public';
 		if(!empty($_POST)){
+			die();
 			$insert_user = array();
 			$insert_user['user_name'] = $_POST['reg-username'];
 			$insert_user['user_email'] = $_POST['reg-email'];
 			$insert_user['user_password'] = encrypt($_POST['reg-password']);
 			$insert_user['user_type'] = '2';
+			$insert_user['user_fm_id'] = '0';
 			$user_id = $usermapper->insert($insert_user);
 
 			$insert_bc = array();

@@ -43,6 +43,9 @@ var comm_events = {
         checkboxClass: 'icheckbox_square-green',
         radioClass: 'iradio_square-green',
     });
+    $(".i-checks input").on('ifChanged', function (e) {
+        $(this).trigger("change", e);
+    });
   },
   submit_init : function(){
     $('.form-submit').click(function(){

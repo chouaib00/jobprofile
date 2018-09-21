@@ -31,6 +31,7 @@ class Controller extends CI_Controller {
 	protected function view($file){
 		if($this->is_secure){
 			if($this->sess->isLogin()){
+				$this->_data['_login_details'] = $this->get_current_user();
 				$content = array(
 					'content'=> $this->load->view($file, $this->_data, true)
 				);
@@ -41,11 +42,10 @@ class Controller extends CI_Controller {
 					case 2:
 						$this->_template = 'templates/applicant_main';
 					break;
-					case 2:
+					case 3:
 						$this->_template = 'templates/employer_main';
 					break;
 					default:
-
 				}
 
 
@@ -71,6 +71,17 @@ class Controller extends CI_Controller {
 
 		header('Location: ' . $url, true, $permanent ? 301 : 302);
 		exit();
+	}
+
+	public function get_current_user(){
+		$userMapper = new App\Mapper\UserMapper();
+		$fileManagerMapper = new App\Mapper\FileManagerMapper();
+		$user = $userMapper->getByFilter("user_id = '". $_SESSION['current_user']['id']."' ", true);
+		$fileManager =$fileManagerMapper->getByFilter("fm_id = '". $user['user_fm_id']."' ", true);
+
+		return array(
+			'profile_img' => empty($fileManager)? 'emp_img_default.png' : $fileManager['fm_encypted_name']
+		);
 	}
 
 

@@ -13,7 +13,10 @@
   <script src="<?php echo THEME ?>js/plugins/iCheck/icheck.min.js"></script>
   <!-- Bootstrap-Datepicker -->
   <script src="<?php echo THEME ?>js/plugins/datapicker/bootstrap-datepicker.js"></script>
-
+  <!-- Jquery Validate -->
+  <script src="<?php echo THEME ?>js/plugins/validate/jquery.validate.min.js"></script>
+  <!-- IonRangeSlider -->
+  <script src="<?php echo THEME ?>js/plugins/ionRangeSlider/ion.rangeSlider.min.js"></script>
   <script src="<?php echo JS_DIR; ?>components/general/jquery_extension.js"></script>
   <script src="<?php echo JS_DIR; ?>lib/bootbox.min.js"></script>
   <script src="<?php echo JS_DIR; ?>lib/moment.js"></script>

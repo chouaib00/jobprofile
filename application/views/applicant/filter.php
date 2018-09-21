@@ -12,9 +12,6 @@
                     <button id="filter-applicants" class="btn btn-warning btn-outline has-tooltip form-submit" title="Filter"><i class="fa fa-filter"></i></button>
                   </div>
                 </div>
-
-
-
               </div>
               <div class="panel-body">
                 <div class="row">
@@ -40,25 +37,38 @@
                                   <option></option>
                               </select>
                             </div>
+                            <div class="col-sm-9">
+                              <h5>Age Range</h5>
+                              <div name="age-range" data-default="10;90"></div>
+                            </div>
                           </div>
                           <h5>Address</h5>
                           <div class="form-group">
                               <div class="col-sm-4 m-t-sm">
-                                <select class="filter-field form-control select2-region" name="present-add-region" data-placeholder="Select Region" <?php echo ($form_data['present_add_region']['region_id'])? '': 'disabled' ?>>
+                                <select class="filter-field form-control select2-region" name="add-region" data-placeholder="Select Region" <?php echo ($form_data['present_add_region']['region_id'])? '': 'disabled' ?>>
                                     <option></option>
                                 </select>
                               </div>
                               <div class="col-sm-4 m-t-sm">
-                                <select class="filter-field form-control select2-province" name="present-add-province" data-placeholder="Select Province" <?php echo ($form_data['present_add_province']['province_id'])? '': 'disabled' ?>>
+                                <select class="filter-field form-control select2-province" name="add-province" data-placeholder="Select Province" <?php echo ($form_data['present_add_province']['province_id'])? '': 'disabled' ?>>
                                     <option></option>
 
                                 </select>
                               </div>
                               <div class="col-sm-4 m-t-sm">
-                                <select class="filter-field form-control select2-city" name="present-add-city" data-placeholder="Select City" <?php echo ($form_data['present_add_city']['city_id'])? '': 'disabled' ?> >
+                                <select class="filter-field form-control select2-city" name="add-city" data-placeholder="Select City" <?php echo ($form_data['present_add_city']['city_id'])? '': 'disabled' ?> >
                                     <option></option>
                                 </select>
                               </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="col-sm-12">
+                              <h5>Skills</h5>
+                              <select class="select2-skill form-control filter-field" name="applicant-skills" data-placeholder="Select Skills" multiple="multiple">
+                              </select>
+                            </div>
+
                           </div>
                         </div>
                       </div>
@@ -72,7 +82,7 @@
                       <div class="ibox-title blue-bg">Applicant List</div>
                       <div class="ibox-content">
                         <div class="table-responsive">
-                          <table id="applicant-list" class="table table-striped table-bordered table-hover" data-config="">
+                          <!-- <table id="applicant-list" class="table table-striped table-bordered table-hover" data-config="">
                             <thead>
                               <tr>
                                 <th class="col-md-2 text-center">Applicant Name</th>
@@ -89,6 +99,11 @@
                             <tbody>
 
                             </tbody>
+                          </table> -->
+                          <table id="applicant-list" class="table shoping-cart-table">
+                              <tbody>
+
+                              </tbody>
                           </table>
                         </div>
                       </div>

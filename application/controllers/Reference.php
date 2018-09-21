@@ -45,6 +45,9 @@ class Reference extends Controller {
 		if($option['type'] == 'school'){
 			$mapper = new App\Mapper\SchoolMapper();
 		}
+		if($option['type'] == 'skill'){
+			$mapper = new App\Mapper\SkillTagMapper();
+		}
 
 		$result = $mapper->selectDataTable($search['value'], $columns, $limit, $offset, $orders, $condition);
 		echo json_encode($result);
@@ -97,6 +100,12 @@ class Reference extends Controller {
 								'column'=>'school_id'
 							,	'value'=> $option['id']);
 			break;
+			case 'skill':
+				$mapper = new App\Mapper\SkillTagMapper();
+				$params[] = array(
+								'column'=>'st_id'
+							,	'value'=> $option['id']);
+			break;
 
 		}
 
@@ -127,7 +136,7 @@ class Reference extends Controller {
 		$this->_data['action'] = 'add';
 		$this->_data['form_data'] = $data;
 
-		$this->_template = 'templates/admin_main';
+		$this->is_secure = true;
     $this->view('reference/country/form');
 	}
 
@@ -158,7 +167,7 @@ class Reference extends Controller {
 		$this->_data['action'] = 'add';
 		$this->_data['form_data'] = $data;
 
-		$this->_template = 'templates/admin_main';
+		$this->is_secure = true;
     $this->view('reference/region/form');
 	}
 
@@ -189,7 +198,7 @@ class Reference extends Controller {
 		$this->_data['action'] = 'add';
 		$this->_data['form_data'] = $data;
 
-		$this->_template = 'templates/admin_main';
+		$this->is_secure = true;
     $this->view('reference/province/form');
 	}
 
@@ -217,7 +226,7 @@ class Reference extends Controller {
 		$this->_data['action'] = 'add';
 		$this->_data['form_data'] = $data;
 
-		$this->_template = 'templates/admin_main';
+		$this->is_secure = true;
     $this->view('reference/city/form');
 	}
 
@@ -242,8 +251,33 @@ class Reference extends Controller {
 		$this->_data['action'] = 'add';
 		$this->_data['form_data'] = $data;
 
-		$this->_template = 'templates/admin_main';
+		$this->is_secure = true;
     $this->view('reference/educ_attainment/form');
+	}
+
+	public function add_skill_tag(){
+		$skillTagMapper = new App\Mapper\SkillTagMapper();
+		$data = array(
+				'st_id' => ''
+			,	'st_name' => ''
+		);
+
+		if(!empty($_POST)){
+				$insert_data = array();
+				$insert_data['st_name'] = $_POST['st_name'];
+				$skillTagMapper->insert($insert_data);
+				$this->set_alert(array(
+					'message'=>	'Successfully added a Skill Tag.'
+				,	'type'	=> 	'success'
+				,	'href'	=> 	DOMAIN.'reference/skill-tag'
+				,	'text'	=>	'Skill Tag List'
+				));
+		}
+		$this->_data['action'] = 'add';
+		$this->_data['form_data'] = $data;
+
+		$this->is_secure = true;
+    $this->view('reference/skill_tag/form');
 	}
 
 	public function add_school(){
@@ -275,7 +309,7 @@ class Reference extends Controller {
 		$this->_data['action'] = 'add';
 		$this->_data['form_data'] = $data;
 
-		$this->_template = 'templates/admin_main';
+		$this->is_secure = true;
     $this->view('reference/school/form');
 	}
 
@@ -302,7 +336,7 @@ class Reference extends Controller {
 		$this->_data['action'] = 'edit';
 		$this->_data['form_data'] = $school;
 
-		$this->_template = 'templates/admin_main';
+		$this->is_secure = true;
     $this->view('reference/school/form');
 	}
 
@@ -330,7 +364,7 @@ class Reference extends Controller {
 		$this->_data['action'] = 'edit';
 		$this->_data['form_data'] = $country;
 
-		$this->_template = 'templates/admin_main';
+		$this->is_secure = true;
     $this->view('reference/country/form');
 
 	}
@@ -363,7 +397,7 @@ class Reference extends Controller {
 		$this->_data['action'] = 'edit';
 		$this->_data['form_data'] = $region;
 
-		$this->_template = 'templates/admin_main';
+		$this->is_secure = true;
     $this->view('reference/region/form');
 
 	}
@@ -397,7 +431,7 @@ class Reference extends Controller {
 		$this->_data['action'] = 'edit';
 		$this->_data['form_data'] = $province;
 
-		$this->_template = 'templates/admin_main';
+		$this->is_secure = true;
     $this->view('reference/province/form');
 	}
 
@@ -428,7 +462,7 @@ class Reference extends Controller {
 		$this->_data['action'] = 'edit';
 		$this->_data['form_data'] = $city;
 
-		$this->_template = 'templates/admin_main';
+		$this->is_secure = true;
     $this->view('reference/city/form');
 	}
 
@@ -455,11 +489,38 @@ class Reference extends Controller {
 		$this->_data['action'] = 'edit';
 		$this->_data['form_data'] = $educAttainment;
 
-		$this->_template = 'templates/admin_main';
+		$this->is_secure = true;
     $this->view('reference/educ_attainment/form');
 
 	}
 
+	public function edit_skill_tag($id){
+		$skillTagMapper = new App\Mapper\SkillTagMapper();
+		$filter = array();
+		$filter[] = array('column'=>'st_id',
+											'value' => $id);
+
+		if(!empty($_POST)){
+				$update_data = array();
+				$update_data['st_name'] = $_POST['st_name'];
+				$skillTagMapper->update($update_data, $filter);
+				$this->set_alert(array(
+					'message'=>	'Successfully updated a skill tag.'
+				,	'type'	=> 	'success'
+				,	'href'	=> 	DOMAIN.'reference/skill-tag'
+				,	'text'	=>	'Skill Tag List'
+				));
+		}
+		$skillTag = $skillTagMapper->getByFilter($filter, true);
+		if(empty($country));//Show 404
+
+		$this->_data['action'] = 'edit';
+		$this->_data['form_data'] = $skillTag;
+
+		$this->is_secure = true;
+    $this->view('reference/skill_tag/form');
+
+	}
 
 	public function add_field_of_study(){
 		$fieldOfStudyMapper = new App\Mapper\FieldOfStudyMapper();
@@ -484,7 +545,7 @@ class Reference extends Controller {
 		$this->_data['form_data'] = $data;
 		$this->_data['fos_parent_list'] = $fieldOfStudyMapper->selectAllHeader();
 
-		$this->_template = 'templates/admin_main';
+		$this->is_secure = true;
     $this->view('reference/field_of_study/form');
 	}
 
@@ -512,43 +573,48 @@ class Reference extends Controller {
 		$this->_data['form_data'] = $fieldOfStudy;
 		$this->_data['fos_parent_list'] = $fieldOfStudyMapper->selectAllHeader();
 
-		$this->_template = 'templates/admin_main';
+		$this->is_secure = true;
     $this->view('reference/field_of_study/form');
 	}
 
 	public function country(){
-    $this->_template = 'templates/admin_main';
+    $this->is_secure = true;
     $this->view('reference/country/list');
   }
 
 	public function region(){
-    $this->_template = 'templates/admin_main';
+    $this->is_secure = true;
     $this->view('reference/region/list');
   }
 
 	public function province(){
-    $this->_template = 'templates/admin_main';
+    $this->is_secure = true;
     $this->view('reference/province/list');
   }
 
 	public function city(){
-    $this->_template = 'templates/admin_main';
+    $this->is_secure = true;
     $this->view('reference/city/list');
   }
 
 	public function field_of_study(){
-    $this->_template = 'templates/admin_main';
+    $this->is_secure = true;
     $this->view('reference/field_of_study/list');
   }
 
 	public function educ_attainment(){
-    $this->_template = 'templates/admin_main';
+    $this->is_secure = true;
     $this->view('reference/educ_attainment/list');
   }
 
 	public function school(){
-    $this->_template = 'templates/admin_main';
+    $this->is_secure = true;
     $this->view('reference/school/list');
+  }
+
+	public function skill_tag(){
+    $this->is_secure = true;
+    $this->view('reference/skill_tag/list');
   }
 
 	public function education_form(){

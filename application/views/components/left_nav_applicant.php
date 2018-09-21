@@ -3,7 +3,7 @@
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element"> <span>
-                        <img alt="image" class="img-circle img-responsive" src="<?php echo UPLOAD ?>profile/emp_img_default.png" />
+                        <img alt="image" class="img-circle img-responsive" src="<?php echo UPLOAD.'profile/'.$_login_details['profile_img'] ?>" />
                          </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php echo $_SESSION['current_user']['displayname'] ?></strong>
@@ -23,15 +23,16 @@
                         ?> </span> </span> </a>
                 </div>
                 <div class="logo-element">
-                  <img alt="image" class="img-circle img-responsive" src="<?php echo IMG_DIR ?>emp_img_default.png" />
+                  <img alt="image" class="img-circle img-responsive" src="<?php echo UPLOAD.'profile/'.$_login_details['profile_img'] ?>" />
                 </div>
             </li>
             <li>
                 <a href=""><i class="fa fa-user"></i> <span class="nav-label">My Profile</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="<?php echo DOMAIN; ?>applicant/update_profile">Edit Profile</a></li>
-                    <li><a href="<?php echo DOMAIN; ?>applicant/my-skills">My Skills</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>applicant/view-profile">View Profile</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>applicant/update-profile">Edit Profile</a></li>
                     <li><a href="<?php echo DOMAIN; ?>applicant/file-attachment">File Attachments</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>applicant/upload-image">Profile Image</a></li>
                 </ul>
             </li>
         </ul>
