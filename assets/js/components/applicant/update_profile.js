@@ -1019,8 +1019,10 @@ var educ_modal_controller = {
   get_data : function(){
     let tempStartDate = ($('#modal-educ-start-date').val() + ' 01').split(' ');
     let startDate = moment().month(tempStartDate[0]).year(tempStartDate[1]).date(tempStartDate[2]).format('YYYY-MM-DD');
+
     let tempEndDate = ($('#modal-educ-end-date').val() + ' 01').split(' ');
-    let endDate = moment().month(tempEndDate[0]).year(tempEndDate[1]).date(tempEndDate[2]).format('YYYY-MM-DD');
+    let isCurrent = $('#modal-educ-end-date-current').is(':checked');
+    let endDate = (isCurrent)? null : moment().month(tempEndDate[0]).year(tempEndDate[1]).date(tempEndDate[2]).format('YYYY-MM-DD');
 
     let content = {
       school : $('#modal-educ-school').val()
