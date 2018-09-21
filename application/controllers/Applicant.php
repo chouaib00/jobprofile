@@ -557,5 +557,128 @@ class Applicant extends Controller {
     $this->view('applicant/view_profile');
   }
 
+	public function print_resume($username = ""){
+		$data = array();
+		$userMapper = new App\Mapper\UserMapper();
+		$applicantMapper = new App\Mapper\ApplicantMapper();
+		$basicContactMapper = new App\Mapper\BasicContactMapper();
+		$educAttainmentMapper = new App\Mapper\EducAttainmentMapper();
+		$addressMapper = new App\Mapper\AddressMapper();
+		$educationMapper = new App\Mapper\EducationMapper();
+		$workExperienceMapper = new App\Mapper\WorkExperienceMapper();
+		$applicantSkillMapper = new App\Mapper\ApplicantSkillMapper();
+		$user = null;
+		$applicant = null;
+		// if($this->sess->isLogin()){
+		if(!empty($username)){
+			$user = $userMapper->getByFilter(array(
+				array(
+					'column'=>'user_name'
+				,	'value'	=>$username
+				)
+			), true);
+		}
+		else{
+			if($this->sess->isLogin()){
+				$user = $userMapper->getByFilter(array(
+					array(
+						'column'=>'user_id'
+					,	'value'	=>$_SESSION['current_user']['id']
+					)
+				), true);
+			}
+		}
+
+
+		if(!$user){
+			$this->redirect($route['404_override']);
+		}//Show 404;
+
+		$applicant = $applicantMapper->getByFilter("applicant_user_id = '". $user['user_id']."' ", true);
+		$basicContact = $basicContactMapper->getByFilter("bc_id = '".$applicant['applicant_bc_id']."'", true);
+		$educAttainment = $educAttainmentMapper->getByFilter("ea_id = '".$applicant['applicant_ea_id']."'", true);
+		$presentAddress = $addressMapper->getCompleteAddressByID($applicant['applicant_present_id']);
+		$permanentAddress = $addressMapper->getCompleteAddressByID($applicant['applicant_permanent_add_id']);
+		$education = $educationMapper->getEducationTable($applicant['applicant_id']);
+		$work = $workExperienceMapper->getWorkTable($applicant['applicant_id']);
+		$applicantSkill = $applicantSkillMapper->getSkill($applicant['applicant_id']);
+
+		$form_data = array(
+				'applicant_username'	=> $user['user_name']
+			,	'applicant_first_name' => $basicContact['bc_first_name']
+			,	'applicant_middle_name' => $basicContact['bc_middle_name']
+			,	'applicant_last_name' => $basicContact['bc_last_name']
+			,	'applicant_name_ext' => $basicContact['bc_name_ext']
+			,	'present_add_desc' => $presentAddress['address_desc']
+			,	'present_add_country' => array(
+					'country_id'	=> $presentAddress['country_id']
+				,	'country_name'=> $presentAddress['country_name']
+				)
+			,	'present_add_region' => array(
+					'region_id'	=> $presentAddress['region_id']
+				,	'region_code'=> $presentAddress['region_code']
+				,	'region_desc'=> $presentAddress['region_desc']
+				)
+			,	'present_add_province' => array(
+					'province_id'	=> $presentAddress['province_id']
+				,	'province_name'=> $presentAddress['province_name']
+				)
+			,	'present_add_city' => array(
+					'city_id'	=> $presentAddress['city_id']
+				,	'city_name'=> $presentAddress['city_name']
+				)
+			,	'permanent_add_desc' => $permanentAddress['address_desc']
+			,	'permanent_add_country' => array(
+				'country_id'	=> $permanentAddress['country_id']
+			,	'country_name'=> $permanentAddress['country_name']
+			)
+			,	'permanent_add_region' => array(
+					'region_id'	=> $permanentAddress['region_id']
+				,	'region_code'=> $permanentAddress['region_code']
+				,	'region_desc'=> $permanentAddress['region_desc']
+				)
+			,	'permanent_add_province' => array(
+					'province_id'	=> $permanentAddress['province_id']
+				,	'province_name'=> $permanentAddress['province_name']
+				)
+			,	'permanent_add_city' => array(
+					'city_id'	=> $permanentAddress['city_id']
+				,	'city_name'=> $permanentAddress['city_name']
+				)
+			,	'applicant_gender' => $basicContact['bc_gender']
+			,	'applicant_birthday' => $applicant['applicant_birthday']? date("m/d/Y", strtotime($applicant['applicant_birthday'])) : ''
+			,	'applicant_civil_status' => $applicant['applicant_civil_status']
+			,	'applicant_nationality' => $applicant['applicant_nationality']
+			,	'applicant_citizenship' => $applicant['applicant_citizenship']
+			,	'applicant_educ_attainment' => array(
+					'ea_id'	=> $educAttainment['ea_id']
+				,	'ea_name'=> $educAttainment['ea_name']
+				)
+			,	'phone_number_1' => $basicContact['bc_phone_num1']
+			,	'phone_number_2' => $basicContact['bc_phone_num2']
+			,	'phone_number_3' => $basicContact['bc_phone_num3']
+			,	'education_table'=> $education
+			,	'work_table'=> $work
+			,	'skill_tag'=>$applicantSkill
+		);
+		$data['form_data'] = $form_data;
+
+
+		$html = $this->load->view('applicant/resume_format', $data, true);
+
+    $this->load->library('MPdf');
+    //echo $html;
+		$this->mpdf->generate(
+			array(	'format'=>'Letter',
+					'orientation'=>'P',
+					'html'=>$html,
+					'is_create'=>false
+			));
+
+
+
+  }
+
+
 
 }
