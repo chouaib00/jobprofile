@@ -44,6 +44,7 @@ class Users extends Controller {
 			$insert_applicant['applicant_nationality'] = '';
 			$insert_applicant['applicant_citizenship'] = '';
 			$insert_applicant['applicant_civil_status'] = '';
+			$insert_applicant['applicant_summary'] = '';
 			$insert_applicant['applicant_ea_id'] = NULL;
 			$insert_applicant['applicant_present_id'] = NULL;
 			$insert_applicant['applicant_permanent_add_id'] = NULL;

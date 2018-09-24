@@ -250,6 +250,26 @@
               </div>
             </div>
           </div>
+          <div class="ibox">
+            <div class="ibox-title">
+              <h5>Applicant Summary</h5>
+              <div class="ibox-tools">
+                  <a class="collapse-link">
+                      <i class="fa fa-chevron-up"></i>
+                  </a>
+                  <a class="fullscreen-link">
+                      <i class="fa fa-expand"></i>
+                  </a>
+              </div>
+            </div>
+            <div class="ibox-content form-horizontal">
+              <div class="form-group">
+                  <div class="col-sm-12">
+                    <textarea class="form-control" name="applicant-summary" maxlength="255"><?php echo $form_data['applicant_summary'] ?></textarea>
+                  </div>
+              </div>
+            </div>
+          </div>
           <div class="row">
               <div class="col-sm-8 col-sm-offset-2">
                 <button id="update-profile" class="btn btn-primary col-sm-12 btn-outline" type="button">

@@ -23,6 +23,17 @@ class ApplicantMapper extends Mapper{
     $where_statement = '';
     $num_of_matches_statement = '';
     $skill_match_statement = '';
+    $filter_type = "";
+    switch($_POST['filter-type']){
+      case "most-relevant":
+        $filter_type = "OR";
+      break;
+      case 'strict-match':
+        $filter_type = "AND";
+      break;
+    }
+
+
     $order_statement = ' ORDER BY match_count DESC, bc_first_name ASC, bc_middle_name ASC, bc_last_name ASC';
     $condition = array();
     if(!empty($filter['applicant-educ-attainment'])){
@@ -39,12 +50,16 @@ class ApplicantMapper extends Mapper{
                       OR permanent .address_city_id IN (".$filter['add-city']."))  ";
     }
 
+    if(!empty($filter['applicant-gender'])){
+      $condition[] = " bc_gender = '".$filter['applicant-gender']."'  ";
+    }
+
 
     foreach($condition as $_condition){
       $where_statement .= $_condition;
       $num_of_matches_statement .= "(case when ".$_condition." then 1 else 0 end)";
       if(next($condition)){
-        $where_statement.=" OR ";
+        $where_statement.=" ".$filter_type." ";
         $num_of_matches_statement.=" + ";
       }
     }
