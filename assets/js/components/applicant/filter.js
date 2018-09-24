@@ -18,6 +18,11 @@ $(document).ready(function(){
       name : 'age-range'
     , value: $("[name=age-range]").attr("value")
     });
+    filter.push({
+      name: 'filter-type'
+    , value :$("[name=filter-type]").val()
+    });
+
     $.ajax({
 			type: 'POST',
 			dataType: 'json',

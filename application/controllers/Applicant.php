@@ -282,6 +282,7 @@ class Applicant extends Controller {
 			,	'applicant_birthday'=> ($_POST['applicant-birthday'])? date("Y-m-d", strtotime($_POST['applicant-birthday'])) : NULL
 			,	'applicant_present_id'=> $applicant['applicant_present_id']
 			,	'applicant_permanent_add_id'=> $applicant['applicant_permanent_add_id']
+			,	'applicant_summary'=> $_POST['applicant-summary']	
 			,	'applicant_ea_id'=>$_POST['applicant-educ-attainment']
 		), " applicant_id = '".$applicant['applicant_id']."'");
 
@@ -430,6 +431,7 @@ class Applicant extends Controller {
 			,	'applicant_civil_status' => $applicant['applicant_civil_status']
 			,	'applicant_nationality' => $applicant['applicant_nationality']
 			,	'applicant_citizenship' => $applicant['applicant_citizenship']
+			,	'applicant_summary' => $applicant['applicant_summary']
 			,	'applicant_educ_attainment' => array(
 					'ea_id'	=> $educAttainment['ea_id']
 				,	'ea_name'=> $educAttainment['ea_name']
@@ -542,6 +544,7 @@ class Applicant extends Controller {
 			,	'applicant_civil_status' => $applicant['applicant_civil_status']
 			,	'applicant_nationality' => $applicant['applicant_nationality']
 			,	'applicant_citizenship' => $applicant['applicant_citizenship']
+			,	'applicant_summary' => $applicant['applicant_summary']
 			,	'applicant_educ_attainment' => array(
 					'ea_id'	=> $educAttainment['ea_id']
 				,	'ea_name'=> $educAttainment['ea_name']

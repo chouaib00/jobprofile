@@ -8,8 +8,18 @@
                   <div class="col-md-3">
                     <h4>Applicant Search</h4>
                   </div>
-                  <div class="col-md-3 pull-right text-right">
-                    <button id="filter-applicants" class="btn btn-warning btn-outline has-tooltip form-submit" title="Filter"><i class="fa fa-filter"></i></button>
+                  <div class="col-md-2 pull-right text-right" >
+                    <div class="input-group">
+                      <select class="form-control filter-field" name="filter-type">
+                        <option value="most-relevant" selected>Most Relevant</option>
+                        <option value="strict-match">Strict Match</option>
+                      </select>
+                      <span class="input-group-btn">
+                        <button id="filter-applicants" class="btn btn-warning btn-outline has-tooltip form-submit" title="Filter"><i class="fa fa-filter"></i></button>
+                      </span>
+                    </div>
+
+
                   </div>
                 </div>
               </div>
@@ -69,6 +79,16 @@
                               </select>
                             </div>
 
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-2">
+                              <h5>Gender</h5>
+                              <select class="select2-basic form-control filter-field" name="applicant-gender" data-placeholder="Select Gender">
+                                <option></option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                              </select>
+                            </div>
                           </div>
                         </div>
                       </div>
