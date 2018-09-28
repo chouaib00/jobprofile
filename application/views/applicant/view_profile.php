@@ -5,7 +5,7 @@
     </div>
 
     <div class="col-lg-2 text-right">
-      <a href="<?php echo DOMAIN?>applicant/print_resume  " class="btn btn-success has-tooltip form-submit" name="save" title="Add Resident" data-form="main-form"><i class="fa fa-print"></i> VIEW PDF</a>
+      <a href="<?php echo DOMAIN?>applicant/print_resume/<?php echo $form_data['applicant_username'] ?>" class="btn btn-success has-tooltip form-submit" name="save" title="Add Resident" data-form="main-form"><i class="fa fa-print"></i> VIEW PDF</a>
     </div>
   </div>
   <div class="row">
