@@ -6,6 +6,7 @@ $(document).ready(function(){
   comm_events.tooltip_init();
   comm_events.icheck_init();
   comm_events.submit_init();
+  comm_events.summernote_init();
 });
 
 
@@ -51,5 +52,10 @@ var comm_events = {
     $('.form-submit').click(function(){
       $("#"+$(this).data('form')).submit();
     })
+  },
+  summernote_init : function(){
+    $('.text-editor').summernote({
+      height: 300
+    });
   }
 }

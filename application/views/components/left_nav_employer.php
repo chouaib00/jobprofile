@@ -7,24 +7,22 @@
                          </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php echo $_SESSION['current_user']['displayname'] ?></strong>
-                        </span> <span class="text-muted text-xs block"><?php
-                        switch($_SESSION['current_user']['type']){
-                          case '1':
-                            echo "Administrator";
-                          break;
-                          case '2':
-                            echo "Applicant";
-                          break;
-                          case '3':
-                            echo "Employer";
-                          break;
-                        }
-
-                        ?> </span> </span> </a>
+                        </span>
+                          <span class="text-muted text-xs block">
+                          <?php echo $employer ?>
+                          </span>
+                        </span> </a>
                 </div>
                 <div class="logo-element">
                   <img alt="image" class="img-circle img-responsive" src="<?php echo UPLOAD.'profile/'.$_login_details['profile_img'] ?>" />
                 </div>
+            </li>
+            <li>
+                <a href=""><i class="fa fa-building"></i> <span class="nav-label"> Company Profile</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="<?php echo DOMAIN; ?>employer/view-profile">View Profile</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>employer/edit-profile">Edit Profile</a></li>
+                </ul>
             </li>
             <li>
                 <a href=""><i class="fa fa-group"></i> <span class="nav-label"> Applicant</span> <span class="fa arrow"></span></a>

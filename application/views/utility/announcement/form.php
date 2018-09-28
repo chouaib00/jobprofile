@@ -1,8 +1,3 @@
-<link href="<?php echo THEME ?>css/plugins/summernote/summernote.css" rel="stylesheet">
-<link href="<?php echo THEME ?>css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
-
-
-
 <div class="wrapper wrapper-content animated fadeInLeft">
   <div class="row">
     <div class="col-lg-12 text-right">
@@ -43,6 +38,5 @@
 
 
 </div>
-<script src="<?php echo THEME; ?>js/plugins/summernote/summernote.min.js"></script>
 
 <script src="<?php echo JS_DIR ?>components/utility/add_announcement.js"></script>

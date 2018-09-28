@@ -11,7 +11,6 @@ class Applicant extends Controller {
 		$offset = $_POST['start'];
 		$search = $_POST['search'];
 		$columns = $_POST['columns'];
-		$option = $_POST['option'];
 		$orders = array();
 
 		foreach($_POST['order'] as $_order){
@@ -20,7 +19,7 @@ class Applicant extends Controller {
 			,	'type'	=> $_order['dir']
 			));
 		}
-		$mapper = new App\Mapper\AdminMapper();
+		$mapper = new App\Mapper\ApplicantMapper();
 		$result = $mapper->selectDataTable($search['value'], $columns, $limit, $offset, $orders);
 		echo json_encode($result);
 	}
@@ -282,7 +281,7 @@ class Applicant extends Controller {
 			,	'applicant_birthday'=> ($_POST['applicant-birthday'])? date("Y-m-d", strtotime($_POST['applicant-birthday'])) : NULL
 			,	'applicant_present_id'=> $applicant['applicant_present_id']
 			,	'applicant_permanent_add_id'=> $applicant['applicant_permanent_add_id']
-			,	'applicant_summary'=> $_POST['applicant-summary']	
+			,	'applicant_summary'=> $_POST['applicant-summary']
 			,	'applicant_ea_id'=>$_POST['applicant-educ-attainment']
 		), " applicant_id = '".$applicant['applicant_id']."'");
 

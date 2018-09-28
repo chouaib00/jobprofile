@@ -16,6 +16,8 @@
   <!-- Jquery Validate -->
   <script src="<?php echo THEME ?>js/plugins/validate/jquery.validate.min.js"></script>
   <!-- IonRangeSlider -->
+  <!-- Summernote -->
+  <script src="<?php echo THEME; ?>js/plugins/summernote/summernote.min.js"></script>
   <script src="<?php echo THEME ?>js/plugins/ionRangeSlider/ion.rangeSlider.min.js"></script>
   <script src="<?php echo JS_DIR; ?>components/general/jquery_extension.js"></script>
   <script src="<?php echo JS_DIR; ?>lib/bootbox.min.js"></script>
