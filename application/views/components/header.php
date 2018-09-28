@@ -19,7 +19,8 @@
     <link href="<?php echo THEME; ?>css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="<?php echo THEME; ?>css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
     <link href="<?php echo THEME; ?>css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
-
+    <link href="<?php echo THEME ?>css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="<?php echo THEME ?>css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
     <link href="<?php echo THEME; ?>css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 
 

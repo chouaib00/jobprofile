@@ -6,7 +6,7 @@ $(document).ready(function(){
       serverSide: true,
       bSort: true,
       ajax: {
-        url : global.site_name + 'applicant/applicant_ref',
+        url : global.site_name + 'employer/employer_ref',
         type : 'POST',
         dataType : 'json',
         data : function(params){
@@ -27,13 +27,14 @@ $(document).ready(function(){
           render: function ( data, type, row, meta ) {
             // return '';
             let id = data;
-            let html =  '<div class="text-center"><a class="btn btn-info has-tooltip" title="Edit" href="' + global.site_name + 'applicant/update-profile/' + row['user_name']  + '"><i class="fa fa-pencil"></i></a> ' +
+            let html =  '<div class="text-center"><a class="btn btn-info has-tooltip" title="Edit" href="' + global.site_name + 'employer/edit-profile/' + row['user_name']  + '"><i class="fa fa-pencil"></i></a> ' +
                         '<button class="btn btn-danger has-tooltip delete-row" title="Delete" value="' + id + '"><i class="fa fa-trash"></i></button></div>'
             return html;
           }
-      }],
+      },
+      {targets: [4,5], visible: false}],
       initComplete: function(){
-        let toolbar = '<div class="pull-right"><a class="btn btn-default" role="button" href="' + global.site_name + 'applicant/add-applicant' + '"><i class="fa fa-file">&nbsp</i> ADD</a></div>';;
+        let toolbar = '<div class="pull-right"><a class="btn btn-default" role="button" href="' + global.site_name + 'employer/add-employer' + '"><i class="fa fa-file">&nbsp</i> ADD</a></div>';;
         $("div.dt-toolbar").html(toolbar);
       },
       processing : function( e, settings, processing ) {
@@ -60,7 +61,7 @@ $(document).ready(function(){
               callback: function (result) {
                 if(result){
                   $.ajax({
-                    url : global.site_name + 'employer/delete-applicant/',
+                    url : global.site_name + 'employer/delete-employer/',
                     type : 'POST',
                     dataType : 'json',
                     data : params,
@@ -94,25 +95,16 @@ $(document).ready(function(){
       ],
       order:[[0,'asc']],
       columns: [
-        {   "data": "applicant" },
-        { "data": "bc_gender",
-          "render" : function(data, type, full, meta) {
-            return '<span class="text-capitalize">' + full.bc_gender + '</span> / ' + full.age;
-          }
-        },
+        {   "data": "employer_name" },
+        { "data": "employer_address" },
         { "data": "bc_email_address"},
-        { "data": "bc_gender",
-          "render" : function(data, type, full, meta) {
-            return '';
-          }
-        },
         { "data": "bc_phone_num1",
           "render" : function(data, type, full, meta) {
             return '<span class="text-capitalize">' + full.bc_phone_num1 + '/' + full.bc_phone_num2 + '/'+ full.bc_phone_num3 + '/' + '</span>';
           }
         },
-        { "data": "address"
-        },
+        { "data": "bc_phone_num2"},
+        { "data": "bc_phone_num3"},
         { "data": "employer_id"
         , "searchable": false}
       ]

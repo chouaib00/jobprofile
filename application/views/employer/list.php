@@ -3,7 +3,7 @@
       <div class="col-lg-12">
               <div class="ibox float-e-margins">
                   <div class="ibox-title">
-                      <h5>Applicant List</h5>
+                      <h5>Employer List</h5>
                       <div class="ibox-tools">
                           <a class="collapse-link">
                               <i class="fa fa-chevron-up"></i>
@@ -19,12 +19,12 @@
                       <table id="employer-list" class="table table-striped table-bordered table-hover" data-config="{}">
                         <thead>
                           <tr>
-                            <th class="col-md-3 text-center">Applicant</th>
-                            <th class="col-md-2 text-center">Gender / Age</th>
-                            <th class="col-md-1 text-center">Email</th>
-                            <th class="col-md-1 text-center">Category</th>
+                            <th class="col-md-4 text-center">Employer Name</th>
+                            <th class="col-md-3 text-center">Address</th>
+                            <th class="col-md-2 text-center">Email</th>
                             <th class="col-md-2 text-center">Contact</th>
-                            <th class="col-md-2 text-center">Address</th>
+                            <th class="col-md-2 text-center"></th>
+                            <th class="col-md-2 text-center"></th>
                             <th class="col-md-1 text-center no-sort">Action</th>
                           </tr>
                         </thead>
@@ -41,4 +41,4 @@
 
 </div>
 
-<script src="<?php echo JS_DIR ?>components/applicant/applicant_list.js"></script>
+<script src="<?php echo JS_DIR ?>components/employer/employer_list.js"></script>
