@@ -6,6 +6,8 @@ class Applicant extends Controller {
 		parent::__construct();
 	}
 
+
+
 	public function applicant_ref(){
 		$limit = $_POST['length'];
 		$offset = $_POST['start'];
@@ -55,6 +57,61 @@ class Applicant extends Controller {
 		$mapper = new App\Mapper\ApplicantAttachmentMapper();
 		$result = $mapper->selectDataTable($search['value'], $columns, $limit, $offset, $orders, $condition);
 		echo json_encode($result);
+	}
+
+	public function add_applicant(){
+		$usermapper = new App\Mapper\UserMapper();
+		$basiccontactmapper = new App\Mapper\BasicContactMapper();
+		$applicantmapper = new App\Mapper\ApplicantMapper();
+
+		if(!empty($_POST)){
+			$insert_user = array();
+			$insert_user['user_name'] = $_POST['reg-username'];
+			$insert_user['user_email'] = $_POST['reg-email'];
+			$insert_user['user_password'] = encrypt($_POST['reg-password']);
+			$insert_user['user_type'] = '2';
+			$insert_user['user_fm_id'] = '0';
+			$user_id = $usermapper->insert($insert_user);
+
+			$insert_bc = array();
+			$insert_bc['bc_first_name'] = 'Applicant';
+			$insert_bc['bc_middle_name'] = '';
+			$insert_bc['bc_last_name'] = '';
+			$insert_bc['bc_name_ext'] = '';
+			$insert_bc['bc_phone_num1'] = '';
+			$insert_bc['bc_phone_num2'] = '';
+			$insert_bc['bc_phone_num3'] = '';
+			$insert_bc['bc_gender'] = '';
+			$insert_bc['bc_email_address'] = $insert_user['user_email'];
+			$bc_id = $basiccontactmapper->insert($insert_bc);
+
+			$insert_applicant['applicant_user_id'] = $user_id;
+			$insert_applicant['applicant_bc_id'] = $bc_id;
+			$insert_applicant['applicant_birthday'] = NULL;
+			$insert_applicant['applicant_nationality'] = '';
+			$insert_applicant['applicant_citizenship'] = '';
+			$insert_applicant['applicant_civil_status'] = '';
+			$insert_applicant['applicant_summary'] = '';
+			$insert_applicant['applicant_ea_id'] = NULL;
+			$insert_applicant['applicant_present_id'] = NULL;
+			$insert_applicant['applicant_permanent_add_id'] = NULL;
+
+			$applicant_id = $applicantmapper->insert($insert_applicant);
+
+			$applicant = $applicantmapper->getByID($user_id);
+			$basicContact = $basiccontactmapper->getByID($applicant['applicant_bc_id']);
+			$displayname = $basicContact['bc_first_name'] . ' ' . $basicContact['bc_middle_name'] . ' ' . $basicContact['bc_last_name'] . ' ' . $basicContact['bc_name_ext'];
+			$user = $usermapper->selectByID($user_id);
+			$user_details = array(
+					'displayname'=>	$displayname
+				,	'id'=>	$user['user_id']
+				,	'email'		=>$user['user_email']
+				,	'type'		=>$user['user_type']
+			);
+			$this->redirect(DOMAIN.'applicant/update-profile/'.$user['user_name']);
+		}
+		$this->is_secure = true;
+		$this->view('applicant/registration');
 	}
 
 	public function upload_image(){
