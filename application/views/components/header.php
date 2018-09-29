@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title><?php echo $title; ?></title>
-
+    <link rel="icon" href="<?php echo IMG_DIR ?>favicon.png" type="image/png" sizes="16x16">
     <link href="<?php echo CSS_DIR; ?>style.css" rel="stylesheet">
     <link href="<?php echo THEME; ?>css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo THEME; ?>font-awesome/css/font-awesome.css" rel="stylesheet">

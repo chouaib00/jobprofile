@@ -19,6 +19,14 @@ class Home extends Controller {
       $this->view('home/dashboard');
   }
 
+	public function about(){
+		$pageMapper = new App\Mapper\PageMapper();
+		$page = $pageMapper->getByFilter("page_id = '1'", true);
+		$this->_data['data'] = $page;
+		$this->_template = 'templates/public';
+		$this->view('home/about');
+	}
+
 	public function error_404(){
 		$this->_template = 'templates/main';
 		$this->view('home/error_404');

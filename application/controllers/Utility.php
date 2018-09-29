@@ -89,4 +89,19 @@ class Utility extends Controller {
 
 	}
 
+	public function edit_page($id){
+		$pageMapper = new App\Mapper\PageMapper();
+		$page = $pageMapper->getByFilter("page_id = '".$id."'", true);
+
+		if(!empty($_POST)){
+			$pageMapper->update(array(
+				'page_context'=>$_POST['page-content']
+			), "page_id = '".$id."'");
+		}
+		$page = $pageMapper->getByFilter("page_id = '".$id."'", true);
+
+		$this->is_secure = true;
+		$this->_data['form_data'] = $page;
+		$this->view('utility/page/form');
+	}
 }
