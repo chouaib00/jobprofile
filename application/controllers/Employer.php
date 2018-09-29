@@ -9,14 +9,14 @@ class Employer extends Controller {
 	public function add_employer(){
 		$usermapper = new App\Mapper\UserMapper();
 		$basiccontactmapper = new App\Mapper\BasicContactMapper();
-		$applicantmapper = new App\Mapper\ApplicantMapper();
+		$employerMapper = new App\Mapper\EmployerMapper();
 
 		if(!empty($_POST)){
 			$insert_user = array();
 			$insert_user['user_name'] = $_POST['reg-username'];
 			$insert_user['user_email'] = $_POST['reg-email'];
 			$insert_user['user_password'] = encrypt($_POST['reg-password']);
-			$insert_user['user_type'] = '2';
+			$insert_user['user_type'] = '3';
 			$insert_user['user_fm_id'] = '0';
 			$user_id = $usermapper->insert($insert_user);
 
@@ -25,28 +25,26 @@ class Employer extends Controller {
 			$insert_bc['bc_middle_name'] = '';
 			$insert_bc['bc_last_name'] = '';
 			$insert_bc['bc_name_ext'] = '';
-			$insert_bc['bc_phone_num1'] = '';
-			$insert_bc['bc_phone_num2'] = '';
-			$insert_bc['bc_phone_num3'] = '';
+			$insert_bc['bc_phone_num1'] = $_POST['phone-number-1'];
+			$insert_bc['bc_phone_num2'] = $_POST['phone-number-2'];
+			$insert_bc['bc_phone_num3'] = $_POST['phone-number-3'];
 			$insert_bc['bc_gender'] = '';
 			$insert_bc['bc_email_address'] = $insert_user['user_email'];
 			$bc_id = $basiccontactmapper->insert($insert_bc);
 
-			$insert_applicant['applicant_user_id'] = $user_id;
-			$insert_applicant['applicant_bc_id'] = $bc_id;
-			$insert_applicant['applicant_birthday'] = NULL;
-			$insert_applicant['applicant_nationality'] = '';
-			$insert_applicant['applicant_citizenship'] = '';
-			$insert_applicant['applicant_civil_status'] = '';
-			$insert_applicant['applicant_summary'] = '';
-			$insert_applicant['applicant_ea_id'] = NULL;
-			$insert_applicant['applicant_present_id'] = NULL;
-			$insert_applicant['applicant_permanent_add_id'] = NULL;
+			$insert_employer = array();
+			$insert_employer['employer_user_id'] = $user_id;
+			$insert_employer['employer_bc_id'] = $bc_id;
+			$insert_employer['employer_name'] = $_POST['employer-name'];
+			$insert_employer['employer_address'] = $_POST["employer-address"];
+			$insert_employer['employer_about'] = $_POST["employer-about"];
 
-			$applicant_id = $applicantmapper->insert($insert_applicant);
 
-			$applicant = $applicantmapper->getByID($user_id);
-			$basicContact = $basiccontactmapper->getByID($applicant['applicant_bc_id']);
+
+			$employer_id = $employerMapper->insert($insert_employer);
+
+			$employer = $employerMapper->getByFilter("employer_user_id = '". $user_id."' ", true);
+			$basicContact = $basiccontactmapper->getByID($employer['employer_bc_id']);
 			$displayname = $basicContact['bc_first_name'] . ' ' . $basicContact['bc_middle_name'] . ' ' . $basicContact['bc_last_name'] . ' ' . $basicContact['bc_name_ext'];
 			$user = $usermapper->selectByID($user_id);
 			$user_details = array(
@@ -63,6 +61,8 @@ class Employer extends Controller {
 
 	public function edit_profile($username = ""){
 		$userMapper = new App\Mapper\UserMapper();
+		$employerMapper = new App\Mapper\EmployerMapper();
+		$basicContactMapper = new App\Mapper\BasicContactMapper();
 		if($this->sess->isLogin()){
 			$user = $userMapper->getByFilter(array(
 				array(
@@ -84,17 +84,27 @@ class Employer extends Controller {
 			), true);
 		}
 		if(!$user && !$employer);//Show 404;
-		$employerMapper = new App\Mapper\EmployerMapper();
+
 		$employer = $employerMapper->getByFilter("employer_user_id = '". $user['user_id']."' ", true);
+		$basicContact = $basicContactMapper->getByFilter("bc_id = '". $employer['employer_bc_id']."' ", true);
 		$employer_id = $employer['employer_id'];
 		if(!empty($_POST)){
 			$employerMapper->update(array(
 					"employer_about"		=>$_POST['employer-summary']
+				,	"employer_name"		=>$_POST['employer-name']
+				,	"employer_address"		=>$_POST['employer-address']
 			), "employer_id = '".$employer['employer_id']."'");
+			$basicContact->update(array(
+				"bc_phone_num1"=>$_POST['phone-number-1']
+			,	"bc_phone_num2"=>$_POST['phone-number-2']
+			,	"bc_phone_num3"=>$_POST['phone-number-3']
+			),"bc_id = '". $employer['employer_bc_id']."' ");
 		}
 
 		$employer = $employerMapper->getByFilter("employer_user_id = '". $user['user_id']."' ", true);
-		$form_data = $employer;
+		$basicContact = $basicContactMapper->getByFilter("bc_id = '". $employer['employer_bc_id']."' ", true);
+
+		$form_data = array_merge($employer, $basicContact);
 		$this->_data['form_data'] = $form_data;
 		$this->is_secure = true;
     $this->view('employer/edit_profile');
