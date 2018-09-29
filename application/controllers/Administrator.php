@@ -60,7 +60,7 @@ class Administrator extends Controller {
 
 				 $insert_user = array(
 					'user_name'			=>$_POST['user-name']
-				,	'user_password'	=>$_POST['user-password']
+				,	'user_password'	=>Encrypt($_POST['user-password'])
 				,	'user_email'	=>$_POST['user-email']
 				,	'user_type'	=> 1
 				,	'user_fm_id'	=> 0
