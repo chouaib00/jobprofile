@@ -18,6 +18,32 @@
                   <form id="main-form" class="form-horizontal" action="" method="POST">
                       <div class="form-group">
                         <div class="col-md-12">
+                          <label>Employer Name</label>
+                          <input type="text" name="employer-name" placeholder="Enter Employer Name" class="form-control">
+                        </div>
+                        <div class="col-md-12">
+                          <label>Employer Address</label>
+                          <input type="text" name="employer-address" placeholder="Enter Employer Address" class="form-control">
+                        </div>
+                        <div class="col-md-12">
+                          <label>Employer About</label>
+                          <textarea name="employer-about" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group col-sm-12">
+                          <div class="col-sm-4">
+                            <h5>Main Contact Number</h5>
+                            <input name="phone-number-1" type="text" class="form-control" placeholder="Enter Main Contact Number">
+                          </div>
+                          <div class="col-sm-4">
+                            <h5>Mobile Number</h5>
+                            <input name="phone-number-2" type="text" class="form-control" placeholder="Enter Mobile Number">
+                          </div>
+                          <div class="col-sm-4">
+                            <h5>Home Number</h5>
+                            <input name="phone-number-3" type="text" class="form-control" placeholder="Enter Home Number">
+                          </div>
+                        </div>
+                        <div class="col-md-12">
                           <label>Email</label>
                           <input type="email" name="reg-email" placeholder="Enter Email" class="form-control">
                         </div>
@@ -65,6 +91,9 @@ $(document).ready(function(){
 
   $("#main-form").validate({
     rules :{
+      'employer-name':{
+        required : true
+      },
       'reg-email': {
         required : true,
         email : true
