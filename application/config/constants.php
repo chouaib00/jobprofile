@@ -86,7 +86,7 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 
 defined('DOMAIN') OR define('DOMAIN', '/');
-defined('SITE_NAME') OR define('SITE_NAME', 'Job Profiling');
+defined('SITE_NAME') OR define('SITE_NAME', 'Public Employment Service Office Batangas City - Job Profiling');
 //loaded by server
 
 defined('ASSETS')      OR define('ASSETS', DOMAIN.'assets/');
