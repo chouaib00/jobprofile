@@ -1,11 +1,3 @@
-
-<div class="m-sm alert alert-success alert-dismissable">
-    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-    A wonderful serenity has taken possession. <a class="alert-link" href="#">Alert Link</a>.
-</div>
-
-
-
 <div class="wrapper wrapper-content animated fadeInLeft">
   <div class="row">
     <div class="col-lg-12 text-right">
@@ -28,16 +20,16 @@
               <form id="main-form" method="POST" class="form-horizontal" action="?">
                   <div class="form-group">
                       <label class="col-sm-12">First Name, Middle Name, Last Name, Name Extension</label>
-                      <div class="col-sm-3"><input type="text" name="first-name" class="form-control" placeholder="First Name"></div>
-                      <div class="col-sm-3"><input type="text" name="middle-name" class="form-control" placeholder="Middle Name"></div>
-                      <div class="col-sm-3"><input type="text" name="last-name" class="form-control" placeholder="Last Name"></div>
-                      <div class="col-sm-3"><input type="text" name="name-ext" class="form-control" placeholder="Name Extension"></div>
+                      <div class="col-sm-3"><input name="admin-first-name" type="text" class="form-control" placeholder="First Name" value="<?php echo $form_data['admin_first_name'] ?>"></div>
+                      <div class="col-sm-3"><input name="admin-middle-name" type="text" class="form-control" placeholder="Middle Name" value="<?php echo $form_data['admin_middle_name'] ?>"></div>
+                      <div class="col-sm-3"><input name="admin-last-name" type="text" class="form-control" placeholder="Last Name" value="<?php echo $form_data['admin_last_name'] ?>"></div>
+                      <div class="col-sm-3"><input name="admin-name-ext" type="text" class="form-control" placeholder="Name Extension" value="<?php echo $form_data['admin_name_ext'] ?>"></div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-12">Gender</label>
                     <div class="col-sm-12">
-                      <label class="checkbox-inline i-checks"> <input type="radio" value="male" name="gender" checked> <i></i> Male </label>
-                      <label class="checkbox-inline i-checks"> <input type="radio" value="female" name="gender"> <i></i> Female</label>
+                      <label class="checkbox-inline i-checks"> <input type="radio" value="male" name="gender" <?php echo $form_data['admin_gender'] == 'male'? 'checked': '' ?>> <i></i> Male </label>
+                      <label class="checkbox-inline i-checks"> <input type="radio" value="female" name="gender" <?php echo $form_data['admin_gender'] == 'female'? 'checked': '' ?>> <i></i> Female</label>
                     </div>
                   </div>
                   <div class="hr-line-dashed"></div>
@@ -49,9 +41,9 @@
                       </div>
                   </div>
                   <div class="form-group">
-                      <label class="col-lg-12">User ID</label>
+                      <label class="col-lg-12">Username</label>
                       <div class="col-lg-12">
-                        <input type="text" name="user-id" placeholder="User ID" class="form-control">
+                        <input type="text" name="user-name" placeholder="User name" class="form-control">
                       </div>
                   </div>
                   <div class="form-group">
@@ -76,3 +68,38 @@
 
 
 </div>
+
+
+<script>
+
+$(document).ready(function(){
+
+
+
+  $("#main-form").validate({
+    rules :{
+      'first-name': {
+        required : true
+      },
+      'user-email': {
+        required : true,
+        email : true
+      },
+      'user-name':{
+        required : true,
+        minlength: 6
+      },
+      'user-password':{
+        required : true,
+        minlength: 6
+      },
+      'user-re-password':{
+        required : true,
+        equalTo : "[name=user-password]"
+      }
+
+    }
+
+  });
+});
+</script>
