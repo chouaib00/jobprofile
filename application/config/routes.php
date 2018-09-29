@@ -53,6 +53,7 @@ $route['default_controller'] = 'home/landing_page';
 $route['404_override'] = 'home/error_404';
 $route['login'] = 'auth/login';
 $route['logout'] = 'auth/logout';
+$route['about'] = 'home/about';
 $route['dashboard'] = 'home/dashboard';
 $route['(:any)'] = 'users/search/$1';
 $route['translate_uri_dashes'] = TRUE;

@@ -11,6 +11,11 @@
               </div>
 
                   <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <a href="<?php echo DOMAIN?>about">
+                            <i class="fa fa-info"></i> About
+                        </a>
+                    </li>
                       <li>
                           <a href="<?php echo DOMAIN?>login">
                               <i class="fa fa-sign-in"></i> Log in
