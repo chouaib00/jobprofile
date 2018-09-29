@@ -6,8 +6,6 @@ class Applicant extends Controller {
 		parent::__construct();
 	}
 
-
-
 	public function applicant_ref(){
 		$limit = $_POST['length'];
 		$offset = $_POST['start'];
@@ -234,6 +232,34 @@ class Applicant extends Controller {
 						,	'value'=> $fileManager['fm_id'])
 		));
 		echo json_encode($result);
+	}
+
+	public function delete_applicant(){
+		$param = $_POST;
+		$user_name = $param['id'];
+
+		$usermapper = new App\Mapper\UserMapper();
+		$basiccontactmapper = new App\Mapper\BasicContactMapper();
+		$applicantmapper = new App\Mapper\ApplicantMapper();
+		$addressmapper = new App\Mapper\AddressMapper();
+		$applicantSkillMapper = new App\Mapper\ApplicantSkillMapper();
+		$educationMapper = new App\Mapper\EducationMapper();
+		$workExperienceMapper = new App\Mapper\WorkExperienceMapper();
+
+		$user = $usermapper->getByFilter("user_name = '". $user_name."' ", true);
+		$applicant = $applicantmapper->getByFilter("applicant_user_id = '". $user['user_id']."' ", true);
+		$basiccontact = $basiccontactmapper->getByFilter("bc_id = '". $applicant['applicant_bc_id']."' ", true);
+
+		$workExperienceMapper->delete("we_applicant_id = '".$applicant['applicant_id']."'");
+		$educationMapper->delete("educ_applicant_id = '".$applicant['applicant_id']."'");
+		$applicantSkillMapper->delete("askill_applicant_id = '".$applicant['applicant_id']."'");
+		$basiccontactmapper->delete("bc_id = '".$basiccontact['bc_id']."'");
+		$applicantmapper->delete("applicant_id = '".$applicant['applicant_id']."'");
+		$usermapper->delete("user_id = '".$user['user_id']."'");
+
+		echo json_encode(array(
+			"success"=>1
+		));
 	}
 
 	public function save_file(){

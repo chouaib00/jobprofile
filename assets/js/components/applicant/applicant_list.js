@@ -28,7 +28,7 @@ $(document).ready(function(){
             // return '';
             let id = data;
             let html =  '<div class="text-center"><a class="btn btn-info has-tooltip" title="Edit" href="' + global.site_name + 'applicant/update-profile/' + row['user_name']  + '"><i class="fa fa-pencil"></i></a> ' +
-                        '<button class="btn btn-danger has-tooltip delete-row" title="Delete" value="' + id + '"><i class="fa fa-trash"></i></button></div>'
+                        '<button class="btn btn-danger has-tooltip delete-row" title="Delete" value="' + row['user_name'] + '"><i class="fa fa-trash"></i></button></div>'
             return html;
           }
       }],
@@ -60,13 +60,13 @@ $(document).ready(function(){
               callback: function (result) {
                 if(result){
                   $.ajax({
-                    url : global.site_name + 'employer/delete-applicant/',
+                    url : global.site_name + 'applicant/delete-applicant/',
                     type : 'POST',
                     dataType : 'json',
                     data : params,
                     success : function(){
                       bootbox.alert("Delete Successful");
-                      $('#employer-list').ajax.reload();
+                      $('#employer-list').DataTable().ajax.reload();
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         bootbox.alert("Something went wrong!");
