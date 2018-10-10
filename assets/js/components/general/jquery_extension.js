@@ -7,6 +7,7 @@ $(document).ready(function(){
   comm_events.icheck_init();
   comm_events.submit_init();
   comm_events.summernote_init();
+  comm_events.jquery_validator_ext();
 });
 
 
@@ -57,5 +58,10 @@ var comm_events = {
     $('.text-editor').summernote({
       height: 300
     });
+  },
+  jquery_validator_ext  : function(){
+    jQuery.validator.addMethod("username", function(value, element) {
+      return this.optional(element) || /^[a-zA-Z0-9_]*$/i.test(value);
+    }, "Only Alphanumeric characters are allowed. (A-z, 0-9, _)");
   }
 }

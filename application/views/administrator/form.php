@@ -76,7 +76,7 @@ $(document).ready(function(){
   if($("#main-form").data('action') == 'add'){
     $("#main-form").validate({
       rules :{
-        'first-name': {
+        'admin-first-name': {
           required : true
         },
         'user-email': {
