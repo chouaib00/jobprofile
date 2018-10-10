@@ -16,18 +16,11 @@
                 </div>
                 <div class="ibox-content">
                   <form id="main-form" class="form-horizontal" action="" method="POST">
+                      <input type="hidden" name="add-again" value="0">
                       <div class="form-group">
                         <div class="col-md-12">
                           <label>Employer Name</label>
                           <input type="text" name="employer-name" placeholder="Enter Employer Name" class="form-control">
-                        </div>
-                        <div class="col-md-12">
-                          <label>Employer Address</label>
-                          <input type="text" name="employer-address" placeholder="Enter Employer Address" class="form-control">
-                        </div>
-                        <div class="col-md-12">
-                          <label>Employer About</label>
-                          <textarea name="employer-about" class="form-control"></textarea>
                         </div>
                         <div class="form-group col-sm-12">
                           <div class="col-sm-4">
@@ -46,6 +39,14 @@
                         <div class="col-md-12">
                           <label>Email</label>
                           <input type="email" name="reg-email" placeholder="Enter Email" class="form-control">
+                        </div>
+                        <div class="col-md-12">
+                          <label>Employer Address</label>
+                          <input type="text" name="employer-address" placeholder="Enter Employer Address" class="form-control">
+                        </div>
+                        <div class="col-md-12">
+                          <label>Employer About</label>
+                          <textarea name="employer-about" class="form-control"></textarea>
                         </div>
                         <div class="col-md-12">
                           <label>Username</label>
@@ -69,9 +70,14 @@
             </div>
             <div class="col-lg-12">
               <div class="form-group">
-                  <div class="col-sm-4 col-sm-offset-4">
+                  <div class="col-sm-4 col-sm-offset-2">
                       <button class="btn btn-primary form-submit col-sm-12" data-form="main-form">
                         <h3 class="font-bold"><i class="fa fa-user-o"></i> Register</h3>
+                      </button>
+                  </div>
+                  <div class="col-sm-4 ">
+                      <button class="btn btn-primary form-submit-add-new col-sm-12">
+                        <h3 class="font-bold"><i class="fa fa-user-plus"></i> Register & Add New</h3>
                       </button>
                   </div>
               </div>
@@ -87,7 +93,10 @@
 
 $(document).ready(function(){
 
-
+  $('.form-submit-add-new').click(function(){
+    $('[name=add-again]').val('1');
+    $("#"+$(this).data('form')).submit();
+  });
 
   $("#main-form").validate({
     rules :{
@@ -100,6 +109,7 @@ $(document).ready(function(){
       },
       'reg-username':{
         required : true,
+        username : true,
         minlength: 6
       },
       'reg-password':{

@@ -53,7 +53,12 @@ class Employer extends Controller {
 				,	'email'		=>$user['user_email']
 				,	'type'		=>$user['user_type']
 			);
-			$this->redirect(DOMAIN.'employer/edit-profile/'.$user['user_name']);
+			if($_POST['add-again'] == '1'){
+				$this->redirect(DOMAIN.'employer/add-employer/'.$user['user_name']);
+			}
+			else{
+				$this->redirect(DOMAIN.'employer/edit-profile/'.$user['user_name']);
+			}
 		}
 		$this->is_secure = true;
 		$this->view('employer/registration');

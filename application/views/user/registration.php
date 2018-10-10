@@ -60,6 +60,7 @@ $(document).ready(function(){
       },
       'reg-username':{
         required : true,
+        username : true,
         minlength: 6
       },
       'reg-password':{
