@@ -54,7 +54,7 @@ class Employer extends Controller {
 				,	'type'		=>$user['user_type']
 			);
 			if($_POST['add-again'] == '1'){
-				$this->redirect(DOMAIN.'employer/add-employer/'.$user['user_name']);
+				$this->redirect(DOMAIN.'employer/add-employer/');
 			}
 			else{
 				$this->redirect(DOMAIN.'employer/edit-profile/'.$user['user_name']);
