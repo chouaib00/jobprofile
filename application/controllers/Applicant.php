@@ -112,57 +112,6 @@ class Applicant extends Controller {
 		$this->view('applicant/registration');
 	}
 
-	public function upload_image(){
-		$current_user = $_SESSION['current_user']['id'];
-		$userMapper = new App\Mapper\UserMapper();
-		$applicantMapper = new App\Mapper\ApplicantMapper();
-		$fileManagerMapper = new App\Mapper\FileManagerMapper();
-		$user = $userMapper->getByFilter("user_id = '". $current_user."' ", true);
-		$applicant = $applicantMapper->getByFilter("applicant_user_id = '". $current_user."' ", true);
-
-		if(!empty($_FILES)){
-			$this->load->model('FileManagement/Upload_Model');
-			if($_FILES['applicant-img']["error"] == 0){
-				$result = $this->Upload_Model->upload_profile_image($_FILES);
-
-				$applicant = $applicantMapper->getByFilter("applicant_user_id = '". $_SESSION['current_user']['id']."' ", true);
-				if($user['user_fm_id']>0){
-					//Update
-					$fileManager = $fileManagerMapper->getByFilter("fm_id = '".$user['user_fm_id']."'", true);
-					$file_path = 'upload/profile/'.$fileManager['fm_encypted_name'];
-					if(file_exists($file_path)){
-						$this->Upload_Model->delete_file($file_path);
-					}
-					$fileManagerMapper->update(array(
-						'fm_encypted_name'	=> $result['image_name']
-					), "fm_id = '".$user['user_fm_id']."'");
-				}
-				else{
-					//Insert
-					$user['user_fm_id'] = $fileManagerMapper->insert(array(
-						'fm_encypted_name'	=> $result['image_name']
-					));
-				}
-				$userMapper->update(array(
-					'user_fm_id' =>$user['user_fm_id']
-				), "user_id = '".$current_user."'");
-
-				$this->set_alert(array(
-					'message'=>'<i class="fa fa-check"></i> Successfully change display picture!'
-				,	'type'=>'success'
-				));
-			}
-			else{
-				$this->set_alert(array(
-					'message'=>'<i class="fa fa-exclamation"></i> Failed to upload!'
-				,	'type'=>'danger'
-				));
-			}
-		};
-		$this->is_secure = true;
-    $this->view('applicant/upload_image');
-	}
-
 	public function file_attachment(){
 		$this->is_secure = true;
     $this->view('applicant/file_attachment');

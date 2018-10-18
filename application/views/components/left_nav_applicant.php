@@ -32,7 +32,14 @@
                     <li><a href="<?php echo DOMAIN; ?>applicant/view-profile">View Profile</a></li>
                     <li><a href="<?php echo DOMAIN; ?>applicant/update-profile">Edit Profile</a></li>
                     <li><a href="<?php echo DOMAIN; ?>applicant/file-attachment">File Attachments</a></li>
-                    <li><a href="<?php echo DOMAIN; ?>applicant/upload-image">Profile Image</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>users/upload-image">Profile Image</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href=""><i class="fa fa-briefcase"></i> <span class="nav-label"> Job Vacancy</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="<?php echo DOMAIN; ?>vacancy/job-feed"> My Job Feed</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>vacancy/my-application"> My Application</a></li>
                 </ul>
             </li>
         </ul>

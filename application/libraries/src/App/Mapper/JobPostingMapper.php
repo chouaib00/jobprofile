@@ -7,7 +7,7 @@ class JobPostingMapper extends Mapper{
   protected $_table = 'tbl_job_posting';
 
 
-  public function selectDataTable($filter, $columns, $limit, $offset, $order){
+  public function selectDataTable($filter, $columns, $limit, $offset, $order, $employer_id){
     $result = array(
       'data'  => array()
     , 'total_count'=>0
@@ -25,6 +25,14 @@ class JobPostingMapper extends Mapper{
         $where_str_query .= "WHERE ( employer_name LIKE :employer_name OR jp_title LIKE :jp_title)";
         $params[':employer_name'] = '%'.$filter.'%';
         $params[':jp_title'] = '%'.$filter.'%';
+    }
+    if($employer_id){
+      if(strlen($where_str_query) > 0){
+        $where_str_query .= " AND employer_id = '".$employer_id."'";
+      }
+      else{
+        $where_str_query .= "WHERE employer_id = '".$employer_id."'";
+      }
     }
 
     foreach($order as $i=>$_order){
@@ -60,4 +68,5 @@ class JobPostingMapper extends Mapper{
 
 		return $result;
   }
+
 }

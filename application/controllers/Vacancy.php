@@ -8,10 +8,74 @@ class Vacancy extends Controller {
 
 	public function vacancy_list(){
 		$this->is_secure = true;
-    $this->view('vacancy/vacancy_list');
+
+		if($_SESSION['current_user']['type'] == '3'){
+			$employerMapper = new App\Mapper\EmployerMapper();
+			$employer = $employerMapper->getByFilter("employer_user_id = '".$_SESSION['current_user']['id']."'", true);
+			$this->_data['employer_id'] = $employer['employer_id'];
+			$this->view('vacancy/posted_job_vacancy');
+		}
+		else{
+				$this->view('vacancy/vacancy_list');
+		}
+	}
+
+	public function job_feed(){
+		$userMapper = new App\Mapper\UserMapper();
+		$applicantMapper = new App\Mapper\ApplicantMapper();
+		$user = $userMapper->getByFilter(array(
+			array(
+				'column'=>'user_id'
+			,	'value'	=>$_SESSION['current_user']['id']
+			)
+		), true);
+
+		$applicant = $applicantMapper->getByFilter("applicant_user_id = '". $user['user_id']."' ", true);
+		$this->load->model('JobSearch/JobSearch_Model');
+		$searchResult = $this->JobSearch_Model->getJobList($applicant['applicant_id']);
+		$this->_data['feed'] = $searchResult;;
+		$this->is_secure = true;
+		$this->view('vacancy/job_feed');
+	}
+
+	public function my_application(){
+		$userMapper = new App\Mapper\UserMapper();
+		$applicantMapper = new App\Mapper\ApplicantMapper();
+		$applicantApplicationMapper = new App\Mapper\ApplicantApplicationMapper();
+		$user = $userMapper->getByFilter(array(
+			array(
+				'column'=>'user_id'
+			,	'value'	=>$_SESSION['current_user']['id']
+			)
+		), true);
+
+		$applicant = $applicantMapper->getByFilter("applicant_user_id = '". $user['user_id']."' ", true);
+		$searchResult = $applicantApplicationMapper->getMyApplication($applicant['applicant_id']);
+		$this->_data['application_list'] = $searchResult;;
+		$this->is_secure = true;
+		$this->view('vacancy/my_application');
 	}
 
 	public function vacancy_ref(){
+		$limit = $_POST['length'];
+		$offset = $_POST['start'];
+		$search = $_POST['search'];
+		$columns = $_POST['columns'];
+		$employer = (isset($_POST['employer']))? $_POST['employer'] : '';
+		$orders = array();
+
+		foreach($_POST['order'] as $_order){
+			array_push($orders, array(
+				'col'=> $_POST['columns'][$_order['column']]['data']
+			,	'type'	=> $_order['dir']
+			));
+		}
+		$mapper = new App\Mapper\JobPostingMapper();
+		$result = $mapper->selectDataTable($search['value'], $columns, $limit, $offset, $orders, $employer);
+		echo json_encode($result);
+	}
+
+	public function pjobv_ref(){
 		$limit = $_POST['length'];
 		$offset = $_POST['start'];
 		$search = $_POST['search'];
@@ -101,9 +165,7 @@ class Vacancy extends Controller {
 		$employerMapper = new App\Mapper\EmployerMapper();
 		$jobPostingMapper = new App\Mapper\JobPostingMapper();
 		$jobPostingQualificationMapper = new App\Mapper\JobPostingQualificationMapper();
-
 		$jobPosting = $jobPostingMapper->getByFilter("jp_id = '".$jp_id."'", true);
-
 
 		if(!empty($input)){
 			$jobPostingMapper->update(array(
@@ -201,6 +263,64 @@ class Vacancy extends Controller {
 		$this->_data['form_data']	= $form_data;
 		$this->is_secure = true;
 		$this->view('vacancy/view_vacancy');
+	}
+
+	public function apply_vacancy($jp_id){
+		$input = $_POST;
+		$employerMapper = new App\Mapper\EmployerMapper();
+		$jobPostingMapper = new App\Mapper\JobPostingMapper();
+		$applicantMapper = new App\Mapper\ApplicantMapper();
+		$applicantApplicationMapper = new App\Mapper\ApplicantApplicationMapper();
+		$jobPostingQualificationMapper = new App\Mapper\JobPostingQualificationMapper();
+		$jobPosting = $jobPostingMapper->getByFilter("jp_id = '".$jp_id."'", true);
+
+		$applicant = $applicantMapper->getByFilter("applicant_user_id = '".$_SESSION['current_user']['id']."'", true);
+		$employer = $employerMapper->getByFilter("employer_id = '".$jobPosting['jp_employer_id']."'", true);
+		$ageFromQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'AGE_FROM')[0];
+		$ageToQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'AGE_TO')[0];
+		$genderQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'GENDER');
+		$educAttainment = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'EDUC_ATTAINMENT');
+		$skillsQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'SKILLS');
+		$cityQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'CITY');
+		$provinceQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'PROVINCE');
+		$regionQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'REGION');
+		if(!empty($input)){
+			$applicantApplicationMapper->insert(array(
+				'aa_jp_id'	=> $jp_id
+			,	'aa_applicant_id'	=> $applicant['applicant_id']
+			,	'aa_applicantion_status'	=> '0'
+			,	'aa_application_date'	=>date('Y-m-d H:i:s')
+			,	'aa_cover_letter'	=> $input['cover-letter']
+			));
+			$this->set_alert(array(
+				'message'=>'<i class="fa fa-thumb-tack"></i> You have successfully Applied to this Job!'
+			,	'type'=>'success'
+			));
+		}
+		$applicantApplication = $applicantApplicationMapper->getByFilter("aa_applicant_id = '".$applicant['applicant_id']."' AND aa_jp_id = '".$jp_id."'", true);
+
+		$form_data = array(
+			'jp_title'	=>	$jobPosting['jp_title']
+		,	'jp_description'	=> $jobPosting['jp_description']
+		,	'jp_open'	=>	($jobPosting['jp_open'])? '1':'0'
+		,	'employer'	=> array(
+				'employer_id'	=>	$employer['employer_id']
+			,	'employer_name'	=> $employer['employer_name']
+			)
+		,	'gender_qualification'=>$genderQualification
+		,	'educ_qualification'=>$educAttainment
+		,	'agefrom_qualification'=>$ageFromQualification
+		,	'ageto_qualification'=>$ageToQualification
+		,	'skill_qualification'=>$skillsQualification
+		,	'city_qualification'=>$cityQualification
+		,	'province_qualification'=>$provinceQualification
+		,	'region_qualification'=>$regionQualification
+		,	'applicant_application'=>$applicantApplication
+		);
+
+		$this->_data['form_data']	= $form_data;
+		$this->is_secure = true;
+		$this->view('vacancy/apply_vacancy');
 	}
 
 	private function format_qualification($input){

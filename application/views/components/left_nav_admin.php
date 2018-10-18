@@ -3,15 +3,21 @@
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element"> <span>
-                        <img alt="image" class="img-circle img-responsive" src="<?php echo UPLOAD ?>profile/emp_img_default.png" />
+                        <img alt="image" class="img-circle img-responsive" src="<?php echo UPLOAD.'profile/'.$_login_details['profile_img'] ?>" />
                          </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php echo $_SESSION['current_user']['displayname'] ?></strong>
                         </span> <span class="text-muted text-xs block">Administrator </span> </span> </a>
                 </div>
                 <div class="logo-element">
-                  <img alt="image" class="img-circle img-responsive" src="<?php echo IMG_DIR ?>emp_img_default.png" />
+                  <img alt="image" class="img-circle img-responsive" src="<?php echo UPLOAD.'profile/'.$_login_details['profile_img'] ?>" />
                 </div>
+            </li>
+            <li>
+                <a href=""><i class="fa fa-user"></i> <span class="nav-label">Profile</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="<?php echo DOMAIN; ?>users/upload-image">Profile Image</a></li>
+                </ul>
             </li>
             <li>
                 <a href=""><i class="fa fa-bars"></i> <span class="nav-label">Reference</span> <span class="fa arrow"></span></a>
