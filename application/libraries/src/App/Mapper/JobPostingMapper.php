@@ -69,4 +69,18 @@ class JobPostingMapper extends Mapper{
 		return $result;
   }
 
+  public function getJobVacancy(){
+    $sql_statement = "SELECT *
+                      FROM `tbl_job_posting`
+                      LEFT JOIN `tbl_employer`
+                      ON `jp_employer_id` = `employer_id`
+                      ORDER BY jp_date_posted ASC
+                      LIMIT 25 ";
+		$stmt = $this->prepare($sql_statement);
+
+		$stmt->execute();
+		$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $result;
+  }
+
 }

@@ -106,7 +106,10 @@ class Home extends Controller {
 			'column'=>'announcement_date'
 		,	'order'=>'DESC'
 		)));
-		$this->_template = 'templates/public';
+
+		$jobPostingMapper = new App\Mapper\JobPostingMapper();
+		$this->_data['job_post'] = $jobPostingMapper->getJobVacancy();
+		$this->_template = 'templates/plain';
 		$this->view('home/landing_page');
 	}
 }

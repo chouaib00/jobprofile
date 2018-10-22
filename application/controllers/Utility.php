@@ -31,21 +31,12 @@ class Utility extends Controller {
 
   public function announcement(){
 			$this->is_secure = true;
-			if($_SESSION['current_user']['type'] == '1'){
-				//Means Admin
-				$this->_template = 'templates/admin_main';
-			}
-			if($_SESSION['current_user']['type'] == '2'){
-				//Means Applicant
-				$this->_template = 'templates/applicant_main';
-			}
       $this->view('utility/announcement/list');
   }
 
 	public function add_announcement(){
 		$announcementMapper = new App\Mapper\AnnouncementMapper();
 		$adminMapper = new App\Mapper\AdminMapper();
-		$this->_template = 'templates/admin_main';
 		$data = array(
 				'announcement_title'=>''
 			,	'announcement_content'=>''
@@ -60,6 +51,7 @@ class Utility extends Controller {
 		}
 		$this->_data['action'] = 'add';
 		$this->_data['form_data'] = $data;
+		$this->is_secure = true;
 		$this->view('utility/announcement/form');
 	}
 
@@ -76,8 +68,7 @@ class Utility extends Controller {
 		if(empty($school));//Show 404
 		$this->_data['action'] = 'edit';
 		$this->_data['form_data'] = $announcement;
-
-		$this->_template = 'templates/admin_main';
+		$this->is_secure = true;	
     $this->view('utility/announcement/form');
 	}
 
