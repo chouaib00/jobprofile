@@ -1,6 +1,4 @@
 <?php
-
-
 class Upload_Model extends CI_Model{
 
 	public function upload_profile_image($file){
