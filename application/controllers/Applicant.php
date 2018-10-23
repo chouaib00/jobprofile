@@ -239,6 +239,65 @@ class Applicant extends Controller {
 		echo json_encode($applicantList);
 	}
 
+	public function generate_excel(){
+		$filter = $_POST;
+		$applicantMapper = new App\Mapper\ApplicantMapper();
+		$applicantList = $applicantMapper->selectByFilter($filter);
+
+		$this->load->library('Phpspreadsheet');
+
+		$spreadSheetObj = $this->phpspreadsheet->getSpreadObj();
+
+		//Autofits
+		foreach (range('A','O') as $col) {
+		  $spreadSheetObj->getColumnDimension($col)->setAutoSize(true);
+		}
+
+		$spreadSheetObj->setCellValueByColumnAndRow(1, 1, 'First Name');
+		$spreadSheetObj->setCellValueByColumnAndRow(2, 1, 'Middle Name');
+		$spreadSheetObj->setCellValueByColumnAndRow(3, 1, 'Last Name');
+		$spreadSheetObj->setCellValueByColumnAndRow(4, 1, 'Name Extension');
+		$spreadSheetObj->setCellValueByColumnAndRow(5, 1, 'Gender');
+		$spreadSheetObj->setCellValueByColumnAndRow(6, 1, 'Main Contact Number');
+		$spreadSheetObj->setCellValueByColumnAndRow(7, 1, 'Mobile Number');
+		$spreadSheetObj->setCellValueByColumnAndRow(8, 1, 'Home Number');
+		$spreadSheetObj->setCellValueByColumnAndRow(9, 1, 'Email');
+		$spreadSheetObj->setCellValueByColumnAndRow(10, 1, 'Full Address');
+		$spreadSheetObj->setCellValueByColumnAndRow(11, 1, 'Civil Status');
+		$spreadSheetObj->setCellValueByColumnAndRow(12, 1, 'Citizenship');
+		$spreadSheetObj->setCellValueByColumnAndRow(13, 1, 'Birthdate');
+		$spreadSheetObj->setCellValueByColumnAndRow(14, 1, 'Age');
+		$spreadSheetObj->setCellValueByColumnAndRow(15, 1, 'Applicant Summary');
+
+		$row_index = 2;
+		foreach($applicantList as $applicant){
+			$spreadSheetObj->setCellValueByColumnAndRow(1, $row_index, $applicant['bc_first_name']);
+			$spreadSheetObj->setCellValueByColumnAndRow(2, $row_index, $applicant['bc_middle_name']);
+			$spreadSheetObj->setCellValueByColumnAndRow(3, $row_index, $applicant['bc_last_name']);
+			$spreadSheetObj->setCellValueByColumnAndRow(4, $row_index, $applicant['bc_name_ext']);
+			$spreadSheetObj->setCellValueByColumnAndRow(5, $row_index, $applicant['bc_gender']);
+			$spreadSheetObj->setCellValueByColumnAndRow(6, $row_index, $applicant['bc_phone_num1']);
+			$spreadSheetObj->setCellValueByColumnAndRow(7, $row_index, $applicant['bc_phone_num2']);
+			$spreadSheetObj->setCellValueByColumnAndRow(8, $row_index, $applicant['bc_phone_num3']);
+			$spreadSheetObj->setCellValueByColumnAndRow(9, $row_index, $applicant['bc_email_address']);
+			$spreadSheetObj->setCellValueByColumnAndRow(10, $row_index, $applicant['address_desc'].', '.$applicant['city_name'].', '.$applicant['province_name']);
+			$spreadSheetObj->setCellValueByColumnAndRow(11, $row_index, $applicant['applicant_civil_status']);
+			$spreadSheetObj->setCellValueByColumnAndRow(12, $row_index, $applicant['applicant_citizenship']);
+			$spreadSheetObj->setCellValueByColumnAndRow(13, $row_index, $applicant['applicant_birthday']);
+			$spreadSheetObj->setCellValueByColumnAndRow(14, $row_index, date_diff(date_create($applicant['applicant_birthday']), date_create('now'))->y);
+			$spreadSheetObj->setCellValueByColumnAndRow(15, $row_index, $applicant['applicant_summary']);
+			$row_index++;
+		}
+
+		// $this->load->library('Phpspreadsheet');
+    // //echo $html;
+		// $spreadSheetObj = $this->phpspreadsheet->getSpreadObj();
+		// $spreadSheetObj->setCellValue('A1', 'Hello World !');
+		$output = array('file_name'=>$this->phpspreadsheet->write());
+
+		echo json_encode($output);
+	}
+
 	public function list(){
 		$this->is_secure = true;
     $this->view('applicant/list');

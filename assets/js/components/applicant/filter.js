@@ -31,17 +31,57 @@ $(document).ready(function(){
       complete : function(){
       },
 			success : function(result){
+        if(result.length > 0){
+          $('#generate-excel').show();
+        }
+        else{
+          $('#generate-excel').hide();
+        }
+
+
         let html_data = '';
         result.forEach(function(row){
           html_data += row_format(row);
         });
-        console.log(html_data);
         $('#applicant-list tbody').html('')
         $('#applicant-list tbody').html(html_data)
         console.log(result)
 				// if(result.success){
 				// 	window.location.reload();
 				// }
+			}
+		});
+  });
+
+  $('#generate-excel').click(function(){
+    var filter = [];
+    $('#filter .filter-field').each(function(){
+      let entry = {
+        name : $(this).attr("name")
+      , value: $(this).val()
+      };
+
+      filter.push(entry);
+    });
+    filter.push({
+      name : 'age-range'
+    , value: $("[name=age-range]").attr("value")
+    });
+    filter.push({
+      name: 'filter-type'
+    , value :$("[name=filter-type]").val()
+    });
+
+    $.ajax({
+			type: 'POST',
+			dataType: 'json',
+			url: global.site_name + 'applicant/generate-excel',
+			data : filter,
+      complete : function(){
+      },
+			success : function(result){
+        var win = window.open(global.site_name + 'upload/spreadsheet/' + result.file_name, '_blank');
+        win.focus();
 			}
 		});
   });

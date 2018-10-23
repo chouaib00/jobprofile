@@ -99,7 +99,14 @@
                 </div>
 
                     <div class="ibox float-e-margins">
-                      <div class="ibox-title blue-bg">Applicant List</div>
+                      <div class="ibox-title blue-bg clearfix">
+                        <h4 class="panel-title pull-left">Applicant List</h4>
+                        <div class="pull-right">
+                          <button id="generate-excel" type="button" class="btn btn-info btn-sm has-tooltip" title="Generate Excel List" style="display:none"><i class="fa fa-file-excel-o"></i></button>
+                        </div>
+
+
+                      </div>
                       <div class="ibox-content">
                         <div class="table-responsive">
                           <!-- <table id="applicant-list" class="table table-striped table-bordered table-hover" data-config="">
