@@ -76,7 +76,7 @@
                       </button>
                   </div>
                   <div class="col-sm-4 ">
-                      <button class="btn btn-primary form-submit-add-new col-sm-12">
+                      <button class="btn btn-primary form-submit-add-new col-sm-12" data-form="main-form">
                         <h3 class="font-bold"><i class="fa fa-user-plus"></i> Register & Add New</h3>
                       </button>
                   </div>
