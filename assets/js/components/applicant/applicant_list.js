@@ -1,5 +1,54 @@
 $(document).ready(function(){
 
+  $('#generate-excel').click(function(){
+    var filter = [
+      {
+        name : 'applicant-educ-attainment'
+      , value : ''
+      },
+      {
+        name : 'add-region'
+      , value : ''
+      },
+      {
+        name : 'add-province'
+      , value : ''
+      },
+      {
+        name : 'add-city'
+      , value : ''
+      },
+      {
+        name : 'applicant-skills'
+      , value : ''
+      },
+      {
+        name : 'applicant-gender'
+      , value : ''
+      },
+      {
+        name : 'age-range'
+      , value : '10;90'
+      },
+      {
+        name : 'filter-type'
+      , value : 'most-relevant'
+      },
+    ];
+
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: global.site_name + 'applicant/generate-excel',
+      data : filter,
+      complete : function(){
+      },
+      success : function(result){
+        var win = window.open(global.site_name + 'upload/spreadsheet/' + result.file_name, '_blank');
+        win.focus();
+      }
+    });
+  })
   $('#employer-list').DataTable( {
       responsive: true,
       processing: true,

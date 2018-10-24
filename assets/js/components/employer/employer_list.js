@@ -1,5 +1,20 @@
 $(document).ready(function(){
 
+  $('#generate-excel').click(function(){
+    $.ajax({
+			type: 'POST',
+			dataType: 'json',
+			url: global.site_name + 'employer/generate-employer-excel',
+			data : {},
+      complete : function(){
+      },
+			success : function(result){
+        var win = window.open(global.site_name + 'upload/spreadsheet/' + result.file_name, '_blank');
+        win.focus();
+			}
+		});
+  });
+
   $('#employer-list').DataTable( {
       responsive: true,
       processing: true,
