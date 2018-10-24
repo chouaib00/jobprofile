@@ -19,4 +19,19 @@ class ApplicantSkillMapper extends Mapper{
     $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
     return $result;
   }
+
+  public function getSkillTop(){
+    $sql_statement = "SELECT st.st_id, st.st_name, COUNT(st.st_id) num
+                      FROM `tbl_applicant_skill`
+                      INNER JOIN `tbl_skill_tag` st
+                      ON `tbl_applicant_skill`.`st_id` = st.`st_id`
+                      GROUP BY st.st_id, st.st_name
+                      ORDER BY num DESC, st_name ASC
+                      LIMIT 10";
+    $stmt = $this->prepare($sql_statement);
+    $stmt->execute(array(
+    ));
+    $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $result;
+  }
 }

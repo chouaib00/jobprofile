@@ -37,8 +37,36 @@
             </div>
         </div>
     </div>
-
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="ibox float-e-margins">
+          <div class="ibox-title">
+              <h5>Applicant Registration
+              </h5>
+          </div>
+          <div class="ibox-content">
+              <div>
+                  <canvas id="applicant-registration-linegraph" height="150"></canvas>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="ibox">
+          <div class="ibox-content">
+              <h5>Top 10 used skillset</h5>
+              <table id="top-skill" class="table table-stripped small m-t-md">
+                  <tbody>
+                    
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
 
   </div>
 </div>
+<script src="<?php echo THEME ?>js/plugins/chartJs/Chart.min.js"></script>
+<script src="<?php echo THEME ?>js/demo/chartjs-demo.js"></script>
 <script src="<?php echo JS_DIR ?>components/home/dashboard_admin.js"></script>
