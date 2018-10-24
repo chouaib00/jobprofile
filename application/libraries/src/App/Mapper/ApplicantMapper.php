@@ -187,7 +187,7 @@ class ApplicantMapper extends Mapper{
   }
 
   public function getApplicantRegisteredCount(){
-    $sql_statement = "SELECT YEAR(user_register_date) year_rec, DATE_FORMAT(user_register_date, \"%b\") month_rec, COUNT(user_id) user
+    $sql_statement = "SELECT YEAR(user_register_date) year_rec, MONTH(user_register_date) month_rec, COUNT(user_id) user
                       FROM tbl_user
                       WHERE user_type = '2'
                       GROUP BY YEAR(user_register_date), month_rec LIMIT 10";
@@ -200,7 +200,7 @@ class ApplicantMapper extends Mapper{
       'data'=>array()
     );
     for($i=0;$i<10&&$i<count($result);$i++){
-      $month = date( 'M', strtotime($result[$i]['month_rec'].'-01-'.$result[$i]['year_rec']));
+      $month = date( 'M', strtotime($result[$i]['year_rec'].'-'.$result[$i]['month_rec'].'-01'));
       $output['month'][] = $month;
       $output['data'][] = $result[$i]['user'];
     }
