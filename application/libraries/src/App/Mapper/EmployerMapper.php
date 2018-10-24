@@ -70,4 +70,16 @@ class EmployerMapper extends Mapper{
 
 		return $result;
   }
+
+  public function getEmployerList(){
+    $sql_statement = "SELECT *
+                      FROM `tbl_employer`
+                      INNER JOIN `tbl_basic_contact`
+                      ON `bc_id` = `employer_bc_id`";
+    $stmt = $this->prepare($sql_statement);
+    $stmt->execute(array(
+    ));
+    $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $result;
+  }
 }

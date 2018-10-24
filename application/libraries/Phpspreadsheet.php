@@ -14,8 +14,6 @@ class Phpspreadsheet {
 			$this->spreadsheet->getProperties()->setCreator("Brent Macatangay");
       $this->sheet = $this->spreadsheet->getActiveSheet();
 
-
-
 			return $this->sheet;
 	}
 

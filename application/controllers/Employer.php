@@ -283,6 +283,48 @@ class Employer extends Controller {
 		echo json_encode($file);
 	}
 
+	public function generate_employer_excel(){
+		$filter = $_POST;
+		$employerMapper = new App\Mapper\EmployerMapper();
+		$employerList = $employerMapper->getEmployerList();
+		$this->load->library('Phpspreadsheet');
+
+		$spreadSheetObj = $this->phpspreadsheet->getSpreadObj();
+		//Autofits
+		foreach (range('A','G') as $col) {
+		  $spreadSheetObj->getColumnDimension($col)->setAutoSize(true);
+		}
+
+		$spreadSheetObj->setCellValueByColumnAndRow(1, 1, 'Employer');
+		$spreadSheetObj->setCellValueByColumnAndRow(2, 1, 'Email');
+		$spreadSheetObj->setCellValueByColumnAndRow(3, 1, 'Main Contact');
+		$spreadSheetObj->setCellValueByColumnAndRow(4, 1, 'Mobile Number');
+		$spreadSheetObj->setCellValueByColumnAndRow(5, 1, 'Home Number');
+		$spreadSheetObj->setCellValueByColumnAndRow(6, 1, 'Address');
+		$spreadSheetObj->setCellValueByColumnAndRow(7, 1, 'About');
+
+		$row_index = 2;
+		foreach($employerList as $employer){
+			$spreadSheetObj->setCellValueByColumnAndRow(1, $row_index, $employer['employer_name']);
+			$spreadSheetObj->setCellValueByColumnAndRow(2, $row_index, $employer['bc_email_address']);
+			$spreadSheetObj->setCellValueByColumnAndRow(3, $row_index, $employer['bc_phone_num1']);
+			$spreadSheetObj->setCellValueByColumnAndRow(4, $row_index, $employer['bc_phone_num2']);
+			$spreadSheetObj->setCellValueByColumnAndRow(5, $row_index, $employer['bc_phone_num3']);
+			$spreadSheetObj->setCellValueByColumnAndRow(6, $row_index, $employer['employer_address']);
+			$spreadSheetObj->setCellValueByColumnAndRow(7, $row_index, $employer['employer_about']);
+			$row_index++;
+		}
+
+		// $this->load->library('Phpspreadsheet');
+    // //echo $html;
+		// $spreadSheetObj = $this->phpspreadsheet->getSpreadObj();
+		// $spreadSheetObj->setCellValue('A1', 'Hello World !');
+		$output = array('file_name'=>$this->phpspreadsheet->write());
+
+		echo json_encode($output);
+	}
+
+
 	public function list(){
 		$this->is_secure = true;
     $this->view('employer/list');

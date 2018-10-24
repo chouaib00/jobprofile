@@ -34,6 +34,7 @@ class Home extends Controller {
 		$applicantMapper = new App\Mapper\ApplicantMapper();
 		$adminMapper = new App\Mapper\AdminMapper();
 		$jobPostingMapper = new App\Mapper\JobPostingMapper();
+		$applicantSkillMapper = new App\Mapper\ApplicantSkillMapper();
 		$applicantApplicationMapper = new App\Mapper\ApplicantApplicationMapper();
 
 		$this->load->model('JobSearch/JobSearch_Model');
@@ -47,6 +48,10 @@ class Home extends Controller {
 			$result['registered_employer_count'] = count($registered_employer_count);
 			$job_posted_count = $jobPostingMapper->getAllCount();
 			$result['job_posted_count'] = $job_posted_count;
+			$applicant_registration_linegraph = $applicantMapper->getApplicantRegisteredCount();
+			$result['applicant_registration_linegraph'] = $applicant_registration_linegraph;
+			$top_skill = $applicantSkillMapper->getSkillTop();
+			$result['top_skill'] = $top_skill;
 
 
 		}
