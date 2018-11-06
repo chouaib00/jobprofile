@@ -58,12 +58,29 @@
               <h5>Top 10 used skillset</h5>
               <table id="top-skill" class="table table-stripped small m-t-md">
                   <tbody>
-                    
+
                   </tbody>
               </table>
           </div>
       </div>
   </div>
+
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+          <div class="ibox-title">
+              <h5>Applicant frequency of getting hired
+              </h5>
+          </div>
+          <div class="ibox-content">
+              <div>
+                  <canvas id="applicant-frequency-linegraph" height="150"></canvas>
+              </div>
+          </div>
+      </div>
+    </div>
+
 
   </div>
 </div>

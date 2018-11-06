@@ -7,3 +7,16 @@
 .select2-dropdown{
     z-index: 3051  !important;
 }
+table.shoping-cart-table tr.applicant-info{
+    border-top: 1px dashed gray;
+}
+table.shoping-cart-table tr.applicant-info:first-child {
+    border-top-width: 0px;
+}
+table.shoping-cart-table tr.applicant-info td
+{
+  text-align: left;
+}
+table.shoping-cart-table tr.applicant-info  td:last-child{
+  display: none;
+}

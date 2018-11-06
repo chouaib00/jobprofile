@@ -149,8 +149,6 @@ class ApplicantMapper extends Mapper{
                       ON present.`address_city_id` = city_id
                       INNER JOIN `tbl_province`
                       ON present.`address_province_id` = province_id
-                      INNER JOIN `tbl_address` permanent
-                      ON `applicant_permanent_add_id` = permanent.`address_id`
                       " . $where_str_query;
 		$stmt = $this->prepare($sql_statement);
 		$stmt->execute($params);
@@ -170,8 +168,6 @@ class ApplicantMapper extends Mapper{
                       ON present.`address_city_id` = city_id
                       INNER JOIN `tbl_province`
                       ON present.`address_province_id` = province_id
-                      INNER JOIN `tbl_address` permanent
-                      ON `applicant_permanent_add_id` = permanent.`address_id`
                       " . $where_str_query . " " . $order_str_query. " ".$limit_str_query;
 		$stmt = $this->prepare($sql_statement);
     $params[':limit'] = $limit;

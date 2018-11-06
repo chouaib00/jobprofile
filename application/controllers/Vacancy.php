@@ -20,6 +20,16 @@ class Vacancy extends Controller {
 		}
 	}
 
+	public function shift_status(){
+		$applicantApplicationMapper = new App\Mapper\ApplicantApplicationMapper();
+		$input = $_POST;
+		$applicantApplicationMapper->update(array(
+				'aa_applicantion_status'	=>	$input['new-status']
+			,	'aa_action_date'	=>	($input['new-status'] != '1')? date('Y-m-d H:i:s') : NULL
+		), "aa_id = '".$input['aa-id']."'");
+		echo json_encode(array('success'=>true));
+	}
+
 	public function job_feed(){
 		$userMapper = new App\Mapper\UserMapper();
 		$applicantMapper = new App\Mapper\ApplicantMapper();
@@ -230,6 +240,11 @@ class Vacancy extends Controller {
 		$employerMapper = new App\Mapper\EmployerMapper();
 		$jobPostingMapper = new App\Mapper\JobPostingMapper();
 		$jobPostingQualificationMapper = new App\Mapper\JobPostingQualificationMapper();
+
+		$applicantApplicationMapper = new App\Mapper\ApplicantApplicationMapper();
+		$applicantApplication = $applicantApplicationMapper->getApplicantApplicationByJPID($jp_id);
+
+
 		$jobPosting = $jobPostingMapper->getByFilter("jp_id = '".$jp_id."'", true);
 
 		$employer = $employerMapper->getByFilter("employer_id = '".$jobPosting['jp_employer_id']."'", true);
@@ -241,6 +256,8 @@ class Vacancy extends Controller {
 		$cityQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'CITY');
 		$provinceQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'PROVINCE');
 		$regionQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'REGION');
+
+
 
 		$form_data = array(
 			'jp_title'	=>	$jobPosting['jp_title']
@@ -258,6 +275,7 @@ class Vacancy extends Controller {
 		,	'city_qualification'=>$cityQualification
 		,	'province_qualification'=>$provinceQualification
 		,	'region_qualification'=>$regionQualification
+		,	'applicant_application' =>$applicantApplication
 		);
 
 		$this->_data['form_data']	= $form_data;
@@ -288,7 +306,7 @@ class Vacancy extends Controller {
 			$applicantApplicationMapper->insert(array(
 				'aa_jp_id'	=> $jp_id
 			,	'aa_applicant_id'	=> $applicant['applicant_id']
-			,	'aa_applicantion_status'	=> '0'
+			,	'aa_applicantion_status'	=> '1'
 			,	'aa_application_date'	=>date('Y-m-d H:i:s')
 			,	'aa_cover_letter'	=> $input['cover-letter']
 			));
