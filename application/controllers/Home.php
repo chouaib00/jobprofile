@@ -54,6 +54,8 @@ class Home extends Controller {
 			$result['top_skill'] = $top_skill;
 
 
+			$result['applicant_frequency_application'] = $applicantApplicationMapper->getFrequencyOfApplication();
+
 		}
 		else if($user['user_type'] == 2){
 			$applicant = $applicantMapper->getByFilter("applicant_user_id = '".$user['user_id']."'", true);
