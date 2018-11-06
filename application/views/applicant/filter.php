@@ -109,24 +109,6 @@
                       </div>
                       <div class="ibox-content">
                         <div class="table-responsive">
-                          <!-- <table id="applicant-list" class="table table-striped table-bordered table-hover" data-config="">
-                            <thead>
-                              <tr>
-                                <th class="col-md-2 text-center">Applicant Name</th>
-                                <th class="col-md-1 text-center">Gender</th>
-                                <th class="col-md-1 text-center">Age</th>
-                                <th class="col-md-2 text-center">Contact Info</th>
-                                <th class="col-md-1 text-center">Field of Study</th>
-                                <th class="col-md-1 text-center">Email</th>
-                                <th class="col-md-3 text-center">Present Address</th>
-                                <th class="col-md-1 text-center">Skillset</th>
-                                <th class="col-md-1 text-center no-sort">Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                          </table> -->
                           <table id="applicant-list" class="table shoping-cart-table">
                               <tbody>
 

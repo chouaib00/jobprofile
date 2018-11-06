@@ -5,7 +5,12 @@
   </div>
       <ul class="nav navbar-top-links navbar-right">
           <li>
-              <a href="<?php echo DOMAIN?>logout">
+              <a class="has-tooltip" title="Dashboard" href="<?php echo DOMAIN?>dashboard">
+                  <i class="fa fa-home"></i> Dashboard
+              </a>
+          </li>
+          <li>
+              <a class="has-tooltip" title="Log out" href="<?php echo DOMAIN?>logout">
                   <i class="fa fa-sign-out"></i> Log out
               </a>
           </li>
