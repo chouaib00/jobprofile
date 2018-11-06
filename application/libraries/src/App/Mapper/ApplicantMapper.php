@@ -24,6 +24,7 @@ class ApplicantMapper extends Mapper{
     $num_of_matches_statement = '';
     $skill_match_statement = '';
     $filter_type = "";
+    $num_of_matches = 0;
     switch($_POST['filter-type']){
       case "most-relevant":
         $filter_type = "OR";
@@ -63,11 +64,12 @@ class ApplicantMapper extends Mapper{
         $num_of_matches_statement.=" + ";
       }
     }
+    $num_of_matches = count($condition);
     if(strlen($where_statement)>0){
       $where_statement = 'WHERE '.$where_statement;
     }
 
-    $sql_statement = "SELECT tbl_applicant.*, tbl_basic_contact.*, present.*, tbl_city.*, tbl_province.*, tbl_user.user_name, tbl_file_manager.*, ".$num_of_matches_statement." as match_count
+    $sql_statement = "SELECT tbl_applicant.*, tbl_basic_contact.*, present.*, tbl_city.*, tbl_province.*, tbl_user.user_name, tbl_file_manager.*, ".$num_of_matches_statement." as match_count, ".$num_of_matches." as total_matches
                       FROM `tbl_applicant`
                       INNER JOIN `tbl_user`
                       ON `applicant_user_id` = `user_id`
