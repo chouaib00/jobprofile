@@ -538,7 +538,7 @@ var row_format = function(data){
     contact += ' / ' + data.bc_phone_num3;
   }
   let img_src = (data.fm_encypted_name)? data.fm_encypted_name : 'emp_img_default.png'
-  return  '<tr class="ribbon-content">' +
+  return  '<tr class="hidden-last ribbon-content">' +
               '<td width="90">' +
                   '<div>' +
                     '<img class="img-circle img-responsive" src="' + global.site_name + 'upload/profile/' + img_src + '">' +

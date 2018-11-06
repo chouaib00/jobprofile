@@ -43,6 +43,7 @@ class Auth extends Controller {
 		}
 		if(!$this->sess->isLogin()){
 			$this->_data['action_url'] = (isset($_GET['redirect_url']))? $_SERVER['REQUEST_URI'] : '?';
+			$this->_template = 'templates/public';
 			$this->view('auth/login');
 		}
 		else{

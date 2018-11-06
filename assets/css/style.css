@@ -17,9 +17,14 @@ table.shoping-cart-table tr.applicant-info td
 {
   text-align: left;
 }
+table.shoping-cart-table tr.hidden-last  td:last-child{
+  display: none;
+}
+/*
 table.shoping-cart-table tr  td:last-child{
   display: none;
 }
+*/
 
 .ribbon {
     position: absolute;
