@@ -538,7 +538,7 @@ var row_format = function(data){
     contact += ' / ' + data.bc_phone_num3;
   }
   let img_src = (data.fm_encypted_name)? data.fm_encypted_name : 'emp_img_default.png'
-  return  '<tr>' +
+  return  '<tr class="ribbon-content">' +
               '<td width="90">' +
                   '<div>' +
                     '<img class="img-circle img-responsive" src="' + global.site_name + 'upload/profile/' + img_src + '">' +
@@ -573,13 +573,17 @@ var row_format = function(data){
                   // $180,00
                   // <s class="small text-muted">$230,00</s>
               '</td>' +
-              '<td width="65">' +
+              '<td width="150">' +
                   // <input type="text" class="form-control" placeholder="1">
-              '</td>' +
-              '<td>' +
                   '<h3>' +
                     '<a class="text-navy has-tooltip" title="Print" href="' + global.site_name + 'applicant/print-resume/' + data.user_name + '"><i class="fa fa-external-link"></i></a>' +
                   '</h3>' +
+                  '<div class="ribbon-content">' +
+                  '<div class="ribbon base-alt"><span>Match Score <br><strong>' + ((data.match_count/data.total_matches) * 100).toFixed(2)+ '%</strong></span></div>' +
+                  '</div>' +
+              '</td>' +
+              '<td>' +
+
               '</td>' +
           '</tr>';
 
