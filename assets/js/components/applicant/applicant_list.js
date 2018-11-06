@@ -143,7 +143,11 @@ $(document).ready(function(){
       ],
       order:[[0,'asc']],
       columns: [
-        {   "data": "applicant" },
+        { "data": "applicant",
+          "render":function(data, type, full, meta) {
+            return '<span class="text-capitalize">' + full.applicant + '</span> / ';
+          }
+        },
         { "data": "bc_gender",
           "render" : function(data, type, full, meta) {
             return '<span class="text-capitalize">' + full.bc_gender + '</span> / ' + full.age;
