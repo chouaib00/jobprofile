@@ -48,9 +48,6 @@ $(document).ready(function(){
             'applicant-first-name' : {
               required : true
             },
-            'applicant-middle-name' : {
-              required : true
-            },
             'applicant-last-name' : {
               required : true
             },
