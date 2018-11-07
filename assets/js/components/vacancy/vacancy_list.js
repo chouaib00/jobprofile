@@ -1,5 +1,23 @@
 $(document).ready(function(){
 
+  $('.view-vacancy-description').popover({
+    "html": true,
+    "content": function(){
+        var div_id =  "tmp-id-" + $.now();
+        return details_in_popup($(this).data('jp-id'), div_id);
+    }
+  });
+
+  function details_in_popup(link, div_id){
+      $.ajax({
+          url: global.site_name + 'vacancy/view-vacancy-ref/' + link,
+          success: function(response){
+              $('#'+div_id).html(response);
+          }
+      });
+      return '<div id="'+ div_id +'">Loading...</div>';
+  }
+  
   $('#vacancy-list').DataTable( {
       responsive: true,
       processing: true,

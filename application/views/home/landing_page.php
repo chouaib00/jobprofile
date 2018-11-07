@@ -54,8 +54,12 @@
                                 </h3>
                                 <p class="small"><?php echo date('M d Y h:i A', strtotime($job['jp_date_posted']))?></p>
                                 <dl class="small m-b-none">
-                                    <dt>Click here to see full description</dt>
-                                    <?php /* ?><dd>A description list is perfect for defining terms.</dd><?php */ ?>
+                                    <dt><h4 class="text-info"><i class="fa fa-building-o"> <?php echo $job['employer_name']?></i></h4></dt>
+                                    <dd>
+                                      <a class="view-vacancy-description" onclick="return false;" data-toggle="popover" data-container="body" data-placement="right" type="button" data-html="true" href="" data-jp-id="<?php echo $job['jp_id'] ?>">
+                                        <i class="fa fa-briefcase " style="margin:3px 0 0 0"></i> Click here to see full description
+                                      </a>
+                                    </dd>
                                 </dl>
                                 <div class="m-t-sm">
                                 </div>
@@ -154,9 +158,36 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
+<script>
+$(document).ready(function(){
 
+  $('.view-vacancy-description').popover({
+    "html": true,
+    "content": function(){
+        var div_id =  "tmp-id-" + $.now();
+        return details_in_popup($(this).data('jp-id'), div_id);
+    }
+  });
+
+  function details_in_popup(link, div_id){
+      $.ajax({
+          url: global.site_name + 'vacancy/view-vacancy-ref/' + link,
+          success: function(response){
+              $('#'+div_id).html(response);
+          }
+      });
+      return '<div id="'+ div_id +'">Loading...</div>';
+  }
+});
+</script>
 
 <style>
+.popover {
+  max-width:70vw;
+  max-height:15vw;
+  overflow-y: auto;
+}
+
 #navigation ul li{
   font-size: 48px;
   background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7));
@@ -174,10 +205,14 @@
 }
 .business-header {
   position:relative;
-  height: 100vh;
+  height: 80vh;
   min-height: 200px;
   /* background: #b4ddb4 center center no-repeat scroll; */
-  background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('<?php echo IMG_DIR ?>landing-page.jpg') center center no-repeat scroll;
+  background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('<?php echo IMG_DIR ?>landing_page.jpg') center center no-repeat scroll;
+  transition: background 2s linear;
+  -moz-transition: background 2s linear; /* Firefox 4 */
+  -webkit-transition: background 2s linear; /* Safari and Chrome */
+  -o-transition: background 2s linear; /* Opera */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;

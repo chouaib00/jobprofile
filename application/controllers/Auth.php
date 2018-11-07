@@ -15,14 +15,27 @@ class Auth extends Controller {
 			$user = $userMapper->selectByLoginPassword($user_email, $user_password);
 			if($user){
 				$bc_id = 0;
+				$displayname = "";
 				if($user['user_type'] == 1){
 					//Admin
 					$adminMapper = new App\Mapper\AdminMapper();
 					$admin = $adminMapper->getByID($user['user_id']);
+					$basicContact = $basicContactMapper->getByID($admin['admin_bc_id']);
+					$displayname = $basicContact['bc_first_name'] . ' ' . $basicContact['bc_middle_name'] . ' ' . $basicContact['bc_last_name'] . ' ' . $basicContact['bc_name_ext'];
+				}
+				else if($user['user_type'] == 2){
+					$applicantMapper = new App\Mapper\ApplicantMapper();
+					$applicant = $applicantMapper->getByFilter("applicant_user_id = '".$user['user_id']."'", true);
+					$basicContact = $basicContactMapper->getByID($applicant['applicant_bc_id']);
+					$displayname = $basicContact['bc_first_name'] . ' ' . $basicContact['bc_middle_name'] . ' ' . $basicContact['bc_last_name'] . ' ' . $basicContact['bc_name_ext'];
+				}
+				else if($user['user_type'] == 3){
+					$employerMapper = new App\Mapper\EmployerMapper();
+					$employer = $employerMapper->getByFilter("employer_user_id = '". $user['user_id']."' ", true);
+					$displayname = $employer['employer_name'];
 				}
 
-				$basicContact = $basicContactMapper->getByID($admin['admin_bc_id']);
-				$displayname = $basicContact['bc_first_name'] . ' ' . $basicContact['bc_middle_name'] . ' ' . $basicContact['bc_last_name'] . ' ' . $basicContact['bc_name_ext'];
+
 				$user_details = array(
 						'displayname'=>	$displayname
 					,	'id'=>	$user['user_id']

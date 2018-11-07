@@ -76,8 +76,10 @@ $(document).ready(function(){
           render: function ( data, type, row, meta ) {
             // return '';
             let id = data;
-            let html =  '<div class="text-center"><a class="btn btn-info has-tooltip" title="Edit" href="' + global.site_name + 'applicant/update-profile/' + row['user_name']  + '"><i class="fa fa-pencil"></i></a> ' +
-                        '<button class="btn btn-danger has-tooltip delete-row" title="Delete" value="' + row['user_name'] + '"><i class="fa fa-trash"></i></button></div>'
+            let html =  '<div class="text-center"><a class="btn btn-info btn-sm has-tooltip" title="Edit" href="' + global.site_name + 'applicant/update-profile/' + row['user_name']  + '"><i class="fa fa-pencil"></i></a> ' +
+                        '<button class="btn btn-danger btn-sm has-tooltip delete-row" title="Delete" value="' + row['user_name'] + '"><i class="fa fa-trash"></i></button> ' +
+                        '<a class="btn btn-primary btn-sm has-tooltip" title="" href="'+ global.site_name + "applicant/view-profile/" + row['user_name'] + '" data-original-title="See Profile"><i class="fa fa-eye"></i></a>' +
+                        '</div>'
             return html;
           }
       }],
@@ -145,7 +147,7 @@ $(document).ready(function(){
       columns: [
         { "data": "applicant",
           "render":function(data, type, full, meta) {
-            return '<span class="text-capitalize">' + full.applicant + '</span> / ';
+            return '<a href="'+ global.site_name + "applicant/view-profile/" + full.user_name + '"><span class="text-capitalize">' + full.applicant + '</span></a>';
           }
         },
         { "data": "bc_gender",

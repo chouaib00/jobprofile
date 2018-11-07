@@ -8,9 +8,7 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php echo $_SESSION['current_user']['displayname'] ?></strong>
                         </span>
-                          <span class="text-muted text-xs block">
-                          <?php echo $employer ?>
-                          </span>
+                          <span class="text-muted text-xs block">Employer</span>
                         </span> </a>
                 </div>
                 <div class="logo-element">
