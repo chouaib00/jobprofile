@@ -18,8 +18,12 @@
                               </h3>
                               <p class="small"><?php echo date('M d Y h:i A', strtotime($job['jp_date_posted']))?></p>
                               <dl class="small m-b-none">
-                                  <dt>Click here to see full description</dt>
-                                  <?php /* ?><dd>A description list is perfect for defining terms.</dd><?php */ ?>
+                                <dt><h4 class="text-info"><i class="fa fa-building-o"> <?php echo $job['employer_name']?></i></h4></dt>
+                                <dd>
+                                  <a class="view-vacancy-description" onclick="return false;" data-toggle="popover" data-container="body" data-placement="right" type="button" data-html="true" href="" data-jp-id="<?php echo $job['jp_id'] ?>">
+                                    <i class="fa fa-briefcase " style="margin:3px 0 0 0"></i> Click here to see full description
+                                  </a>
+                                </dd>
                               </dl>
                               <div class="m-t-sm">
                                 <?php if($job['qualified']){ ?>
@@ -45,5 +49,12 @@
     </div>
 
 </div>
+<style>
+.popover {
+  max-width:70vw;
+  max-height:15vw;
+  overflow-y: auto;
+}
+</style>
 
 <script src="<?php echo JS_DIR ?>components/vacancy/vacancy_list.js"></script>

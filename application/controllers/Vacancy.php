@@ -20,6 +20,49 @@ class Vacancy extends Controller {
 		}
 	}
 
+	public function view_vacancy_ref($jp_id){
+		$jobPostingMapper = new App\Mapper\JobPostingMapper();
+		$jobPostingQualificationMapper = new App\Mapper\JobPostingQualificationMapper();
+
+
+		$jobPosting = $jobPostingMapper->getByFilter("jp_id = '".$jp_id."'", true);
+		echo $jobPosting['jp_description'];
+		// $employer = $employerMapper->getByFilter("employer_id = '".$jobPosting['jp_employer_id']."'", true);
+		// $ageFromQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'AGE_FROM')[0];
+		// $ageToQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'AGE_TO')[0];
+		// $genderQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'GENDER');
+		// $educAttainment = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'EDUC_ATTAINMENT');
+		// $skillsQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'SKILLS');
+		// $cityQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'CITY');
+		// $provinceQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'PROVINCE');
+		// $regionQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'REGION');
+		//
+		//
+		//
+		// $form_data = array(
+		// 	'jp_title'	=>	$jobPosting['jp_title']
+		// ,	'jp_description'	=> $jobPosting['jp_description']
+		// ,	'jp_open'	=>	($jobPosting['jp_open'])? '1':'0'
+		// ,	'employer'	=> array(
+		// 		'employer_id'	=>	$employer['employer_id']
+		// 	,	'employer_name'	=> $employer['employer_name']
+		// 	)
+		// ,	'gender_qualification'=>$genderQualification
+		// ,	'educ_qualification'=>$educAttainment
+		// ,	'agefrom_qualification'=>$ageFromQualification
+		// ,	'ageto_qualification'=>$ageToQualification
+		// ,	'skill_qualification'=>$skillsQualification
+		// ,	'city_qualification'=>$cityQualification
+		// ,	'province_qualification'=>$provinceQualification
+		// ,	'region_qualification'=>$regionQualification
+		// ,	'applicant_application' =>$applicantApplication
+		// );
+		//
+		// $this->_data['form_data']	= $form_data;
+		// $this->is_secure = true;
+		// $this->view('vacancy/view_vacancy');
+	}
+
 	public function shift_status(){
 		$applicantApplicationMapper = new App\Mapper\ApplicantApplicationMapper();
 		$input = $_POST;
@@ -43,7 +86,7 @@ class Vacancy extends Controller {
 		$applicant = $applicantMapper->getByFilter("applicant_user_id = '". $user['user_id']."' ", true);
 		$this->load->model('JobSearch/JobSearch_Model');
 		$searchResult = $this->JobSearch_Model->getJobList($applicant['applicant_id']);
-		$this->_data['feed'] = $searchResult;;
+		$this->_data['feed'] = $searchResult;
 		$this->is_secure = true;
 		$this->view('vacancy/job_feed');
 	}

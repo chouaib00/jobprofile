@@ -11,6 +11,7 @@ class JobSearch_Model extends CI_Model{
     $addressMapper = new App\Mapper\AddressMapper();
     $educationMapper = new App\Mapper\EducationMapper();
     $workExperienceMapper = new App\Mapper\WorkExperienceMapper();
+    $employerMapper = new App\Mapper\EmployerMapper();
     $applicantSkillMapper = new App\Mapper\ApplicantSkillMapper();
     $jobPostingMapper = new App\Mapper\JobPostingMapper();
     $jobPostingQualificationMapper = new App\Mapper\JobPostingQualificationMapper();
@@ -101,7 +102,7 @@ class JobSearch_Model extends CI_Model{
           }
         }
       }
-
+      $jobPosting['employer_name'] = $employerMapper->getByFilter("employer_id = '". $jobPosting['jp_employer_id'] ."' ", true)['employer_name'];
       $jobPosting['qualified'] = $is_qualified;
       array_push($final_list, $jobPosting);
 

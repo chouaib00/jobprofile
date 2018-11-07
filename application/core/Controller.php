@@ -42,10 +42,7 @@ class Controller extends CI_Controller {
 					case 2:
 						$this->_template = 'templates/applicant_main';
 					break;
-					case 3:
-						$employerMapper = new App\Mapper\EmployerMapper();
-						$employer = $employerMapper->getByFilter("employer_user_id = '". $_SESSION['current_user']['id']."' ", true);
-						$content['employer'] = $employer['employer_name'];
+					case 3:						
 						$this->_template = 'templates/employer_main';
 					break;
 					default:

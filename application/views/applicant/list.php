@@ -15,7 +15,7 @@
                   </div>
                   <div class="ibox-content">
                     <button id="generate-excel" type="button" class="btn btn-outline btn-success dim has-tooltip" title="Generate Excel List"><i class="fa fa-file-excel-o"></i> Generate Excel List</button>
-                    
+
                     <div class="table-responsive">
                       <table id="employer-list" class="table table-striped table-bordered table-hover" data-config="{}">
                         <thead>
