@@ -41,7 +41,7 @@
             <div class="panel-heading">
               <h3>Job Vacancy</h3>
             </div>
-            <div class="panel-body">
+            <div class="panel-body"  style="max-height: 70vh; overflow-y: auto">
               <?php foreach($job_post as $job){ ?>
               <div class="ibox-content">
                 <div class="table-responsive">
