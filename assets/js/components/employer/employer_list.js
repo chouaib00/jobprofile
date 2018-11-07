@@ -82,7 +82,7 @@ $(document).ready(function(){
                     data : params,
                     success : function(){
                       bootbox.alert("Delete Successful");
-                      $('#employer-list').ajax.reload();
+                      $('#employer-list').DataTable().ajax.reload();
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         bootbox.alert("Something went wrong!");

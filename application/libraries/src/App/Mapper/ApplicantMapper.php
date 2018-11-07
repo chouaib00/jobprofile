@@ -18,6 +18,30 @@ class ApplicantMapper extends Mapper{
 		return $result;
   }
 
+  public function getApplicantByIDWithExclusion($applicant_id, $exclusion_applicant_id){
+    $sql_statement = "SELECT *
+                      FROM  `tbl_applicant`
+                      INNER JOIN `tbl_user`
+                      ON `applicant_user_id` = `user_id`
+                      LEFT JOIN `tbl_file_manager`
+                      ON `fm_id` = `user_fm_id`
+                      INNER JOIN `tbl_basic_contact`
+                      ON `applicant_bc_id` = `bc_id`
+                      INNER JOIN `tbl_address` present
+                      ON `applicant_present_id` = present.`address_id`
+                      INNER JOIN `tbl_city`
+                      ON present.`address_city_id` = city_id
+                      INNER JOIN `tbl_province`
+                      ON present.`address_province_id` = province_id
+                      WHERE `applicant_id` IN (".$applicant_id.") AND `applicant_id` NOT IN (".$exclusion_applicant_id.")
+                      ORDER BY bc_first_name, bc_middle_name, bc_last_name, bc_name_ext";
+    $params = array();
+		$stmt = $this->prepare($sql_statement);
+		$stmt->execute($params);
+		$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $result;
+  }
+
   public function selectByFilter($filter){
     $params = array();
     $where_statement = '';
@@ -25,7 +49,7 @@ class ApplicantMapper extends Mapper{
     $skill_match_statement = '';
     $filter_type = "";
     $num_of_matches = 0;
-    switch($_POST['filter-type']){
+    switch($filter['filter-type']){
       case "most-relevant":
         $filter_type = "OR";
       break;

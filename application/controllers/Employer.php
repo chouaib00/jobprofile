@@ -99,11 +99,15 @@ class Employer extends Controller {
 				,	"employer_name"		=>$_POST['employer-name']
 				,	"employer_address"		=>$_POST['employer-address']
 			), "employer_id = '".$employer['employer_id']."'");
-			$basicContact->update(array(
+			$basicContactMapper->update(array(
 				"bc_phone_num1"=>$_POST['phone-number-1']
 			,	"bc_phone_num2"=>$_POST['phone-number-2']
 			,	"bc_phone_num3"=>$_POST['phone-number-3']
 			),"bc_id = '". $employer['employer_bc_id']."' ");
+			$this->set_alert(array(
+				'message'=>'<i class="fa fa-check"></i> Successfully updated employer!'
+			,	'type'=>'success'
+			));
 		}
 
 		$employer = $employerMapper->getByFilter("employer_user_id = '". $user['user_id']."' ", true);
@@ -199,6 +203,30 @@ class Employer extends Controller {
 	public function file_attachment(){
 		$this->is_secure = true;
     $this->view('applicant/file_attachment');
+	}
+
+	public function delete_employer(){
+		$param = $_POST;
+		$employer_id = $param['id'];
+
+		$usermapper = new App\Mapper\UserMapper();
+		$basiccontactmapper = new App\Mapper\BasicContactMapper();
+		$employerMapper = new App\Mapper\EmployerMapper();
+		$addressmapper = new App\Mapper\AddressMapper();
+		$educationMapper = new App\Mapper\EducationMapper();
+		$workExperienceMapper = new App\Mapper\WorkExperienceMapper();
+
+		$employer = $employerMapper->getByFilter("employer_id = '". $employer_id."' ", true);
+		$user = $usermapper->getByFilter("user_id = '". $employer['employer_user_id']."' ", true);
+		$basiccontact = $basiccontactmapper->getByFilter("bc_id = '". $employer['employer_bc_id']."' ", true);
+
+		$basiccontactmapper->delete("bc_id = '".$basiccontact['bc_id']."'");
+		$employerMapper->delete("employer_id = '".$employer['employer_id']."'");
+		$usermapper->delete("user_id = '".$user['user_id']."'");
+
+		echo json_encode(array(
+			"success"=>1
+		));
 	}
 
 	public function add_file(){

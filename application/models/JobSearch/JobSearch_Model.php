@@ -112,6 +112,75 @@ class JobSearch_Model extends CI_Model{
     return $final_list;
   }
 
+
+  public function getApplicantListFitted($qualification){
+    $format = array(
+      'applicant-educ-attainment' =>""// 7,6,4,5
+    , 'add-region' =>"" //6
+    , 'add-province' =>"" //24
+    , 'add-city' =>"" //447
+    , 'applicant-skills' =>""// 3,2,1
+    , 'applicant-gender' =>""
+    , 'age-range' =>""// 10;90
+    , 'filter-type' =>"strict-match"// most-relevant
+    );
+
+    $format['age-range'] = $qualification['ageFromQualification']['jpq_value'].";".$qualification['ageToQualification']['jpq_value'];
+
+    if(!empty($qualification['genderQualification'])){
+      foreach($qualification['genderQualification'] as $gender){
+        $format['applicant-gender'] = $gender['jpq_value'];
+      }
+    }
+
+    if(!empty($qualification['educAttainment'])){
+      $temp = array();
+      foreach($qualification['educAttainment'] as $educ_attain){
+        $temp[] = $educ_attain['jpq_value'];
+      }
+      $format['applicant-educ-attainment'] = implode (", ", $temp);
+    }
+
+    if(!empty($qualification['skillsQualification'])){
+      $temp = array();
+      foreach($qualification['skillsQualification'] as $skills){
+        $temp[] = $skills['jpq_value'];
+      }
+      $format['applicant-skills'] = implode (", ", $temp);
+    }
+
+    if(!empty($qualification['cityQualification'])){
+      $temp = array();
+      foreach($qualification['cityQualification'] as $city){
+        $temp[] = $city['jpq_value'];
+      }
+      $format['add-city'] = implode (", ", $temp);
+    }
+
+    if(!empty($qualification['provinceQualification'])){
+      $temp = array();
+      foreach($qualification['provinceQualification'] as $province){
+        $temp[] = $province['jpq_value'];
+      }
+      $format['add-province'] = implode (", ", $temp);
+    }
+
+    if(!empty($qualification['regionQualification'])){
+      $temp = array();
+      foreach($qualification['regionQualification'] as $region){
+        $temp[] = $region['jpq_value'];
+      }
+      $format['add-region'] = implode (", ", $temp);
+    }
+
+    $applicantMapper = new App\Mapper\ApplicantMapper();
+    $applicant_qualified = $applicantMapper->selectByFilter($format);
+
+
+
+    return $applicant_qualified;
+  }
+
   public function checkIfQualified($applicant_id, $jp_id){
     $applicantMapper = new App\Mapper\ApplicantMapper();
     $basicContactMapper = new App\Mapper\BasicContactMapper();

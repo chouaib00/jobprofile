@@ -66,10 +66,34 @@ class Vacancy extends Controller {
 	public function shift_status(){
 		$applicantApplicationMapper = new App\Mapper\ApplicantApplicationMapper();
 		$input = $_POST;
-		$applicantApplicationMapper->update(array(
-				'aa_applicantion_status'	=>	$input['new-status']
-			,	'aa_action_date'	=>	($input['new-status'] != '1')? date('Y-m-d H:i:s') : NULL
-		), "aa_id = '".$input['aa-id']."'");
+		if($input['method'] == 'application'){
+			$applicantApplicationMapper->update(array(
+					'aa_applicantion_status'	=>	$input['new-status']
+				,	'aa_action_date'	=>	($input['new-status'] != '1')? date('Y-m-d H:i:s') : NULL
+			), "aa_id = '".$input['aa-id']."'");
+		}
+		else if($input['method'] == 'non-application'){
+			//Check if already added
+			$applicantApplication = $applicantApplicationMapper->getByFilter("aa_jp_id = '".$input['jd-id']."' AND aa_applicant_id = '".$input['applicant-id']."'", true);
+			if(empty($applicantApplication)){
+				//insert
+				$applicantApplicationMapper->insert(array(
+					'aa_jp_id' => $input['jd-id']
+				,	'aa_applicant_id'=>$input['applicant-id']
+				,	'aa_applicantion_status'=>$input['new-status']
+				,	'aa_application_date'=>date('Y-m-d H:i:s')
+				,	'aa_action_date'	=>	($input['new-status'] != '1')? date('Y-m-d H:i:s') : NULL
+				,	'aa_cover_letter'	=> ""
+				));
+			}
+			else{
+				$applicantApplicationMapper->update(array(
+						'aa_applicantion_status'	=>	$input['new-status']
+					,	'aa_action_date'	=>	($input['new-status'] != '1')? date('Y-m-d H:i:s') : NULL
+				), "aa_id = '".$applicantApplication['aa_id']."'");
+			}
+		}
+
 		echo json_encode(array('success'=>true));
 	}
 
@@ -282,6 +306,7 @@ class Vacancy extends Controller {
 		$input = $_POST;
 		$employerMapper = new App\Mapper\EmployerMapper();
 		$jobPostingMapper = new App\Mapper\JobPostingMapper();
+		$applicantMapper = new App\Mapper\ApplicantMapper();
 		$jobPostingQualificationMapper = new App\Mapper\JobPostingQualificationMapper();
 
 		$applicantApplicationMapper = new App\Mapper\ApplicantApplicationMapper();
@@ -289,6 +314,7 @@ class Vacancy extends Controller {
 
 
 		$jobPosting = $jobPostingMapper->getByFilter("jp_id = '".$jp_id."'", true);
+
 
 		$employer = $employerMapper->getByFilter("employer_id = '".$jobPosting['jp_employer_id']."'", true);
 		$ageFromQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'AGE_FROM')[0];
@@ -300,10 +326,34 @@ class Vacancy extends Controller {
 		$provinceQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'PROVINCE');
 		$regionQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'REGION');
 
+		$qualification = array(
+			'ageFromQualification'=>$ageFromQualification
+		,	'ageToQualification'=>$ageToQualification
+		,	'genderQualification'=>$genderQualification
+		,	'educAttainment'=>$educAttainment
+		,	'skillsQualification'=>$skillsQualification
+		,	'cityQualification'=>$cityQualification
+		,	'provinceQualification'=>$provinceQualification
+		,	'regionQualification'=>$regionQualification
+		);
 
+
+		$this->load->model('JobSearch/JobSearch_Model');
+		$filterApplicantList = $this->JobSearch_Model->getApplicantListFitted($qualification);
+		$applicant_qualified = array();
+		foreach($filterApplicantList as $_applicant){
+			array_push($applicant_qualified, $_applicant['applicant_id']);
+		}
+		$applicant_id_application = array();
+		foreach($applicantApplication as $_applicant){
+			array_push($applicant_id_application, $_applicant['applicant_id']);
+		}
+		$applicant_other_qualify = $applicantMapper->getApplicantByIDWithExclusion(implode($applicant_qualified, ", "),
+															implode($applicant_id_application, ", "));
 
 		$form_data = array(
 			'jp_title'	=>	$jobPosting['jp_title']
+		,	'jp_id' => $jp_id
 		,	'jp_description'	=> $jobPosting['jp_description']
 		,	'jp_open'	=>	($jobPosting['jp_open'])? '1':'0'
 		,	'employer'	=> array(
@@ -319,6 +369,7 @@ class Vacancy extends Controller {
 		,	'province_qualification'=>$provinceQualification
 		,	'region_qualification'=>$regionQualification
 		,	'applicant_application' =>$applicantApplication
+		,	'applicant_other_qualify'=>$applicant_other_qualify
 		);
 
 		$this->_data['form_data']	= $form_data;
