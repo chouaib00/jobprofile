@@ -31,6 +31,7 @@ class Controller extends CI_Controller {
 	protected function view($file){
 		if($this->is_secure){
 			if($this->sess->isLogin()){
+				$this->_data['_page_url'] = $this->uri->segment(1).'/'.$this->uri->segment(2); 
 				$this->_data['_login_details'] = $this->get_current_user();
 				$content = array(
 					'content'=> $this->load->view($file, $this->_data, true)
@@ -42,7 +43,7 @@ class Controller extends CI_Controller {
 					case 2:
 						$this->_template = 'templates/applicant_main';
 					break;
-					case 3:						
+					case 3:
 						$this->_template = 'templates/employer_main';
 					break;
 					default:

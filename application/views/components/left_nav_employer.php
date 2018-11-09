@@ -18,24 +18,34 @@
             <li>
                 <a href=""><i class="fa fa-building"></i> <span class="nav-label"> Company Profile</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="<?php echo DOMAIN; ?>employer/view-profile">View Profile</a></li>
-                    <li><a href="<?php echo DOMAIN; ?>employer/edit-profile">Edit Profile</a></li>
-                    <li><a href="<?php echo DOMAIN; ?>users/upload-image">Profile Image</a></li>
+                    <li class="<?php echo ('employer/view-profile' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>employer/view-profile" class="nav-mapper">View Profile</a></li>
+                    <li class="<?php echo ('employer/edit-profile' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>employer/edit-profile" class="nav-mapper">Edit Profile</a></li>
+                    <li class="<?php echo ('users/upload-image' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>users/upload-image" class="nav-mapper">Profile Image</a></li>
                 </ul>
             </li>
             <li>
                 <a href=""><i class="fa fa-group"></i> <span class="nav-label"> Applicant</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="<?php echo DOMAIN; ?>applicant/filter">Filter Applicant</a></li>
+                    <li class="<?php echo ('applicant/filter' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>applicant/filter" class="nav-mapper">Filter Applicant</a></li>
                 </ul>
             </li>
             <li>
                 <a href=""><i class="fa fa-briefcase"></i> <span class="nav-label"> Vacancy</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="<?php echo DOMAIN; ?>vacancy/vacancy-list"> Posted Job Vacancy</a></li>
+                    <li class="<?php echo ('vacancy/vacancy-list' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>vacancy/vacancy-list" class="nav-mapper"> Posted Job Vacancy</a></li>
                 </ul>
             </li>
         </ul>
 
     </div>
 </nav>
+<script>
+$(document).ready(function(){
+  $('.nav-mapper').each(function(i){
+    if($(this).parent().hasClass('active')){
+      $(this).parent().parent().closest('li').addClass('active');
+      return false;
+    }
+  });
+})
+</script>
