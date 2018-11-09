@@ -107,7 +107,7 @@ class ApplicantMapper extends Mapper{
                       ON present.`address_city_id` = city_id
                       INNER JOIN `tbl_province`
                       ON present.`address_province_id` = province_id
-                      INNER JOIN `tbl_address` permanent
+                      LEFT JOIN `tbl_address` permanent
                       ON `applicant_permanent_add_id` = permanent.`address_id` ".$where_statement.
                       ' '.$order_statement;
     $stmt = $this->prepare($sql_statement);
