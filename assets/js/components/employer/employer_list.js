@@ -42,8 +42,10 @@ $(document).ready(function(){
           render: function ( data, type, row, meta ) {
             // return '';
             let id = data;
-            let html =  '<div class="text-center"><a class="btn btn-info has-tooltip" title="Edit" href="' + global.site_name + 'employer/edit-profile/' + row['user_name']  + '"><i class="fa fa-pencil"></i></a> ' +
-                        '<button class="btn btn-danger has-tooltip delete-row" title="Delete" value="' + id + '"><i class="fa fa-trash"></i></button></div>'
+            let html =  '<div class="text-center"><a class="btn btn-sm btn-info has-tooltip" title="Edit" href="' + global.site_name + 'employer/edit-profile/' + row['user_name']  + '"><i class="fa fa-pencil"></i></a> ' +
+                        '<button class="btn btn-sm btn-danger has-tooltip delete-row" title="Delete" value="' + id + '"><i class="fa fa-trash"></i></button> ' +
+                        '<a class="btn btn-primary btn-sm has-tooltip" title="" href="'+ global.site_name + "employer/view-profile/" + row['user_name'] + '" data-original-title="See Profile"><i class="fa fa-eye"></i></a>' +
+                        '</div>'
             return html;
           }
       },
@@ -110,7 +112,11 @@ $(document).ready(function(){
       ],
       order:[[0,'asc']],
       columns: [
-        {   "data": "employer_name" },
+        {   "data": "employer_name",
+          "render":function(data, type, full, meta) {
+            return '<a href="'+ global.site_name + "employer/view-profile/" + full.user_name + '"><span class="text-capitalize">' + full.employer_name + '</span></a>';
+          }
+        },
         { "data": "employer_address" },
         { "data": "bc_email_address"},
         { "data": "bc_phone_num1",

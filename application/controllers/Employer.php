@@ -122,6 +122,8 @@ class Employer extends Controller {
 	public function view_profile($username = ""){
 
 		$userMapper = new App\Mapper\UserMapper();
+		$employerMapper = new App\Mapper\EmployerMapper();
+		$basicContactMapper = new App\Mapper\BasicContactMapper();
 		if($this->sess->isLogin()){
 			$user = $userMapper->getByFilter(array(
 				array(
@@ -143,12 +145,15 @@ class Employer extends Controller {
 			), true);
 		}
 		if(!$user && !$employer);//Show 404;
-		$employerMapper = new App\Mapper\EmployerMapper();
+
 		$employer = $employerMapper->getByFilter("employer_user_id = '". $user['user_id']."' ", true);
+		$basicContact = $basicContactMapper->getByFilter("bc_id = '". $employer['employer_bc_id']."' ", true);
 		$employer_id = $employer['employer_id'];
 
 		$employer = $employerMapper->getByFilter("employer_user_id = '". $user['user_id']."' ", true);
-		$form_data = $employer;
+		$basicContact = $basicContactMapper->getByFilter("bc_id = '". $employer['employer_bc_id']."' ", true);
+
+		$form_data = array_merge($employer, $basicContact);
 		$this->_data['form_data'] = $form_data;
 		$this->is_secure = true;
     $this->view('employer/view_profile');

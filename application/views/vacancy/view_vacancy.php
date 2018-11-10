@@ -206,7 +206,7 @@
                             if($aoq['bc_phone_num2']){
                                 $contact .= ' / '.$aoq['bc_phone_num2'];
                             }
-                            if($aa['bc_phone_num3']){
+                            if($aoq['bc_phone_num3']){
                                 $contact .= ' / '.$aoq['bc_phone_num3'];
                             }
 
