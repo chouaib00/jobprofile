@@ -19,6 +19,23 @@ class ApplicantMapper extends Mapper{
   }
 
   public function getApplicantByIDWithExclusion($applicant_id, $exclusion_applicant_id){
+
+    $where_statement = '';
+    if(!empty($applicant_id)){
+      $where_statement .= "`applicant_id` IN (".$applicant_id.") ";
+    }
+    if(!empty($exclusion_applicant_id)){
+      if(empty($where_statement)){
+        $where_statement .= "`applicant_id` IN (".$applicant_id.") ";
+      }
+      else{
+        $where_statement .= "` AND applicant_id` IN (".$applicant_id.") ";
+      }
+    }
+    if(!empty($where_statement)){
+      $where_statement = ' WHERE ' .$where_statement;
+    }
+
     $sql_statement = "SELECT *
                       FROM  `tbl_applicant`
                       INNER JOIN `tbl_user`
@@ -32,9 +49,8 @@ class ApplicantMapper extends Mapper{
                       INNER JOIN `tbl_city`
                       ON present.`address_city_id` = city_id
                       INNER JOIN `tbl_province`
-                      ON present.`address_province_id` = province_id
-                      WHERE `applicant_id` IN (".$applicant_id.") AND `applicant_id` NOT IN (".$exclusion_applicant_id.")
-                      ORDER BY bc_first_name, bc_middle_name, bc_last_name, bc_name_ext";
+                      ON present.`address_province_id` = province_id "
+                      .$where_statement." ORDER BY bc_first_name, bc_middle_name, bc_last_name, bc_name_ext";
     $params = array();
 		$stmt = $this->prepare($sql_statement);
 		$stmt->execute($params);

@@ -189,11 +189,17 @@ class Vacancy extends Controller {
 		$input = $_POST;
 		$jobPostingMapper = new App\Mapper\JobPostingMapper();
 		$jobPostingQualificationMapper = new App\Mapper\JobPostingQualificationMapper();
+		$employerMapper = new App\Mapper\EmployerMapper();
+		$employer = array();
+		if($_SESSION['current_user']['type'] == '3'){
+			$employer = $employerMapper->getByFilter("employer_user_id = '". $_SESSION['current_user']['id']."' ", true);
+		}
+		$this->_data['employer'] = $employer;
 
 		if(!empty($input)){
 			$jp_id = $jobPostingMapper->insert(array(
 				'jp_title'	=>	$input['vacancy-title']
-			,	'jp_employer_id'	=>	$input['employer']
+			,	'jp_employer_id'	=>	(isset($input['employer']))? $input['employer'] : $employer['employer_id']
 			,	'jp_date_posted'	=>	date('Y-m-d H:i:s')
 			,	'jp_description'	=>	$input['vacancy-description']
 			,	'jp_open'	=>true
@@ -242,12 +248,18 @@ class Vacancy extends Controller {
 		$employerMapper = new App\Mapper\EmployerMapper();
 		$jobPostingMapper = new App\Mapper\JobPostingMapper();
 		$jobPostingQualificationMapper = new App\Mapper\JobPostingQualificationMapper();
+		$employerMapper = new App\Mapper\EmployerMapper();
+		$employer = array();
+		if($_SESSION['current_user']['type'] == '3'){
+			$employer = $employerMapper->getByFilter("employer_user_id = '". $_SESSION['current_user']['id']."' ", true);
+		}
+
 		$jobPosting = $jobPostingMapper->getByFilter("jp_id = '".$jp_id."'", true);
 
 		if(!empty($input)){
 			$jobPostingMapper->update(array(
 				'jp_title'	=>	$input['vacancy-title']
-			,	'jp_employer_id'	=>	$input['employer']
+			,	'jp_employer_id'	=>	(isset($input['employer']))? $input['employer'] : $employer['employer_id']
 			,	'jp_description'	=>	$input['vacancy-description']
 			,	'jp_open'	=>isset($input['is-open'])? 1 : 0
 		), "jp_id = '".$jp_id."'");
@@ -298,6 +310,7 @@ class Vacancy extends Controller {
 		);
 
 		$this->_data['form_data']	= $form_data;
+		$this->_data['employer'] = $employer;
 		$this->is_secure = true;
 		$this->view('vacancy/post_vacancy');
 	}
