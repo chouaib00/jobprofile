@@ -13,16 +13,17 @@
                   <img alt="image" class="img-circle img-responsive" src="<?php echo UPLOAD.'profile/'.$_login_details['profile_img'] ?>" />
                 </div>
             </li>
+            <!--
             <li>
                 <a href=""><i class="fa fa-user"></i> <span class="nav-label">Profile</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li class="<?php echo ('users/upload-image' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>users/upload-image" class="nav-mapper">Profile Image</a></li>
                 </ul>
-            </li>
+            </li> -->
             <li>
                 <a href=""><i class="fa fa-bars"></i> <span class="nav-label">Reference</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li class="<?php echo ('reference/country' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>reference/country" class="nav-mapper">Country</a></li>
+                    <!--<li class="<?php echo ('reference/country' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>reference/country" class="nav-mapper">Country</a></li>-->
                     <li class="<?php echo ('reference/region' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>reference/region" class="nav-mapper">Region</a></li>
                     <li class="<?php echo ('reference/province' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>reference/province" class="nav-mapper">Province</a></li>
                     <li class="<?php echo ('reference/city' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>reference/city" class="nav-mapper">City</a></li>

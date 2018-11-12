@@ -29,23 +29,24 @@
                     <h5>Present Address</h5>
                     <div class="form-group">
                         <div class="col-sm-12"><input type="text" name="present-add-desc" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)" value="<?php echo $form_data['present_add_desc'] ?>"></div>
-                        <div class="col-sm-3 m-t-sm">
+                        <div class="col-sm-3 m-t-sm" style="display:none">
                           <select class="form-control select2-country" name="present-add-country" data-placeholder="Select Country">
                               <option></option>
-                              <?php if($form_data['present_add_country']['country_id']){ ?>
+                              <option value="178" selected>Philippines</option>
+                              <?php /*if($form_data['present_add_country']['country_id']){ ?>
                               <option value="<?php echo $form_data['present_add_country']['country_id'] ?>" selected><?php echo $form_data['present_add_country']['country_name'] ?></option>
-                              <?php } ?>
+                            <?php } */ ?>
                           </select>
                         </div>
-                        <div class="col-sm-3 m-t-sm">
-                          <select class="form-control select2-region" name="present-add-region" data-placeholder="Select Region" <?php echo ($form_data['present_add_region']['region_id'])? '': 'disabled' ?>>
+                        <div class="col-sm-4 m-t-sm">
+                          <select class="form-control select2-region" name="present-add-region" data-placeholder="Select Region" >
                               <option></option>
                               <?php if($form_data['present_add_region']['region_id']){ ?>
                               <option value="<?php echo $form_data['present_add_region']['region_id'] ?>" selected><?php echo $form_data['present_add_region']['region_code'].' - '.$form_data['present_add_region']['region_desc'] ?></option>
                               <?php } ?>
                           </select>
                         </div>
-                        <div class="col-sm-3 m-t-sm">
+                        <div class="col-sm-4 m-t-sm">
                           <select class="form-control select2-province" name="present-add-province" data-placeholder="Select Province" <?php echo ($form_data['present_add_province']['province_id'])? '': 'disabled' ?>>
                               <option></option>
                               <?php if($form_data['present_add_province']['province_id']){ ?>
@@ -54,7 +55,7 @@
 
                           </select>
                         </div>
-                        <div class="col-sm-3 m-t-sm">
+                        <div class="col-sm-4 m-t-sm">
                           <select class="form-control select2-city" name="present-add-city" data-placeholder="Select City" <?php echo ($form_data['present_add_city']['city_id'])? '': 'disabled' ?>>
                               <option></option>
                               <?php if($form_data['present_add_city']['city_id']){ ?>
@@ -69,23 +70,24 @@
                       <div class="col-sm-12">
                         <input type="text" name="permanent-add-desc" class="form-control" placeholder="(House/Unit No., Floor & Bldg./Street, Lot / Blk, Brgy / Village)" value="<?php echo $form_data['permanent_add_desc'] ?>">
                       </div>
-                        <div class="col-sm-3 m-t-sm">
+                        <div class="col-sm-3 m-t-sm" style="display:none">
                         <select class="form-control select2-country" name="permanent-add-country" data-placeholder="Select Country">
                             <option></option>
-                            <?php if($form_data['permanent_add_country']['country_id']){ ?>
+                            <option value="178" selected>Philippines</option>
+                            <?php /* if($form_data['permanent_add_country']['country_id']){ ?>
                             <option value="<?php echo $form_data['permanent_add_country']['country_id'] ?>" selected><?php echo $form_data['permanent_add_country']['country_name'] ?></option>
-                            <?php } ?>
+                            <?php } */ ?>
                         </select>
                         </div>
-                        <div class="col-sm-3 m-t-sm">
-                          <select class="form-control select2-region" name="permanent-add-region"  data-placeholder="Select Region" <?php echo ($form_data['permanent_add_region']['region_id'])? '': 'disabled' ?>>
+                        <div class="col-sm-4 m-t-sm">
+                          <select class="form-control select2-region" name="permanent-add-region"  data-placeholder="Select Region">
                               <option></option>
                               <?php if($form_data['permanent_add_region']['region_id']){ ?>
                               <option value="<?php echo $form_data['permanent_add_region']['region_id'] ?>" selected><?php echo $form_data['permanent_add_region']['region_code'].' - '.$form_data['permanent_add_region']['region_desc'] ?></option>
                               <?php } ?>
                           </select>
                         </div>
-                        <div class="col-sm-3 m-t-sm">
+                        <div class="col-sm-4 m-t-sm">
                           <select class="form-control select2-province" name="permanent-add-province" data-placeholder="Select Province" <?php echo ($form_data['permanent_add_province']['province_id'])? '': 'disabled' ?>>
                               <option></option>
                               <?php if($form_data['permanent_add_province']['province_id']){ ?>
@@ -93,7 +95,7 @@
                               <?php } ?>
                           </select>
                         </div>
-                        <div class="col-sm-3 m-t-sm">
+                        <div class="col-sm-4 m-t-sm">
                           <select class="form-control select2-city" name="permanent-add-city" data-placeholder="Select City" <?php echo ($form_data['permanent_add_city']['city_id'])? '': 'disabled' ?>>
                               <option></option>
                               <?php if($form_data['permanent_add_city']['city_id']){ ?>
@@ -112,12 +114,12 @@
                       <div class="col-sm-3">
                         <h5>Birthday</h5>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="applicant-birthday" class="form-control datepicker" value="<?php echo $form_data['applicant_birthday'] ?>">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="applicant-birthday" class="form-control datepicker" placeholder="mm/dd/yyyy" value="<?php echo $form_data['applicant_birthday'] ?>">
                         </div>
                       </div>
                     </div>
                     <div class="form-group">
-                      <div class="col-sm-3">
+                      <div class="col-sm-4">
                         <h5>Civil Status</h5>
                         <select class="form-control select2-basic" name="applicant-civil-status" data-placeholder="Select Civil Status">
                             <option></option>
@@ -128,19 +130,16 @@
                             <option value="widowed" <?php echo $form_data['applicant_civil_status'] == 'widowed'? 'selected' : '' ?>>Widowed</option>
                         </select>
                       </div>
-                      <div class="col-sm-3">
+                      <div class="col-sm-4">
                         <h5>Nationality</h5>
                         <input name="applicant-nationality" type="text" class="form-control" placeholder="Enter Nationality" value="<?php echo $form_data['applicant_nationality'] ?>">
                       </div>
-                      <div class="col-sm-3">
+                      <div class="col-sm-4">
                         <h5>Citizenship</h5>
-                        <input name="applicant-citizenship" type="text" class="form-control" placeholder="Enter Citizenship" value="<?php echo $form_data['applicant_citizenship'] ?>">
-                      </div>
-                      <div class="col-sm-3">
-                        <h5>Highest Educational Attainment</h5>
-                        <select name="applicant-educ-attainment" class="form-control select2-educ-attainment" data-placeholder="Select Highest Educational Attainment">
+                        <select class="form-control select2-basic" name="applicant-citizenship" data-placeholder="Select Citizenship">
                             <option></option>
-                            <option value="<?php echo $form_data['applicant_educ_attainment']['ea_id'] ?>" selected><?php echo $form_data['applicant_educ_attainment']['ea_name'] ?></option>
+                            <option value="Natural Born" <?php echo $form_data['applicant_citizenship'] == 'Natural Born'? 'selected' : '' ?>>Natural Born</option>
+                            <option value="Dual Citizenship" <?php echo $form_data['applicant_citizenship'] == 'Dual Citizenship'? 'selected' : '' ?>>Dual Citizenship</option>
                         </select>
                       </div>
                     </div>
@@ -161,6 +160,15 @@
                       </div>
                     </div>
                     <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                      <div class="col-sm-3">
+                        <h5>Highest Educational Attainment</h5>
+                        <select name="applicant-educ-attainment" class="form-control select2-educ-attainment" data-placeholder="Select Highest Educational Attainment">
+                            <option></option>
+                            <option value="<?php echo $form_data['applicant_educ_attainment']['ea_id'] ?>" selected><?php echo $form_data['applicant_educ_attainment']['ea_name'] ?></option>
+                        </select>
+                      </div>
+                    </div>
                     <h4>Education</h4>
                     <div class="form-group">
                       <div class="table-responsive col-md-12">
@@ -239,7 +247,7 @@
             <div class="ibox-content form-horizontal">
               <div class="form-group">
                   <div class="col-sm-12">
-                      <h4>Skills <small>(maximum of 5)</small></h4>
+                      <h4>Skills</h4>
                       <select class="select2-skill form-control" name="applicant-skills[]" data-placeholder="Select Skills" multiple="multiple">
                       <option></option>
                       <?php foreach($form_data['skill_tag'] as $skill){ ?>
@@ -282,8 +290,6 @@
     </div>
   </div>
 </div>
-<?php $this->load->view('applicant/education_modal_view') ?>
-<?php $this->load->view('applicant/work_modal_view') ?>
 
 
 <script src="<?php echo JS_DIR ?>components/applicant/update_profile.js"></script>

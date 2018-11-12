@@ -7,6 +7,9 @@
 .select2-dropdown{
     z-index: 3051  !important;
 }
+.datepicker, .datepicker-month-year {
+  z-index: 3000 !important; /* has to be larger than 1050 */
+}
 table.shoping-cart-table tr.applicant-info{
     border-top: 1px dashed gray;
 }

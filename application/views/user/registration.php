@@ -9,14 +9,17 @@
                     <div class="form-group col-md-12">
                         <label>Email</label>
                         <input type="email" name="reg-email" placeholder="Enter Email" class="form-control">
+                        <small>Ex. applicant@gmail.com, applicant@outlook.com, applicant@yahoo.com </small>
                     </div>
                     <div class="form-group col-md-12">
                         <label>Username</label>
                         <input type="username" name="reg-username" placeholder="Enter Username" class="form-control">
+                        <small>Alphanumeric 6-30 characters , no space. Ex. jdelacruz, juandelacruz </small>
                     </div>
                     <div class="form-group col-md-12">
                         <label>Password</label>
                         <input type="password" name="reg-password" placeholder="Enter Password" class="form-control">
+                        <small>Alphanumeric 6-30 characters </small>
                     </div>
                     <div class="form-group col-md-12">
                         <label>Retype Password</label>
@@ -32,7 +35,7 @@
               <div class="form-group">
                   <div class="col-sm-4 col-sm-offset-4">
                       <button disabled class="btn btn-primary form-submit col-sm-12 btn-outline" data-form="main-form">
-                        <h3 class="font-bold"><i class="fa fa-user-o"></i> Register</h3>
+                        <h3 class="font-bold"><i class="fa fa-user-o"></i> Submit</h3>
                       </button>
                   </div>
               </div>
@@ -61,11 +64,14 @@ $(document).ready(function(){
       'reg-username':{
         required : true,
         username : true,
-        minlength: 6
+        minlength: 6,
+        maxlength: 30
       },
       'reg-password':{
         required : true,
-        minlength: 6
+        username : true,
+        minlength: 6,
+        maxlength: 30
       },
       'reg-re-password':{
         required : true,
