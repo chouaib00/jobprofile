@@ -33,7 +33,7 @@
                   <div class="col-md-5">
                     <h5>End Date<span class="text-danger">*</span></h5>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="modal-work-end-date" type="text" placeholder="Select End Start" class="form-control datepicker-month-year" value="">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="modal-work-end-date" type="text" placeholder="Select Date End" class="form-control datepicker-month-year" value="">
                     </div>
                   </div>
                   <div class="col-md-2">

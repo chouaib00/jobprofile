@@ -75,7 +75,7 @@ class Users extends Controller {
 			$user_id = $usermapper->insert($insert_user);
 
 			$insert_bc = array();
-			$insert_bc['bc_first_name'] = 'Applicant';
+			$insert_bc['bc_first_name'] = '';
 			$insert_bc['bc_middle_name'] = '';
 			$insert_bc['bc_last_name'] = '';
 			$insert_bc['bc_name_ext'] = '';

@@ -1,4 +1,4 @@
-<div class="modal inmodal fade" id="modal-educ" role="dialog" data-no="" aria-hidden="true">
+<div class="modal inmodal fade" tabindex="-1" id="modal-educ" role="dialog" data-no="" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -22,6 +22,7 @@
                         <option value="6">Master's Degree</option>
                         <option value="7">Doctorate Degree</option>
                         <option value="8">Training Seminar</option>
+                        <option value="9">Senior High School Graduate</option>
                     </select>
                   </div>
                   <div class="col-md-7">

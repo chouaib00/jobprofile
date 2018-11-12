@@ -78,7 +78,7 @@ $(document).ready(function(){
             let id = data;
             let html =  '<div class="text-center"><a class="btn btn-info btn-sm has-tooltip" title="Edit" href="' + global.site_name + 'applicant/update-profile/' + row['user_name']  + '"><i class="fa fa-pencil"></i></a> ' +
                         '<button class="btn btn-danger btn-sm has-tooltip delete-row" title="Delete" value="' + row['user_name'] + '"><i class="fa fa-trash"></i></button> ' +
-                        '<a class="btn btn-primary btn-sm has-tooltip" title="" href="'+ global.site_name + "applicant/view-profile/" + row['user_name'] + '" data-original-title="See Profile"><i class="fa fa-eye"></i></a>' +
+                        '<a class="btn btn-primary btn-sm has-tooltip" title="" href="'+ global.site_name + "applicant/print-resume/" + row['user_name'] + '" data-original-title="View Resume"><i class="fa fa-file-pdf-o"></i></a>' +
                         '</div>'
             return html;
           }
