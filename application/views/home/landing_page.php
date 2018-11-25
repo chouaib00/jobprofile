@@ -75,6 +75,7 @@
 
               </div>
               <?php }?>
+              <h3><a class="btn btn-block btn-outline btn-primary" href="<?php echo DOMAIN.'login'?>"> <i class="fa fa-user"> Login to See More Job Vacancies</i></a></h3>
             </div>
           </div>
         </div>

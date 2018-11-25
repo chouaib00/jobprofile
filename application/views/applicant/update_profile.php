@@ -117,6 +117,14 @@
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="applicant-birthday" class="form-control datepicker" placeholder="mm/dd/yyyy" value="<?php echo $form_data['applicant_birthday'] ?>">
                         </div>
                       </div>
+                      <div class="col-sm-3">
+                        <h5>Weight (kg)</h5>
+                        <input type="number" min="0" max="200" class="form-control" name="applicant-weight" value="<?php echo $form_data['applicant_weight']  ?>"/>
+                      </div>
+                      <div class="col-sm-3">
+                        <h5>Height (cm)</h5>
+                        <input type="number" min="0" max="220" class="form-control" name="applicant-height" value="<?php echo $form_data['applicant_height']  ?>"/>
+                      </div>
                     </div>
                     <div class="form-group">
                       <div class="col-sm-4">
@@ -141,6 +149,24 @@
                             <option value="Natural Born" <?php echo $form_data['applicant_citizenship'] == 'Natural Born'? 'selected' : '' ?>>Natural Born</option>
                             <option value="Dual Citizenship" <?php echo $form_data['applicant_citizenship'] == 'Dual Citizenship'? 'selected' : '' ?>>Dual Citizenship</option>
                         </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-sm-4">
+                        <h5>Religion</h5>
+                        <input name="applicant-religion" type="text" class="form-control" placeholder="Enter Religion" value="<?php echo $form_data['applicant_religion'] ?>">
+                      </div>
+                      <div class="col-sm-4">
+                        <h5>Employment Status</h5>
+                        <select class="form-control select2-basic" name="applicant-emp-status" data-placeholder="Select Employment Status">
+                            <option></option>
+                            <option value="employed" <?php echo $form_data['applicant_emp_status'] == 'employed'? 'selected' : '' ?>>Employed</option>
+                            <option value="unemployed" <?php echo $form_data['applicant_emp_status'] == 'unemployed'? 'selected' : '' ?>>Unemployed</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4">
+                        <h5>Preferred Occupation</h5>
+                        <input name="applicant-preferred-occupation" type="text" class="form-control" placeholder="Enter Preferred Occupation" value="<?php echo $form_data['applicant_preferred_occupation'] ?>">
                       </div>
                     </div>
                     <div class="hr-line-dashed"></div>

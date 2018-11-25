@@ -51,7 +51,12 @@ class Auth extends Controller {
 				}
 			}
 			else{
-				echo "Invalid User Credentials";
+				$this->set_alert(
+					array(
+						'message' => 'Invalid User Credentials'
+					,	'type'	=> 'danger'
+					)
+				);
 			}
 		}
 		if(!$this->sess->isLogin()){

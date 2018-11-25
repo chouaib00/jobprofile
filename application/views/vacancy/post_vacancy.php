@@ -20,7 +20,7 @@
                       <div class="form-group">
                         <div class="col-md-12">
                           <label>Employer</label>
-                          <select name="employer" class="filter-field form-control" data-placeholder="Select Employer" <?php echo (empty($employer))? '' : 'disabled' ?>>
+                          <select name="employer" class="filter-field form-control" data-placeholder="Select Employer" <?php echo (!empty($employer))? '' : 'disabled' ?>>
                               <option></option>
                               <?php if(!empty($employer)){ ?>
                               <option value="<?php echo $employer['employer_id'] ?>" selected><?php echo $employer['employer_name'] ?></option>
