@@ -69,47 +69,6 @@ $(document).ready(function(){
             }
           })
         });
-
-        // $('.delete-row').click(function(){
-        //   let params = {
-        //     'id'  : $(this).val()
-        //   };
-        //   bootbox.confirm({
-        //       title: "Delete row",
-        //       message: "Are you sure you want to delete this?",
-        //       buttons: {
-        //           cancel: {
-        //               label: '<i class="fa fa-times"></i> Cancel'
-        //           },
-        //           confirm: {
-        //               label: '<i class="fa fa-check"></i> Confirm'
-        //           }
-        //       },
-        //       callback: function (result) {
-        //         if(result){
-        //           $.ajax({
-        //             url : global.site_name + 'applicant/delete-applicant/',
-        //             type : 'POST',
-        //             dataType : 'json',
-        //             data : params,
-        //             success : function(){
-        //               bootbox.alert("Delete Successful");
-        //               $('#applicant-list').DataTable().ajax.reload();
-        //             },
-        //             error: function (xhr, ajaxOptions, thrownError) {
-        //                 bootbox.alert("Something went wrong!");
-        //                 //alert(xhr.status);
-        //                 //alert(thrownError);
-        //             }
-        //           })
-        //         }
-        //       }
-        //   });
-        //
-        // });
-
-
-
       },
       dom: 'l<"dt-toolbar">frtip',
       buttons: [
@@ -157,7 +116,7 @@ $(document).ready(function(){
       serverSide: true,
       bSort: true,
       ajax: {
-        url : global.site_name + 'employer/employer_ref',
+        url : global.site_name + 'jobfair/employer-table',
         type : 'POST',
         dataType : 'json',
         data : function(params){
@@ -178,7 +137,7 @@ $(document).ready(function(){
           render: function ( data, type, row, meta ) {
             // return '';
             let id = data;
-            let html =  '<div class="text-center"><label class="checkbox-inline i-checks has-tooltip" title="Attendance"> <input type="checkbox" class="employer-attendance-log" value="' + row['user_name'] + '" ></label> ' +
+            let html =  '<div class="text-center"><label class="employer-attendance-log checkbox-inline has-tooltip" title="Attendance"> <input type="checkbox" value="' + row['employer_id'] + '" ' + (row['jfa_time_in'] && !row['jfa_time_out']? 'checked': '' ) + ' ></label> ' +
                         '</div>'
             return html;
           }
@@ -194,6 +153,34 @@ $(document).ready(function(){
       //   console.log("Event Added")
       // },
       fnDrawCallback: function (oSettings) {
+
+        $('.employer-attendance-log').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+        $(".employer-attendance-log input").on('ifChanged', function (e) {
+          let employer_id = $(this).val();
+          let isChecked = (this.checked)? '1' : '0';
+          $.ajax({
+            url : global.site_name + 'jobfair/attendance-log/',
+            type : 'POST',
+            data : {
+              'attendee_id' : employer_id
+            , 'type': '3'
+            , 'checked': isChecked
+            },
+            success : function(){
+              //bootbox.alert("Delete Successful");
+              $('#employer-list').DataTable().ajax.reload();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //alert(xhr.status);
+                //alert(thrownError);
+            }
+          })
+        });
+
+
         comm_events.icheck_init();
         $('.delete-row').click(function(){
           let params = {
