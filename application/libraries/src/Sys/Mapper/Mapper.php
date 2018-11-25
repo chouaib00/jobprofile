@@ -134,7 +134,7 @@ class Mapper extends PdoAdapter{
 	}
 
 	public function update($data, $filter){
-		$where_statement = 'WHERE ';
+		$where_statement = '';
 
 		$columns = '';
 		$params = array();
@@ -157,6 +157,10 @@ class Mapper extends PdoAdapter{
 		}
 		else{
 			$where_statement .= $filter;
+		}
+
+		if(!empty($where_statement)){
+			$where_statement = 'WHERE '.$where_statement;
 		}
 
 		$sql_statement = "UPDATE ".$this->_table." SET ".$columns." ".$where_statement;

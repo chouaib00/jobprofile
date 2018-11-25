@@ -79,6 +79,14 @@
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input readonly type="text" class="form-control" value="<?php echo $form_data['applicant_birthday'] ?>">
                         </div>
                       </div>
+                      <div class="col-sm-3">
+                        <h5>Weight (kg)</h5>
+                        <input type="number" min="0" max="200" class="form-control" readonly name="applicant-weight" value="<?php echo $form_data['applicant_weight']  ?>"/>
+                      </div>
+                      <div class="col-sm-3">
+                        <h5>Height (cm)</h5>
+                        <input type="number" min="0" max="220" class="form-control" readonly name="applicant-height" value="<?php echo $form_data['applicant_height']  ?>"/>
+                      </div>
                     </div>
                     <div class="form-group">
                       <div class="col-sm-3">
@@ -96,6 +104,20 @@
                       <div class="col-sm-3">
                         <h5>Highest Educational Attainment</h5>
                         <input type="text" class="form-control" readonly value="<?php echo $form_data['applicant_educ_attainment']['ea_name'] ?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-sm-4">
+                        <h5>Religion</h5>
+                        <input name="applicant-religion" type="text" class="form-control" placeholder="Enter Religion" readonly value="<?php echo $form_data['applicant_religion'] ?>">
+                      </div>
+                      <div class="col-sm-4">
+                        <h5>Employment Status</h5>
+                        <input type="text" class="form-control" readonly value="<?php echo $form_data['applicant_emp_status'] ?>">
+                      </div>
+                      <div class="col-sm-4">
+                        <h5>Preferred Occupation</h5>
+                        <input name="applicant-preferred-occupation" type="text" class="form-control" readonly placeholder="Enter Preferred Occupation" value="<?php echo $form_data['applicant_preferred_occupation'] ?>">
                       </div>
                     </div>
                     <div class="hr-line-dashed"></div>

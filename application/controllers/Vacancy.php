@@ -254,6 +254,7 @@ class Vacancy extends Controller {
 			$employer = $employerMapper->getByFilter("employer_user_id = '". $_SESSION['current_user']['id']."' ", true);
 		}
 
+
 		$jobPosting = $jobPostingMapper->getByFilter("jp_id = '".$jp_id."'", true);
 
 		if(!empty($input)){
@@ -281,7 +282,9 @@ class Vacancy extends Controller {
 			));
 		}
 		$jobPosting = $jobPostingMapper->getByFilter("jp_id = '".$jp_id."'", true);
+
 		$employer = $employerMapper->getByFilter("employer_id = '".$jobPosting['jp_employer_id']."'", true);
+
 		$ageFromQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'AGE_FROM')[0];
 		$ageToQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'AGE_TO')[0];
 		$genderQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'GENDER');

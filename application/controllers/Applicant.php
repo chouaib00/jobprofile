@@ -90,6 +90,11 @@ class Applicant extends Controller {
 			$insert_applicant['applicant_citizenship'] = '';
 			$insert_applicant['applicant_civil_status'] = '';
 			$insert_applicant['applicant_summary'] = '';
+			$insert_applicant['applicant_religion'] = '';
+			$insert_applicant['applicant_emp_status'] = 'unemployed';
+			$insert_applicant['applicant_weight'] = '0';
+			$insert_applicant['applicant_height'] = '0';
+			$insert_applicant['applicant_preferred_occupation'] = '';
 			$insert_applicant['applicant_ea_id'] = NULL;
 			$insert_applicant['applicant_present_id'] = NULL;
 			$insert_applicant['applicant_permanent_add_id'] = NULL;
@@ -283,7 +288,7 @@ class Applicant extends Controller {
 			$spreadSheetObj->setCellValueByColumnAndRow(10, $row_index, $applicant['address_desc'].', '.$applicant['city_name'].', '.$applicant['province_name']);
 			$spreadSheetObj->setCellValueByColumnAndRow(11, $row_index, $applicant['applicant_civil_status']);
 			$spreadSheetObj->setCellValueByColumnAndRow(12, $row_index, $applicant['applicant_citizenship']);
-			$spreadSheetObj->setCellValueByColumnAndRow(13, $row_index, $applicant['applicant_birthday']);
+			$spreadSheetObj->setCellValueByCapplicant_emp_statusolumnAndRow(13, $row_index, $applicant['applicant_birthday']);
 			$spreadSheetObj->setCellValueByColumnAndRow(14, $row_index, date_diff(date_create($applicant['applicant_birthday']), date_create('now'))->y);
 			$spreadSheetObj->setCellValueByColumnAndRow(15, $row_index, $applicant['applicant_summary']);
 			$row_index++;
@@ -373,7 +378,12 @@ class Applicant extends Controller {
 			,	'applicant_present_id'=> $applicant['applicant_present_id']
 			,	'applicant_permanent_add_id'=> $applicant['applicant_permanent_add_id']
 			,	'applicant_summary'=> $_POST['applicant-summary']
+			,	'applicant_religion' => $_POST['applicant-religion']
 			,	'applicant_ea_id'=>$_POST['applicant-educ-attainment']
+			,	'applicant_weight' => $_POST['applicant-weight']
+			,	'applicant_height' => $_POST['applicant-height']
+			,	'applicant_emp_status' => $_POST['applicant-emp-status']
+			,	'applicant_preferred_occupation'=> $_POST['applicant-preferred-occupation']
 		), " applicant_id = '".$applicant['applicant_id']."'");
 
 
@@ -520,6 +530,11 @@ class Applicant extends Controller {
 			,	'applicant_birthday' => $applicant['applicant_birthday']? date("m/d/Y", strtotime($applicant['applicant_birthday'])) : ''
 			,	'applicant_civil_status' => $applicant['applicant_civil_status']
 			,	'applicant_nationality' => $applicant['applicant_nationality']
+			,	'applicant_religion' => $applicant['applicant_religion']
+			,	'applicant_weight' => $applicant['applicant_weight']
+			,	'applicant_height' => $applicant['applicant_height']
+			,	'applicant_emp_status' => $applicant['applicant_emp_status']
+			,	'applicant_preferred_occupation'=> $applicant['applicant_preferred_occupation']
 			,	'applicant_citizenship' => $applicant['applicant_citizenship']
 			,	'applicant_summary' => $applicant['applicant_summary']
 			,	'applicant_educ_attainment' => array(
@@ -634,6 +649,11 @@ class Applicant extends Controller {
 			,	'applicant_civil_status' => $applicant['applicant_civil_status']
 			,	'applicant_nationality' => $applicant['applicant_nationality']
 			,	'applicant_citizenship' => $applicant['applicant_citizenship']
+			,	'applicant_religion' => $applicant['applicant_religion']
+			,	'applicant_weight' => $applicant['applicant_weight']
+			,	'applicant_height' => $applicant['applicant_height']
+			,	'applicant_emp_status' => $applicant['applicant_emp_status']
+			,	'applicant_preferred_occupation'=> $applicant['applicant_preferred_occupation']
 			,	'applicant_summary' => $applicant['applicant_summary']
 			,	'applicant_educ_attainment' => array(
 					'ea_id'	=> $educAttainment['ea_id']

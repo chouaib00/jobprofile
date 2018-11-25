@@ -74,7 +74,7 @@ class JobPostingMapper extends Mapper{
                       FROM `tbl_job_posting`
                       LEFT JOIN `tbl_employer`
                       ON `jp_employer_id` = `employer_id`
-                      ORDER BY jp_date_posted ASC
+                      ORDER BY jp_date_posted DESC
                       LIMIT 25 ";
 		$stmt = $this->prepare($sql_statement);
 

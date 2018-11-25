@@ -60,6 +60,13 @@
                     <li class="<?php echo ('vacancy/vacancy-list' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>vacancy/vacancy-list" class="nav-mapper">Vacancy List</a></li>
                 </ul>
             </li>
+            <li>
+                <a href=""><i class="fa fa-bullhorn"></i> <span class="nav-label"> Job Fair</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li class="<?php echo ('utility/job-fair' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>utility/job-fair" class="nav-mapper">Setup</a></li>
+                    <li class="<?php echo ('jobfair/attendance' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>jobfair/attendance" class="nav-mapper">Attendance</a></li>
+                </ul>
+            </li>
         </ul>
 
     </div>

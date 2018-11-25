@@ -24,6 +24,7 @@
                   </ul>
           </nav>
           </div>
+          <?php $this->load->view('components/alert'); ?>
           <?php echo $content; ?>
       </div>
   </div>
