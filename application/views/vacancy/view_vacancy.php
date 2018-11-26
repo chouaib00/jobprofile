@@ -149,7 +149,7 @@
                                     <dl class="small m-b-none">
                                         <dt>Current Address</dt>
                                         <dd>  <?php echo $aa['address_desc'].', '.$aa['city_name'].' City '.$aa['province_name'] ;?></dd>
-                                    </dl>
+                                    </dl>empty
                                     <dl class="small m-b-none">
                                         <dt>Contact</dt>
                                         <dd><?php echo $contact ?></dd>
