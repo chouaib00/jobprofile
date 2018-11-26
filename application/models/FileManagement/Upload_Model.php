@@ -30,7 +30,9 @@ class Upload_Model extends CI_Model{
 
 	public function upload_file($file){
 		$key = array_keys($file);
-
+		if (!file_exists('upload/files/')) {
+		    mkdir('upload/files/', 0777, true);
+		}
 		$ext = pathinfo($file[$key[0]]['name'], PATHINFO_EXTENSION);
 		$file_name = pathinfo($file[$key[0]]['name'], PATHINFO_BASENAME );
 		$new_file_name = $this->generateKey().'.'.$ext;
