@@ -29,7 +29,7 @@ class ApplicantMapper extends Mapper{
         $where_statement .= "`applicant_id` IN (".$applicant_id.") ";
       }
       else{
-        $where_statement .= "` AND applicant_id` IN (".$applicant_id.") ";
+        $where_statement .= " AND `applicant_id` IN (".$applicant_id.") ";
       }
     }
     if(!empty($where_statement)){
