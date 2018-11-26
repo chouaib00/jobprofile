@@ -9,7 +9,7 @@
             </div>
             <div class="ibox-content">
                 <h1 class="no-margins text-center content-value"></h1>
-                <small>Job Vacancy that qualifies me</small>
+                <small>Job Vacancy</small>
             </div>
         </div>
     </div>

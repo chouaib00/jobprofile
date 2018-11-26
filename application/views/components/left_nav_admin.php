@@ -65,6 +65,7 @@
                 <ul class="nav nav-second-level collapse">
                     <li class="<?php echo ('utility/job-fair' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>utility/job-fair" class="nav-mapper">Setup</a></li>
                     <li class="<?php echo ('jobfair/attendance' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>jobfair/attendance" class="nav-mapper">Attendance</a></li>
+                    <!-- <li class="<?php echo ('jobfair/summary' == $_page_url)? 'active' : '' ?>"><a href="<?php echo DOMAIN; ?>jobfair/summary" class="nav-mapper">Job Fair Summary</a></li> -->
                 </ul>
             </li>
         </ul>
