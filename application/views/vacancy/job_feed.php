@@ -6,7 +6,9 @@
                 <span class="pull-right">(<strong>5</strong>) items</span>
                 <h5>My Job Feed</h5>
             </div>
-            <?php foreach($feed as $job){ ?>
+            <?php foreach($feed as $job){
+            if($job['qualified']){
+              ?>
             <div class="ibox-content">
               <div class="table-responsive">
                   <table class="table shoping-cart-table">
@@ -41,7 +43,9 @@
               </div>
 
             </div>
-            <?php }?>
+            <?php
+            }
+          }?>
 
           </div>
         </div>

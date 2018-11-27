@@ -110,6 +110,7 @@ class Vacancy extends Controller {
 		$applicant = $applicantMapper->getByFilter("applicant_user_id = '". $user['user_id']."' ", true);
 		$this->load->model('JobSearch/JobSearch_Model');
 		$searchResult = $this->JobSearch_Model->getJobList($applicant['applicant_id']);
+		krsort($searchResult);
 		$this->_data['feed'] = $searchResult;
 		$this->is_secure = true;
 		$this->view('vacancy/job_feed');

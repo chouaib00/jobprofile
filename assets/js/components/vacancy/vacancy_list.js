@@ -17,7 +17,7 @@ $(document).ready(function(){
       });
       return '<div id="'+ div_id +'">Loading...</div>';
   }
-  
+
   $('#vacancy-list').DataTable( {
       responsive: true,
       processing: true,
@@ -112,7 +112,7 @@ $(document).ready(function(){
               }
           }
       ],
-      order:[[0,'asc']],
+      order:[[0,'desc']],
       columns: [
         {   "data": "jp_date_posted" },
         { "data": "employer_name" },
