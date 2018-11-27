@@ -35,6 +35,7 @@ class JobSearch_Model extends CI_Model{
         if(!($ageFromQualification['jpq_value'] <= $age && $ageToQualification['jpq_value'] >= $age)){
           $is_qualified = false;
         }
+
       }
 
       if($is_qualified){
@@ -45,7 +46,6 @@ class JobSearch_Model extends CI_Model{
           }
         }
       }
-
       if($is_qualified){
         $educAttainmentQualification = $jobPostingQualificationMapper->getQualificationOfJob($jobPosting['jp_id'], 'EDUC_ATTAINMENT');
         if(!empty($educAttainmentQualification)){
@@ -61,21 +61,25 @@ class JobSearch_Model extends CI_Model{
         }
       }
 
-      if($is_qualified){
-        $skillsQualification = $jobPostingQualificationMapper->getQualificationOfJob($jobPosting['jp_id'], 'SKILLS');
-        $isScope = false;
-        foreach($skillsQualification as $skillsQ){
-          foreach($applicantSkill as $as){
-            if($skillsQ['jpq_value'] == $as['st_id']){
-              $isScope = true;
-            }
-          }
-        }
-        if(!$isScope){
-          $is_qualified = false;
-        }
-      }
-
+      // Removed since bug
+      // if($is_qualified){
+      //   $skillsQualification = $jobPostingQualificationMapper->getQualificationOfJob($jobPosting['jp_id'], 'SKILLS');
+      //   if(!empty($skillsQualification)){
+      //     $isScope = false;
+      //     foreach($skillsQualification as $skillsQ){
+      //       foreach($applicantSkill as $as){
+      //         if($skillsQ['jpq_value'] == $as['st_id']){
+      //           $isScope = true;
+      //         }
+      //       }
+      //     }
+      //     if(!$isScope){
+      //       $is_qualified = false;
+      //     }
+      //   }
+      //
+      // }
+      //
       if($is_qualified){
         $cityQualification = $jobPostingQualificationMapper->getQualificationOfJob($jobPosting['jp_id'], 'CITY');
         if(!empty($cityQualification)){
@@ -84,7 +88,6 @@ class JobSearch_Model extends CI_Model{
           }
         }
       }
-
       if($is_qualified){
         $provinceQualification = $jobPostingQualificationMapper->getQualificationOfJob($jobPosting['jp_id'], 'PROVINCE');
         if(!empty($provinceQualification)){
@@ -93,7 +96,6 @@ class JobSearch_Model extends CI_Model{
           }
         }
       }
-
       if($is_qualified){
         $regionQualification = $jobPostingQualificationMapper->getQualificationOfJob($jobPosting['jp_id'], 'REGION');
         if(!empty($regionQualification)){
@@ -103,6 +105,7 @@ class JobSearch_Model extends CI_Model{
         }
       }
       $jobPosting['employer_name'] = $employerMapper->getByFilter("employer_id = '". $jobPosting['jp_employer_id'] ."' ", true)['employer_name'];
+
       $jobPosting['qualified'] = $is_qualified;
       array_push($final_list, $jobPosting);
 
