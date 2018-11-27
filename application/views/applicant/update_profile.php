@@ -316,6 +316,7 @@
     </div>
   </div>
 </div>
-
+<?php $this->load->view('applicant/education_modal_view') ?>
+<?php $this->load->view('applicant/work_modal_view') ?>
 
 <script src="<?php echo JS_DIR ?>components/applicant/update_profile.js"></script>
