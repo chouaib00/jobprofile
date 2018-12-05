@@ -523,9 +523,9 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 $config['email'] = array(
-    'protocol' => 'smtp',
+    'protocol' => 'mail',
     'smtp_host' => 'ssl://sg2plcpnl0146.prod.sin2.secureserver.net',
-    'smtp_port' => 465,
+    'smtp_port' => 587,
     'smtp_user' => 'admin@pesojobprofiling.com',
     'smtp_pass' => 'MXhzv8WMisZO',
     'mailtype'  => 'html',
