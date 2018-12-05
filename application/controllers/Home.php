@@ -53,7 +53,6 @@ class Home extends Controller {
 			$top_skill = $applicantSkillMapper->getSkillTop();
 			$result['top_skill'] = $top_skill;
 
-
 			$result['applicant_frequency_application'] = $applicantApplicationMapper->getFrequencyOfApplication();
 
 		}
@@ -78,6 +77,43 @@ class Home extends Controller {
 		// $currentProcessedPCRequest = $PCRequestMapper->getTotalPendingByDate($date);
 		// $result['sched_police_clearance'] = $currentProcessedPCRequest;
 		echo json_encode($result);
+	}
+
+	public function get_notification(){
+		$input = $_POST;
+		$result = array();
+		$user_id = $_SESSION['current_user']['id'];
+		$userMapper = new App\Mapper\UserMapper();
+		$notificationMapper = new App\Mapper\NotificationMapper();
+
+		$user = $userMapper->getByFilter("user_id = '".$user_id."'", true);
+		if($user['user_type'] == '1'){
+			$notification = $notificationMapper->getNotificationAdmin($user_id);
+		}
+		else{
+			$notification = $notificationMapper->getNotification($user_id);
+		}
+
+		$result['notification'] = $notification;
+		echo json_encode($result);
+	}
+
+	public function mark_read_notif(){
+		$input = $_POST;
+		$result = array();
+		$user_id = $_SESSION['current_user']['id'];
+		$userMapper = new App\Mapper\UserMapper();
+		$notificationMapper = new App\Mapper\NotificationMapper();
+
+		$user = $userMapper->getByFilter("user_id = '".$user_id."'", true);
+
+		if($user['user_type'] == '1'){
+			$notificationMapper->markReadAdmin($input['notif_id']);
+		}
+		else{
+			$notificationMapper->markRead($input['notif_id']);
+		}
+		echo json_encode($input);
 	}
 
 	private function admin_dashboard(){

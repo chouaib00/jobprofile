@@ -521,3 +521,13 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+$config['email'] = array(
+    'protocol' => 'smtp',
+    'smtp_host' => 'ssl://sg2plcpnl0146.prod.sin2.secureserver.net',
+    'smtp_port' => 465,
+    'smtp_user' => 'admin@pesojobprofiling.com',
+    'smtp_pass' => 'MXhzv8WMisZO',
+    'mailtype'  => 'html',
+    'charset'   => 'iso-8859-1'
+);
