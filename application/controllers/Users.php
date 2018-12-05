@@ -96,9 +96,11 @@ class Users extends Controller {
 			$insert_applicant['applicant_ea_id'] = NULL;
 			$insert_applicant['applicant_present_id'] = NULL;
 			$insert_applicant['applicant_permanent_add_id'] = NULL;
+			$insert_applicant['applicant_is_verified'] = 0;
+			$insert_applicant['applicant_verification_code'] = '';
 
 			$applicant_id = $applicantmapper->insert($insert_applicant);
-
+			$this->send_verification($applicant_id);
 			$applicant = $applicantmapper->getByID($user_id);
 			$basicContact = $basiccontactmapper->getByID($applicant['applicant_bc_id']);
 			$displayname = $basicContact['bc_first_name'] . ' ' . $basicContact['bc_middle_name'] . ' ' . $basicContact['bc_last_name'] . ' ' . $basicContact['bc_name_ext'];
@@ -114,6 +116,33 @@ class Users extends Controller {
 
 		}
 		$this->view('user/registration');
+
+	}
+
+	private function send_verification($applicant_id){
+		$applicantMapper = new App\Mapper\ApplicantMapper();
+		$userMapper = new App\Mapper\UserMapper();
+		$applicant = $applicantMapper->getByFilter("applicant_id = '".$applicant_id."'", true);
+		$user = $userMapper->getByFilter("user_id = '".$applicant['applicant_user_id']."'", true);
+		$code = md5($applicant['applicant_id']);
+		$applicantMapper->update(array(
+			'applicant_verification_code'=>$code
+		), "applicant_id = '".$applicant_id."'");
+		$link = DOMAIN.'auth/verify-email?code='.$code;
+
+		$this->load->library('email', $this->config->item('email'));
+
+		$message = '<p><span style="font-size: 18px;">Click the link to verify your account</span></p>
+								<p><span style="font-size: 18px;"><a href="http://www.pesojobprofiling.com'.$link.'">http://www.pesojobprofiling.com'.$link.'</a></span></p>
+								<p style="text-align: center;"><a href="http://www.pesojobprofiling.com" rel="noopener noreferrer" target="_blank">www.pesojobprofiling.com</a></p><address style="text-align: center;">&nbsp;P. Dandan st. CCYA bldg.<br>Batangas City, Batangas&nbsp;</address><address style="text-align: center;">&nbsp;723-8802<br>&nbsp;<a href="mailto:#">pesobatangascity@yahoo.com.ph</a>&nbsp;</address>
+								<p style="text-align: center;">Copyright &copy; Public Employment Service Office - Batangas City 2018</p>';
+
+		$this->email->from('no-reply@pesojobprofiling.com', "Account Verificator");
+		$this->email->to($user['user_email']);
+		$this->email->bcc($this->config->item('email')['smtp_user']);
+		$this->email->subject("Account Verification");
+		$this->email->message($message);
+		$this->email->send();
 
 	}
 
