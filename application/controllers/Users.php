@@ -68,7 +68,7 @@ class Users extends Controller {
 		if(!empty($_POST)){
 			$checkExisting = $usermapper->getByFilter("user_name = '".$_POST['reg-username']."' OR user_email = '".$_POST['reg-email']."' ");
 
-			if(!empty($checkExisting)){
+			if(empty($checkExisting)){
 				$insert_user = array();
 				$insert_user['user_name'] = $_POST['reg-username'];
 				$insert_user['user_email'] = $_POST['reg-email'];
