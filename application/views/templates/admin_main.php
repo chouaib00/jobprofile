@@ -9,4 +9,5 @@
     </div>
   </div>
   <?php $this->load->view('components/javascript'); ?>
+  <?php $this->load->view('components/notification_js'); ?>
 </body>

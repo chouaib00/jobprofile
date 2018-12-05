@@ -31,7 +31,7 @@ class Controller extends CI_Controller {
 	protected function view($file){
 		if($this->is_secure){
 			if($this->sess->isLogin()){
-				$this->_data['_page_url'] = $this->uri->segment(1).'/'.$this->uri->segment(2); 
+				$this->_data['_page_url'] = $this->uri->segment(1).'/'.$this->uri->segment(2);
 				$this->_data['_login_details'] = $this->get_current_user();
 				$content = array(
 					'content'=> $this->load->view($file, $this->_data, true)
@@ -41,6 +41,11 @@ class Controller extends CI_Controller {
 						$this->_template = 'templates/admin_main';
 					break;
 					case 2:
+						$applicantMapper = new App\Mapper\ApplicantMapper();
+						$applicant = $applicantMapper->getByFilter("applicant_user_id = '".$_SESSION['current_user']['id']."'", true);
+						if($applicant['applicant_is_verified'] == '0'){
+							$this->redirect(DOMAIN.'applicant/verify-email');
+						}
 						$this->_template = 'templates/applicant_main';
 					break;
 					case 3:

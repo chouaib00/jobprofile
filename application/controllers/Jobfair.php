@@ -127,6 +127,9 @@ class Jobfair extends Controller {
 
 
   public function attendance(){
+			$jobFairAttendanceMapper = new App\Mapper\JobFairAttendanceMapper();
+			$jobFairMapper = new App\Mapper\JobFairMapper();
+			$jf_id = $jobFairMapper->getActive();
 			$this->is_secure = true;
       $this->view('jobfair/attendance');
   }

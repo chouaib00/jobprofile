@@ -35,7 +35,6 @@ class Auth extends Controller {
 					$displayname = $employer['employer_name'];
 				}
 
-
 				$user_details = array(
 						'displayname'=>	$displayname
 					,	'id'=>	$user['user_id']
@@ -66,6 +65,45 @@ class Auth extends Controller {
 		}
 		else{
 			$this->redirect(DOMAIN.'dashboard');
+		}
+
+	}
+
+	public function verify_email(){
+		$applicantMapper = new App\Mapper\ApplicantMapper();
+		$userMapper = new App\Mapper\UserMapper();
+		$input = $_GET;
+		$applicant = $applicantMapper->getByFilter(array(
+			array(
+				'column'	=> 'applicant_verification_code',
+				'value'		=> $input['code']
+			)
+		), true);
+		if($applicant){
+			$applicantMapper->update(array(
+				'applicant_is_verified'=>'1'
+			), "applicant_id = '".$applicant['applicant_id']."'");
+			$this->set_alert(array(
+				'message'=>'<i class="fa fa-check"></i> Account has been verified!'
+			,	'type'=>'success'
+			));
+
+			$user = $userMapper->getByFilter("user_id = '".$applicant['applicant_user_id']."'", true);
+			$basicContactMapper = new App\Mapper\BasicContactMapper();
+			$basicContact = $basicContactMapper->getByID($applicant['applicant_bc_id']);
+			$displayname = $basicContact['bc_first_name'] . ' ' . $basicContact['bc_middle_name'] . ' ' . $basicContact['bc_last_name'] . ' ' . $basicContact['bc_name_ext'];
+
+			$user_details = array(
+					'displayname'=>	$displayname
+				,	'id'=>	$user['user_id']
+				,	'email'		=>$user['user_email']
+				,	'type'		=>$user['user_type']
+			);
+			$this->sess->setLogin($user_details);
+			$this->redirect(DOMAIN.'applicant/update-profile');
+		}
+		else{
+			$this->view('auth/expired');
 		}
 
 	}

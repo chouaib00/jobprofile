@@ -71,13 +71,16 @@ class Vacancy extends Controller {
 					'aa_applicantion_status'	=>	$input['new-status']
 				,	'aa_action_date'	=>	($input['new-status'] != '1')? date('Y-m-d H:i:s') : NULL
 			), "aa_id = '".$input['aa-id']."'");
+
+
+			$this->notifyApplicationStatus($input['aa-id']);
 		}
 		else if($input['method'] == 'non-application'){
 			//Check if already added
 			$applicantApplication = $applicantApplicationMapper->getByFilter("aa_jp_id = '".$input['jd-id']."' AND aa_applicant_id = '".$input['applicant-id']."'", true);
 			if(empty($applicantApplication)){
 				//insert
-				$applicantApplicationMapper->insert(array(
+				$aa_id = $applicantApplicationMapper->insert(array(
 					'aa_jp_id' => $input['jd-id']
 				,	'aa_applicant_id'=>$input['applicant-id']
 				,	'aa_applicantion_status'=>$input['new-status']
@@ -85,16 +88,82 @@ class Vacancy extends Controller {
 				,	'aa_action_date'	=>	($input['new-status'] != '1')? date('Y-m-d H:i:s') : NULL
 				,	'aa_cover_letter'	=> ""
 				));
+				$this->notifyApplicationStatus($aa_id);
 			}
 			else{
 				$applicantApplicationMapper->update(array(
 						'aa_applicantion_status'	=>	$input['new-status']
 					,	'aa_action_date'	=>	($input['new-status'] != '1')? date('Y-m-d H:i:s') : NULL
 				), "aa_id = '".$applicantApplication['aa_id']."'");
+				$this->notifyApplicationStatus($input['aa-id']);
 			}
 		}
 
 		echo json_encode(array('success'=>true));
+	}
+
+	private function notifyApplicationStatus($aa_id){
+		$applicantApplicationMapper = new App\Mapper\ApplicantApplicationMapper();
+		$applicantMapper = new App\Mapper\ApplicantMapper();
+		$basicContactMapper = new App\Mapper\BasicContactMapper();
+		$jobPostingMapper = new App\Mapper\JobPostingMapper();
+		$employerMapper = new App\Mapper\EmployerMapper();
+		$userMapper = new App\Mapper\UserMapper();
+		$notificationMapper = new App\Mapper\NotificationMapper();
+
+		$applicantApplication = $applicantApplicationMapper->getByFilter("aa_id = '".$aa_id."'", true);
+		$applicant = $applicantMapper->getByFilter("applicant_id = '".$applicantApplication['aa_applicant_id']."'", true);
+		$applicantUser = $userMapper->getByFilter("user_id = '".$applicant['applicant_user_id']."'", true);
+		$basicContact = $basicContactMapper->getByFilter("bc_id = '".$applicant['applicant_bc_id']."'", true);
+		$jobPosting = $jobPostingMapper->getByFilter("jp_id = '".$applicantApplication['aa_jp_id']."'", true);
+		$employer = $employerMapper->getByFilter("employer_id = '".$jobPosting['jp_employer_id']."'", true);
+		$employerUser = $userMapper->getByFilter("user_id = '".$employer['employer_user_id']."'", true);
+		//$notif_message = $employer['employer_name']. ' has posted a JOB "'.$jp['jp_title'].'"';
+		//$link = DOMAIN.'vacancy/view-vacancy/'.$jp_id;
+		$applicant_name = $basicContact['bc_first_name'].' '.$basicContact['bc_middle_name'].' '.$basicContact['bc_last_name'].' '.$basicContact['bc_name_ext'];
+		$status = "";
+		switch($applicantApplication['aa_applicantion_status']){
+			case '1':
+				//Applied
+				$status = 'Applied';
+			break;
+			case '2':
+				//Rejected
+				$status = 'Rejected';
+			break;
+			case '3':
+				//Reviewing
+				$status = 'Reviewing';
+			break;
+			case '4':
+				//Hired
+				$status = 'Hired';
+			break;
+		}
+		$link = DOMAIN.'vacancy/view-vacancy/'.$jobPosting['jp_id'];
+		$notif_message = $employer['employer_name']. ' has marked '.$applicant_name.' "'.$status.'" from the posted job vacancy "'.$jobPosting['jp_title'].'"';
+		$notificationMapper->insert(array(
+			'notif_user_id'=>$applicantUser['user_id'],
+			'notif_message'=>$notif_message,
+			'notif_link'=>$link
+		));
+
+		$this->load->library('email', $this->config->item('email'));
+
+		$message = '<p style="text-align: center;"><span style="font-size: 24px;">'.$applicant_name.'&nbsp;</span>
+									<br><span style="font-size: 24px;">HAS BEEN MARKED "<b>'.strtoupper($status).'</b>"</span></p>
+								<p style="text-align: center;"><a href="http://www.pesojobprofiling.com/'.$link.'"><span style="font-size: 30px;"><u>'.$jobPosting['jp_title'].'</u></span></a></p>
+								<p style="text-align: center;">'.$jobPosting['jp_description'].'</p>
+								<p style="text-align: center;"><a href="http://www.pesojobprofiling.com" rel="noopener noreferrer" target="_blank">www.pesojobprofiling.com</a></p><address style="text-align: center;">&nbsp;P. Dandan st. CCYA bldg.<br>Batangas City, Batangas&nbsp;</address><address style="text-align: center;">&nbsp;723-8802<br>&nbsp;<a href="mailto:#">pesobatangascity@yahoo.com.ph</a>&nbsp;</address>
+								<p style="text-align: center;">Copyright &copy; Public Employment Service Office - Batangas City 2018</p>';
+
+		$this->email->from($employerUser['user_email'], $employer['employer_name']);
+		$this->email->to($applicantUser['user_email']);
+		$this->email->bcc($this->config->item('email')['smtp_user']);
+		$this->email->subject($notif_message);
+		$this->email->message($message);
+		$this->email->send();
+
 	}
 
 	public function job_feed(){
@@ -191,20 +260,25 @@ class Vacancy extends Controller {
 		$jobPostingMapper = new App\Mapper\JobPostingMapper();
 		$jobPostingQualificationMapper = new App\Mapper\JobPostingQualificationMapper();
 		$employerMapper = new App\Mapper\EmployerMapper();
+		$notificationMapper = new App\Mapper\NotificationMapper();
+		$userMapper = new App\Mapper\UserMapper();
 		$employer = array();
 		if($_SESSION['current_user']['type'] == '3'){
 			$employer = $employerMapper->getByFilter("employer_user_id = '". $_SESSION['current_user']['id']."' ", true);
 		}
+		$current_user = $userMapper->getByFilter("user_id = '".$_SESSION['current_user']['id']."'", true);
+
 		$this->_data['employer'] = $employer;
 
 		if(!empty($input)){
-			$jp_id = $jobPostingMapper->insert(array(
+			$jp = array(
 				'jp_title'	=>	$input['vacancy-title']
 			,	'jp_employer_id'	=>	(isset($input['employer']))? $input['employer'] : $employer['employer_id']
 			,	'jp_date_posted'	=>	date('Y-m-d H:i:s')
 			,	'jp_description'	=>	$input['vacancy-description']
 			,	'jp_open'	=>true
-			));
+		);
+			$jp_id = $jobPostingMapper->insert($jp);
 
 			$qualification = $this->format_qualification($input);
 			foreach($qualification as $entry){
@@ -215,6 +289,35 @@ class Vacancy extends Controller {
 				,	'jpq_is_strict'	=>	true
 				));
 			}
+
+
+			if(!empty($employer)){
+				$notif_message = $employer['employer_name']. ' has posted a JOB "'.$jp['jp_title'].'"';
+				$link = DOMAIN.'vacancy/view-vacancy/'.$jp_id;
+				$notificationMapper->insert(array(
+					'notif_user_id'=>'1',
+					'notif_message'=>$notif_message,
+					'notif_link'=>$link
+				));
+
+				$this->load->library('email', $this->config->item('email'));
+
+				$message = '<p style="text-align: center;"><span style="font-size: 24px;">'.$employer['employer_name'].'&nbsp;</span>
+											<br><span style="font-size: 24px;">HAS POSTED A JOB</span></p>
+										<p style="text-align: center;"><a href="http://www.pesojobprofiling.com/'.$link.'"><span style="font-size: 30px;"><u>'.$jp['jp_title'].'</u></span></a></p>
+										<p style="text-align: center;">'.$jp['jp_description'].'</p>
+										<p style="text-align: center;"><a href="http://www.pesojobprofiling.com" rel="noopener noreferrer" target="_blank">www.pesojobprofiling.com</a></p><address style="text-align: center;">&nbsp;P. Dandan st. CCYA bldg.<br>Batangas City, Batangas&nbsp;</address><address style="text-align: center;">&nbsp;723-8802<br>&nbsp;<a href="mailto:#">pesobatangascity@yahoo.com.ph</a>&nbsp;</address>
+										<p style="text-align: center;">Copyright &copy; Public Employment Service Office - Batangas City 2018</p>';
+
+				$this->email->from($current_user['user_email'], $employer['employer_name']);
+				$this->email->to('admin@pesojobprofiling.com');
+				$this->email->bcc($this->config->item('email')['smtp_user']);
+				$this->email->subject($notif_message);
+				$this->email->message($message);
+				$this->email->send();
+			}
+
+
 			$this->set_alert(array(
 				'message'=>'<i class="fa fa-thumb-tack"></i> Successfully posted a job vacancy!'
 			,	'type'=>'success'
@@ -320,6 +423,11 @@ class Vacancy extends Controller {
 	}
 
 	public function view_vacancy($jp_id){
+		if($_SESSION['current_user']['type'] == '2'){
+			$this->redirect(DOMAIN.'vacancy/apply-vacancy/'.$jp_id);
+		}
+
+
 		$input = $_POST;
 		$employerMapper = new App\Mapper\EmployerMapper();
 		$jobPostingMapper = new App\Mapper\JobPostingMapper();
@@ -329,9 +437,7 @@ class Vacancy extends Controller {
 		$applicantApplicationMapper = new App\Mapper\ApplicantApplicationMapper();
 		$applicantApplication = $applicantApplicationMapper->getApplicantApplicationByJPID($jp_id);
 
-
 		$jobPosting = $jobPostingMapper->getByFilter("jp_id = '".$jp_id."'", true);
-
 
 		$employer = $employerMapper->getByFilter("employer_id = '".$jobPosting['jp_employer_id']."'", true);
 		$ageFromQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'AGE_FROM')[0];
@@ -397,14 +503,20 @@ class Vacancy extends Controller {
 	public function apply_vacancy($jp_id){
 		$input = $_POST;
 		$employerMapper = new App\Mapper\EmployerMapper();
+		$userMapper = new App\Mapper\UserMapper();
 		$jobPostingMapper = new App\Mapper\JobPostingMapper();
 		$applicantMapper = new App\Mapper\ApplicantMapper();
+		$basicContactMapper = new App\Mapper\BasicContactMapper();
 		$applicantApplicationMapper = new App\Mapper\ApplicantApplicationMapper();
 		$jobPostingQualificationMapper = new App\Mapper\JobPostingQualificationMapper();
+		$notificationMapper = new App\Mapper\NotificationMapper();
 		$jobPosting = $jobPostingMapper->getByFilter("jp_id = '".$jp_id."'", true);
 
 		$applicant = $applicantMapper->getByFilter("applicant_user_id = '".$_SESSION['current_user']['id']."'", true);
+		$applicantUser = $userMapper->getByFilter("user_id = '".$applicant['applicant_user_id']."'", true);
+		$basicContact = $basicContactMapper->getByFilter("bc_id = '".$applicant['applicant_bc_id']."'", true);
 		$employer = $employerMapper->getByFilter("employer_id = '".$jobPosting['jp_employer_id']."'", true);
+		$employerUser = $userMapper->getByFilter("user_id = '".$employer['employer_user_id']."'", true);
 		$ageFromQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'AGE_FROM')[0];
 		$ageToQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'AGE_TO')[0];
 		$genderQualification = $jobPostingQualificationMapper->getQualificationOfJob($jp_id, 'GENDER');
@@ -421,6 +533,30 @@ class Vacancy extends Controller {
 			,	'aa_application_date'	=>date('Y-m-d H:i:s')
 			,	'aa_cover_letter'	=> $input['cover-letter']
 			));
+			$applicant_name = $basicContact['bc_first_name'].' '.$basicContact['bc_middle_name'].' '.$basicContact['bc_last_name'].' '.$basicContact['bc_name_ext'];
+			$notif_message = $applicant_name.' applied in the job "'.$jobPosting['jp_title'].'"';
+			$link = DOMAIN.'vacancy/view-vacancy/'.$jp_id;
+			$notificationMapper->insert(array(
+				'notif_user_id'=>$employer['employer_user_id'],
+				'notif_message'=>$notif_message,
+				'notif_link'=>$link
+			));
+
+			$this->load->library('email', $this->config->item('email'));
+			$message = '<p style="text-align: center;"><span style="font-size: 24px;">'.$applicant_name.'&nbsp;</span>
+										<br><span style="font-size: 24px;">Applied in the job </span></p>
+									<p style="text-align: center;"><a href="http://www.pesojobprofiling.com'.$link.'"><span style="font-size: 30px;"><u>'.$jobPosting['jp_title'].'</u></span></a><br><span style="font-size: 18;">'.$employer['employer_name'].'</span></p>
+									<p style="text-align: center;">"'.$input['cover-letter'].'"</p>
+									<p style="text-align: center;"><a href="http://www.pesojobprofiling.com" rel="noopener noreferrer" target="_blank">www.pesojobprofiling.com</a></p><address style="text-align: center;">&nbsp;P. Dandan st. CCYA bldg.<br>Batangas City, Batangas&nbsp;</address><address style="text-align: center;">&nbsp;723-8802<br>&nbsp;<a href="mailto:#">pesobatangascity@yahoo.com.ph</a>&nbsp;</address>
+									<p style="text-align: center;">Copyright &copy; Public Employment Service Office - Batangas City 2018</p>';
+
+			$this->email->from($applicantUser['user_email'], $employer['employer_name']);
+			$this->email->to($employerUser['user_email']);
+			$this->email->bcc($this->config->item('email')['smtp_user']);
+			$this->email->subject($notif_message);
+			$this->email->message($message);
+			$this->email->send();
+
 			$this->set_alert(array(
 				'message'=>'<i class="fa fa-thumb-tack"></i> You have successfully Applied to this Job!'
 			,	'type'=>'success'
