@@ -50,11 +50,11 @@
                       <textarea name="job-fair-summary" class="text-editor"><?php echo $form_data['js_summary']?></textarea>
                     </div>
                   </div>
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <div class="col-sm-12">
                       <label class="checkbox-inline i-checks"> <input type="checkbox" value="active" name="job-fair-announcement"> <i></i> Click Here to send email notification on all registered </label>
                     </div>
-                  </div>
+                  </div> -->
 
                 </form>
 

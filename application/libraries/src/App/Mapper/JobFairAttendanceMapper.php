@@ -201,4 +201,49 @@ class JobFairAttendanceMapper extends Mapper{
 
 		return $result;
   }
+
+  public function employerAttendanceSummary($jf_id){
+    $sql_statement = "SELECT *
+                        FROM `tbl_employer`
+                        INNER JOIN (SELECT `jfa_jf_id`, `jfa_type`, `jfa_attendee_id`, MIN(`jfa_time_in`), MAX(`jfa_time_out`)
+                        FROM `tbl_job_fair_attendance`
+                        GROUP BY `jfa_jf_id`, `jfa_attendee_id`, `jfa_type`) attendee
+                        ON attendee.`jfa_attendee_id` = `employer_id`
+                        WHERE attendee.`jfa_jf_id` = :jfa_jf_id
+                        ORDER BY `employer_name` ";
+    $stmt = $this->prepare($sql_statement);
+    $stmt->execute(array(
+        ':jfa_jf_id' => $jf_id
+    ));
+    $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $result;
+  }
+
+  public function employerSummaryApplicant($jf_id, $employer_id){
+    $sql_statement =    "SELECT *
+                        FROM `tbl_job_fair`
+                        INNER JOIN `tbl_job_posting`
+                        ON `jf_id` = `jp_jf_id`
+                        INNER JOIN `tbl_applicant_application`
+                        ON `aa_jp_id` = `jp_id`
+                        INNER JOIN `tbl_applicant`
+                        ON `aa_applicant_id` = `applicant_id`
+                        INNER JOIN `tbl_basic_contact`
+                        ON `applicant_bc_id` = `bc_id`
+                        INNER JOIN `tbl_address`
+                        ON `address_id` = `applicant_present_id`
+                        INNER JOIN `tbl_city`
+                        ON `address_city_id` = `city_id`
+                        INNER JOIN `tbl_province`
+                        ON `address_province_id` = `province_id`
+                        WHERE `jf_id` = :jf_id AND `jp_employer_id` = :jp_employer_id
+                        ORDER BY `bc_last_name`, `bc_first_name`, `bc_middle_name` ";
+    $stmt = $this->prepare($sql_statement);
+    $stmt->execute(array(
+        ':jf_id' => $jf_id,
+        ':jp_employer_id'  => $employer_id
+    ));
+    $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $result;
+  }
 }
