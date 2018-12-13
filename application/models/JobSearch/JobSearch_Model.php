@@ -14,6 +14,7 @@ class JobSearch_Model extends CI_Model{
     $employerMapper = new App\Mapper\EmployerMapper();
     $applicantSkillMapper = new App\Mapper\ApplicantSkillMapper();
     $jobPostingMapper = new App\Mapper\JobPostingMapper();
+    $jobFairMapper = new App\Mapper\JobFairMapper();
     $jobPostingQualificationMapper = new App\Mapper\JobPostingQualificationMapper();
 
     $applicant = $applicantMapper->getByFilter("applicant_id = '". $applicant_id ."' ", true);
@@ -23,9 +24,10 @@ class JobSearch_Model extends CI_Model{
     $education = $educationMapper->getEducationTable($applicant['applicant_id']);
     $work = $workExperienceMapper->getWorkTable($applicant['applicant_id']);
     $applicantSkill = $applicantSkillMapper->getSkill($applicant['applicant_id']);
+    $jf_id = $jobFairMapper->getActive();
+    $availableJobs = $jobPostingMapper->getByFilter("jp_jf_id = '". $jf_id ."' ");
 
-
-    foreach($jobPostingMapper->getAll() as $jobPosting){
+    foreach($availableJobs as $jobPosting){
       $is_qualified = true;
 
       if($is_qualified){

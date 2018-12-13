@@ -117,12 +117,61 @@ class Jobfair extends Controller {
 		echo json_encode($result);
 	}
 
-	public function summary(){
+	public function summary($jf_id){
+		$jobFairAttendanceMapper = new App\Mapper\JobFairAttendanceMapper();
 		$jobFairMapper = new App\Mapper\JobFairMapper();
 		$jf_id = $jobFairMapper->getActive();
+		$jfa_employee = $jobFairAttendanceMapper->employerAttendanceSummary($jf_id);
+
+		$this->_data['employee_list'] = $jfa_employee;
+
 
 		$this->is_secure = true;
 		$this->view('jobfair/summary');
+	}
+
+	public function print_summary($jf_id, $employer_id = 0){
+		$jobFairAttendanceMapper = new App\Mapper\JobFairAttendanceMapper();
+		$jobFairMapper = new App\Mapper\JobFairMapper();
+		$employerMapper = new App\Mapper\EmployerMapper();
+
+		$output = array();
+		$employer = array();
+		if($employer_id != '0'){
+			$employer = $employerMapper->getByFilter("employer_id = '".$employer_id."'", true);
+			$employer['applicant_list'] = $jobFairAttendanceMapper->employerSummaryApplicant($jf_id, $employer_id);
+			array_push($output, $employer);
+		}
+		else{
+			$jfa_employee = $jobFairAttendanceMapper->employerAttendanceSummary($jf_id);
+			foreach($jfa_employee as $row){
+				$employer = $employerMapper->getByFilter("employer_id = '".$row['employer_id']."'", true);
+				$employer['applicant_list'] = $jobFairAttendanceMapper->employerSummaryApplicant($jf_id, $row['employer_id']);
+				array_push($output, $employer);
+			}
+		}
+
+
+		$data = array(
+			'output'=>$output
+		);
+		//
+		// echo "<pre>";
+		// print_r($output);
+		// echo "</pre>";
+		//$this->_data['employee_list'] = $jfa_employee;
+
+
+		$html = $this->load->view('jobfair/print_summary', $data, true);
+
+		$this->load->library('MPdf');
+		$this->mpdf->generate(
+			array(	'format'=>'Legal',
+					'orientation'=>'L',
+					'html'=>$html,
+					'title'=>'Summary',
+					'is_create'=>false
+		));
 	}
 
 

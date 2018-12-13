@@ -42,6 +42,7 @@
                             <td class="text-center">
                               <div >
                                 <a class="btn btn-info has-tooltip" href="<?php echo DOMAIN.'utility/edit-job-fair/'.$job_fair['jf_id'] ?>" title="Edit"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-primary has-tooltip" href="<?php echo DOMAIN.'jobfair/summary/'.$job_fair['jf_id'] ?>" title="Job Fair SUmmary"><i class="fa fa-tasks"></i></a>
                               </div>
                             </td>
 

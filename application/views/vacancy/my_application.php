@@ -3,7 +3,7 @@
       <div class="col-lg-12">
         <div class="ibox">
             <div class="ibox-title">
-                <span class="pull-right">(<strong>5</strong>) items</span>
+                <span class="pull-right"></span>
                 <h5>My Application</h5>
             </div>
             <?php foreach($application_list as $applicant){ ?>
