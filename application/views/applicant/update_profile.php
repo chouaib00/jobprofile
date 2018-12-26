@@ -140,7 +140,121 @@
                       </div>
                       <div class="col-sm-4">
                         <h5>Nationality</h5>
-                        <input name="applicant-nationality" type="text" class="form-control" placeholder="Enter Nationality" value="<?php echo $form_data['applicant_nationality'] ?>">
+                        <select class="form-control select2-basic" name="applicant-nationality" data-placeholder="Select Nationality">
+                            <option></option>
+                            <option value="Afghan" <?php echo $form_data['applicant_nationality'] == 'Afghan'? 'selected' : '' ?>>Afghan</option>
+                            <option value="Albanian" <?php echo $form_data['applicant_nationality'] == 'Albanian'? 'selected' : '' ?>>Albanian</option>
+                            <option value="Algerian" <?php echo $form_data['applicant_nationality'] == 'Algerian'? 'selected' : '' ?>>Algerian</option>
+                            <option value="Argentine Argentinian" <?php echo $form_data['applicant_nationality'] == 'Argentine Argentinian'? 'selected' : '' ?>>Argentine Argentinian</option>
+                            <option value="Australian" <?php echo $form_data['applicant_nationality'] == 'Australian'? 'selected' : '' ?>>Australian</option>
+                            <option value="Austrian" <?php echo $form_data['applicant_nationality'] == 'Austrian'? 'selected' : '' ?>>Austrian</option>
+                            <option value="Bangladeshi" <?php echo $form_data['applicant_nationality'] == 'Bangladeshi'? 'selected' : '' ?>>Bangladeshi</option>
+                            <option value="Belgian" <?php echo $form_data['applicant_nationality'] == 'Belgian'? 'selected' : '' ?>>Belgian</option>
+                            <option value="Bolivian" <?php echo $form_data['applicant_nationality'] == 'Bolivian'? 'selected' : '' ?>>Bolivian</option>
+                            <option value="Batswana" <?php echo $form_data['applicant_nationality'] == 'Batswana'? 'selected' : '' ?>>Batswana</option>
+                            <option value="Brazilian" <?php echo $form_data['applicant_nationality'] == 'Brazilian'? 'selected' : '' ?>>Brazilian</option>
+                            <option value="Bulgarian" <?php echo $form_data['applicant_nationality'] == 'Bulgarian'? 'selected' : '' ?>>Bulgarian</option>
+                            <option value="Cambodian" <?php echo $form_data['applicant_nationality'] == 'Cambodian'? 'selected' : '' ?>>Cambodian</option>
+                            <option value="Cameroonian" <?php echo $form_data['applicant_nationality'] == 'Cameroonian'? 'selected' : '' ?>>Cameroonian</option>
+                            <option value="Canadian" <?php echo $form_data['applicant_nationality'] == 'Canadian'? 'selected' : '' ?>>Canadian</option>
+                            <option value="Chilean" <?php echo $form_data['applicant_nationality'] == 'Chilean'? 'selected' : '' ?>>Chilean</option>
+                            <option value="Chinese" <?php echo $form_data['applicant_nationality'] == 'Chinese'? 'selected' : '' ?>>Chinese</option>
+                            <option value="Colombian" <?php echo $form_data['applicant_nationality'] == 'Colombian'? 'selected' : '' ?>>Colombian</option>
+                            <option value="Costa Rican" <?php echo $form_data['applicant_nationality'] == 'Costa Rican'? 'selected' : '' ?>>Costa Rican</option>
+                            <option value="Croatian" <?php echo $form_data['applicant_nationality'] == 'Croatian'? 'selected' : '' ?>>Croatian</option>
+                            <option value="Cuban" <?php echo $form_data['applicant_nationality'] == 'Cuban'? 'selected' : '' ?>>Cuban</option>
+                            <option value="Czech" <?php echo $form_data['applicant_nationality'] == 'Czech'? 'selected' : '' ?>>Czech</option>
+                            <option value="Danish" <?php echo $form_data['applicant_nationality'] == 'Danish'? 'selected' : '' ?>>Danish</option>
+                            <option value="Dominican" <?php echo $form_data['applicant_nationality'] == 'Dominican'? 'selected' : '' ?>>Dominican</option>
+                            <option value="Ecuadorian" <?php echo $form_data['applicant_nationality'] == 'Ecuadorian'? 'selected' : '' ?>>Ecuadorian</option>
+                            <option value="Egyptian" <?php echo $form_data['applicant_nationality'] == 'Egyptian'? 'selected' : '' ?>>Egyptian</option>
+                            <option value="Salvadorian" <?php echo $form_data['applicant_nationality'] == 'Salvadorian'? 'selected' : '' ?>>Salvadorian</option>
+                            <option value="English" <?php echo $form_data['applicant_nationality'] == 'English'? 'selected' : '' ?>>English</option>
+                            <option value="Estonian" <?php echo $form_data['applicant_nationality'] == 'Estonian'? 'selected' : '' ?>>Estonian</option>
+                            <option value="Ethiopian" <?php echo $form_data['applicant_nationality'] == 'Ethiopian'? 'selected' : '' ?>>Ethiopian</option>
+                            <option value="Fijian" <?php echo $form_data['applicant_nationality'] == 'Fijian'? 'selected' : '' ?>>Fijian</option>
+                            <option value="Filipino" <?php echo ucwords($form_data['applicant_nationality']) == 'Filipino'? 'selected' : '' ?>>Filipino</option>
+                            <option value="Finnish" <?php echo $form_data['applicant_nationality'] == 'Finnish'? 'selected' : '' ?>>Finnish</option>
+                            <option value="French" <?php echo $form_data['applicant_nationality'] == 'French'? 'selected' : '' ?>>French</option>
+                            <option value="German" <?php echo $form_data['applicant_nationality'] == 'German'? 'selected' : '' ?>>German</option>
+                            <option value="Ghanaian" <?php echo $form_data['applicant_nationality'] == 'Ghanaian'? 'selected' : '' ?>>Ghanaian</option>
+                            <option value="Greek" <?php echo $form_data['applicant_nationality'] == 'Greek'? 'selected' : '' ?>>Greek</option>
+                            <option value="Guatemalan" <?php echo $form_data['applicant_nationality'] == 'Guatemalan'? 'selected' : '' ?>>Guatemalan</option>
+                            <option value="Haitian" <?php echo $form_data['applicant_nationality'] == 'Haitian'? 'selected' : '' ?>>Haitian</option>
+                            <option value="Honduran" <?php echo $form_data['applicant_nationality'] == 'Honduran'? 'selected' : '' ?>>Honduran</option>
+                            <option value="Hungarian" <?php echo $form_data['applicant_nationality'] == 'Hungarian'? 'selected' : '' ?>>Hungarian</option>
+                            <option value="Icelandic" <?php echo $form_data['applicant_nationality'] == 'Icelandic'? 'selected' : '' ?>>Icelandic</option>
+                            <option value="Indian" <?php echo $form_data['applicant_nationality'] == 'Indian'? 'selected' : '' ?>>Indian</option>
+                            <option value="Indonesian" <?php echo $form_data['applicant_nationality'] == 'Indonesian'? 'selected' : '' ?>>Indonesian</option>
+                            <option value="Iranian" <?php echo $form_data['applicant_nationality'] == 'Iranian'? 'selected' : '' ?>>Iranian</option>
+                            <option value="Iraqi" <?php echo $form_data['applicant_nationality'] == 'Iraqi'? 'selected' : '' ?>>Iraqi</option>
+                            <option value="Irish" <?php echo $form_data['applicant_nationality'] == 'Irish'? 'selected' : '' ?>>Irish</option>
+                            <option value="Israeli" <?php echo $form_data['applicant_nationality'] == 'Israeli'? 'selected' : '' ?>>Israeli</option>
+                            <option value="Italian" <?php echo $form_data['applicant_nationality'] == 'Italian'? 'selected' : '' ?>>Italian</option>
+                            <option value="Jamaican" <?php echo $form_data['applicant_nationality'] == 'Jamaican'? 'selected' : '' ?>>Jamaican</option>
+                            <option value="Japanese" <?php echo $form_data['applicant_nationality'] == 'Japanese'? 'selected' : '' ?>>Japanese</option>
+                            <option value="Jordanian" <?php echo $form_data['applicant_nationality'] == 'Jordanian'? 'selected' : '' ?>>Jordanian</option>
+                            <option value="Kenyan" <?php echo $form_data['applicant_nationality'] == 'Kenyan'? 'selected' : '' ?>>Kenyan</option>
+                            <option value="Kuwaiti" <?php echo $form_data['applicant_nationality'] == 'Kuwaiti'? 'selected' : '' ?>>Kuwaiti</option>
+                            <option value="Lao" <?php echo $form_data['applicant_nationality'] == 'Lao'? 'selected' : '' ?>>Lao</option>
+                            <option value="Latvian" <?php echo $form_data['applicant_nationality'] == 'Latvian'? 'selected' : '' ?>>Latvian</option>
+                            <option value="Lebanese" <?php echo $form_data['applicant_nationality'] == 'Lebanese'? 'selected' : '' ?>>Lebanese</option>
+                            <option value="Libyan" <?php echo $form_data['applicant_nationality'] == 'Libyan'? 'selected' : '' ?>>Libyan</option>
+                            <option value="Lithuanian" <?php echo $form_data['applicant_nationality'] == 'Lithuanian'? 'selected' : '' ?>>Lithuanian</option>
+                            <option value="Malaysian" <?php echo $form_data['applicant_nationality'] == 'Malaysian'? 'selected' : '' ?>>Malaysian</option>
+                            <option value="Malian" <?php echo $form_data['applicant_nationality'] == 'Malian'? 'selected' : '' ?>>Malian</option>
+                            <option value="Maltese" <?php echo $form_data['applicant_nationality'] == 'Maltese'? 'selected' : '' ?>>Maltese</option>
+                            <option value="Mexican" <?php echo $form_data['applicant_nationality'] == 'Mexican'? 'selected' : '' ?>>Mexican</option>
+                            <option value="Mongolian" <?php echo $form_data['applicant_nationality'] == 'Mongolian'? 'selected' : '' ?>>Mongolian</option>
+                            <option value="Moroccan" <?php echo $form_data['applicant_nationality'] == 'Moroccan'? 'selected' : '' ?>>Moroccan</option>
+                            <option value="Mozambican" <?php echo $form_data['applicant_nationality'] == 'Mozambican'? 'selected' : '' ?>>Mozambican</option>
+                            <option value="Namibian" <?php echo $form_data['applicant_nationality'] == 'Namibian'? 'selected' : '' ?>>Namibian</option>
+                            <option value="Nepalese" <?php echo $form_data['applicant_nationality'] == 'Nepalese'? 'selected' : '' ?>>Nepalese</option>
+                            <option value="Dutch" <?php echo $form_data['applicant_nationality'] == 'Dutch'? 'selected' : '' ?>>Dutch</option>
+                            <option value="New Zealand" <?php echo $form_data['applicant_nationality'] == 'New Zealand'? 'selected' : '' ?>>New Zealand</option>
+                            <option value="Nicaraguan" <?php echo $form_data['applicant_nationality'] == 'Nicaraguan'? 'selected' : '' ?>>Nicaraguan</option>
+                            <option value="Nigerian" <?php echo $form_data['applicant_nationality'] == 'Nigerian'? 'selected' : '' ?>>Nigerian</option>
+                            <option value="Norwegian" <?php echo $form_data['applicant_nationality'] == 'Norwegian'? 'selected' : '' ?>>Norwegian</option>
+                            <option value="Pakistani" <?php echo $form_data['applicant_nationality'] == 'Pakistani'? 'selected' : '' ?>>Pakistani</option>
+                            <option value="Panamanian" <?php echo $form_data['applicant_nationality'] == 'Panamanian'? 'selected' : '' ?>>Panamanian</option>
+                            <option value="Paraguayan" <?php echo $form_data['applicant_nationality'] == 'Paraguayan'? 'selected' : '' ?>>Paraguayan</option>
+                            <option value="Peruvian" <?php echo $form_data['applicant_nationality'] == 'Peruvian'? 'selected' : '' ?>>Peruvian</option>
+                            <option value="Polish" <?php echo $form_data['applicant_nationality'] == 'Polish'? 'selected' : '' ?>>Polish</option>
+                            <option value="Portuguese" <?php echo $form_data['applicant_nationality'] == 'Portuguese'? 'selected' : '' ?>>Portuguese</option>
+                            <option value="Romanian" <?php echo $form_data['applicant_nationality'] == 'Romanian'? 'selected' : '' ?>>Romanian</option>
+                            <option value="Russian" <?php echo $form_data['applicant_nationality'] == 'Russian'? 'selected' : '' ?>>Russian</option>
+                            <option value="Saudi" <?php echo $form_data['applicant_nationality'] == 'Saudi'? 'selected' : '' ?>>Saudi</option>
+                            <option value="Scottish" <?php echo $form_data['applicant_nationality'] == 'Scottish'? 'selected' : '' ?>>Scottish</option>
+                            <option value="Senegalese" <?php echo $form_data['applicant_nationality'] == 'Senegalese'? 'selected' : '' ?>>Senegalese</option>
+                            <option value="Serbian" <?php echo $form_data['applicant_nationality'] == 'Serbian'? 'selected' : '' ?>>Serbian</option>
+                            <option value="Singaporean" <?php echo $form_data['applicant_nationality'] == 'Singaporean'? 'selected' : '' ?>>Singaporean</option>
+                            <option value="Slovak" <?php echo $form_data['applicant_nationality'] == 'Slovak'? 'selected' : '' ?>>Slovak</option>
+                            <option value="South African" <?php echo $form_data['applicant_nationality'] == 'South African'? 'selected' : '' ?>>South African</option>
+                            <option value="Korean" <?php echo $form_data['applicant_nationality'] == 'Korean'? 'selected' : '' ?>>Korean</option>
+                            <option value="Spanish" <?php echo $form_data['applicant_nationality'] == 'Spanish'? 'selected' : '' ?>>Spanish</option>
+                            <option value="Sri Lankan" <?php echo $form_data['applicant_nationality'] == 'Sri Lankan'? 'selected' : '' ?>>Sri Lankan</option>
+                            <option value="Sudanese" <?php echo $form_data['applicant_nationality'] == 'Sudanese'? 'selected' : '' ?>>Sudanese</option>
+                            <option value="Swedish" <?php echo $form_data['applicant_nationality'] == 'Swedish'? 'selected' : '' ?>>Swedish</option>
+                            <option value="Swiss" <?php echo $form_data['applicant_nationality'] == 'Swiss'? 'selected' : '' ?>>Swiss</option>
+                            <option value="Syrian" <?php echo $form_data['applicant_nationality'] == 'Syrian'? 'selected' : '' ?>>Syrian</option>
+                            <option value="Taiwanese" <?php echo $form_data['applicant_nationality'] == 'Taiwanese'? 'selected' : '' ?>>Taiwanese</option>
+                            <option value="Tajikistani" <?php echo $form_data['applicant_nationality'] == 'Tajikistani'? 'selected' : '' ?>>Tajikistani</option>
+                            <option value="Thai" <?php echo $form_data['applicant_nationality'] == 'Thai'? 'selected' : '' ?>>Thai</option>
+                            <option value="Tongan" <?php echo $form_data['applicant_nationality'] == 'Tongan'? 'selected' : '' ?>>Tongan</option>
+                            <option value="Tunisian" <?php echo $form_data['applicant_nationality'] == 'Tunisian'? 'selected' : '' ?>>Tunisian</option>
+                            <option value="Turkish" <?php echo $form_data['applicant_nationality'] == 'Turkish'? 'selected' : '' ?>>Turkish</option>
+                            <option value="Ukrainian" <?php echo $form_data['applicant_nationality'] == 'Ukrainian'? 'selected' : '' ?>>Ukrainian</option>
+                            <option value="Emirati" <?php echo $form_data['applicant_nationality'] == 'Emirati'? 'selected' : '' ?>>Emirati</option>
+                            <option value="British" <?php echo $form_data['applicant_nationality'] == 'British'? 'selected' : '' ?>>British</option>
+                            <option value="American **" <?php echo $form_data['applicant_nationality'] == 'American **'? 'selected' : '' ?>>American **</option>
+                            <option value="Uruguayan" <?php echo $form_data['applicant_nationality'] == 'Uruguayan'? 'selected' : '' ?>>Uruguayan</option>
+                            <option value="Venezuelan" <?php echo $form_data['applicant_nationality'] == 'Venezuelan'? 'selected' : '' ?>>Venezuelan</option>
+                            <option value="Vietnamese" <?php echo $form_data['applicant_nationality'] == 'Vietnamese'? 'selected' : '' ?>>Vietnamese</option>
+                            <option value="Welsh" <?php echo $form_data['applicant_nationality'] == 'Welsh'? 'selected' : '' ?>>Welsh</option>
+                            <option value="Zambian" <?php echo $form_data['applicant_nationality'] == 'Zambian'? 'selected' : '' ?>>Zambian</option>
+                            <option value="Zimbabwean" <?php echo $form_data['applicant_nationality'] == 'Zimbabwean'? 'selected' : '' ?>>Zimbabwean</option>
+
+                        </select>
                       </div>
                       <div class="col-sm-4">
                         <h5>Citizenship</h5>
@@ -154,7 +268,17 @@
                     <div class="form-group">
                       <div class="col-sm-4">
                         <h5>Religion</h5>
-                        <input name="applicant-religion" type="text" class="form-control" placeholder="Enter Religion" value="<?php echo $form_data['applicant_religion'] ?>">
+                        <select class="form-control select2-basic" name="applicant-religion" data-placeholder="Select Religion">
+                            <option></option>
+                            <option value="Roman Catholic" <?php echo $form_data['applicant_religion'] == 'Roman Catholic'? 'selected' : '' ?>>Roman Catholic</option>
+                            <option value="Protestant" <?php echo $form_data['applicant_religion'] == 'Protestant'? 'selected' : '' ?>>Protestant</option>
+                            <option value="Muslim" <?php echo $form_data['applicant_religion'] == 'Muslim'? 'selected' : '' ?>>Muslim</option>
+                            <option value="Iglesia ni Cristo" <?php echo $form_data['applicant_religion'] == 'Iglesia ni Cristo'? 'selected' : '' ?>>Iglesia ni Cristo</option>
+                            <option value="Muslim" <?php echo $form_data['applicant_religion'] == 'Aglipayan'? 'selected' : '' ?>>Aglipayan</option>
+                            <option value="Buddist" <?php echo $form_data['applicant_religion'] == 'Buddist'? 'selected' : '' ?>>Buddist</option>
+                            <option value="Born Again" <?php echo $form_data['applicant_religion'] == 'Born Again'? 'selected' : '' ?>>Born Again</option>
+                            <option value="Seventh Day Adventist" <?php echo $form_data['applicant_religion'] == 'Seventh Day Adventist'? 'selected' : '' ?>>Seventh Day Adventist</option>
+                        </select>
                       </div>
                       <div class="col-sm-4">
                         <h5>Employment Status</h5>

@@ -53,8 +53,6 @@ function recaptchaCallback() {
 };
 $(document).ready(function(){
 
-
-
   $("#main-form").validate({
     rules :{
       'reg-email': {
